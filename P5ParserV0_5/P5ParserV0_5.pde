@@ -32,7 +32,7 @@ StringList expl = new StringList();
 //import java.math.BigInteger;
 void setup () {
   for (int i=0; i<256; i++)ASCII+=char(i)+"";
-  String lines[] = loadStrings("p.soml");
+  String lines[] = loadStrings("p.sogl");
   JSONObject options = loadJSONObject("options.json");
   debug = options.getBoolean("debug");
   String program = lines[0];//.replace("¶", "\n");
