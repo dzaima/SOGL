@@ -1,0 +1,13 @@
+#[SOML](https://github.com/dzaima/SOML), 24 [bytes](https://github.com/dzaima/SOML/blob/master/chartable.md)
+     -9*"D√⅜‘⁴"Hοr‘¹t x9*o±t
+Explanation:
+                              
+     -9*                      pushes "-" repeated 9 times
+        "D√⅜‘                 pushes compressed string of "|       |"
+             ⁴                copies the 2nd-from-top from stack ("---------")
+              "Hοr‘           pushes compressed string of "|   |   |"
+                   ¹          converts all the strings in the stack to an array ["---------","|       |","---------","|   |   |"]
+                    t         prints the array with newlines without popping
+                      x9*     push "x" repeated 9 times
+                         o    output that
+                          ±t  output the array inverted
