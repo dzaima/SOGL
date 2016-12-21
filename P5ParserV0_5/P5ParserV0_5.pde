@@ -47,11 +47,11 @@ void setup () {
     if (j.charAt(0)=='\n') j=j.substring(1);
     //if (j.charAt(j.length()-1)=='\n') j=j.substring(0,j.length()-2);
     String[]o={j};
-    saveStrings("log.txt", o);
+    saveStrings("output.txt", o);
   }
   if (debug) {
     String[]o2={expl.join("")};
-    saveStrings("loge.txt", o2);
+    saveStrings("log.txt", o2);
   }
   exit();
 }
