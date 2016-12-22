@@ -1,21 +1,23 @@
 import java.math.BigInteger;
-String ALLCHARS = "⁰¹²³⁴⁵⁶⁷⁸\t¶⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~←↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨΑαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡͏→“”‘’";
+String ALLCHARS = "⁰¹²³⁴⁵⁶⁷⁸\t¶⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~←↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡͏→“”‘’"; //<>//
 String compChars = "\n\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 //note: here anywhere where byte is used it's most probably supposed to be a bit (base is an exception)
 String[] dict;
 void setup() {
-  String[] sa = {ALLCHARS.charAt(249)+""};
-  saveStrings("t",sa);
-  String[] parts = {"|   |     |"};
+  String[] parts = {"qwertyuiop"};
   String bits = "";
-  for (String s : parts)
+  String raw = "";
+  for (String s : parts) {
     bits+=compress(s);
+    raw+=s;
+  }
   println(bits);
   println("----------------------------------------------------------------------");
-  println(decompress(toCmd(bits)[0]));
+  String comp = toCmd(bits)[0];
+  println(decompress(comp));
   //println(decompress(toCmd("00100000101011101")[0]));
   println("----------------------------------------------------------------------");
-  println(bits.length(), "bits, ", toCmd(bits)[0].length(), "chars");
+  println(bits.length()+ " bits, " + comp.length() + " chars, original was "+raw.length()+" bytes. "+ round(comp.length()*1000f/raw.length())/10 + "% of original length");
   exit();
 }
 String getb(int c) {
