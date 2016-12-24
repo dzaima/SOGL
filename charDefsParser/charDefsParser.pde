@@ -5,7 +5,7 @@ String[] data;//       0      1         2         3            4              5
 String[] typeNames = {"any", "number", "string", "array", "number array", "string array", "error", "error"};
 String[] search;// = {"variable", "\"a\""};
 void setup() {
-  String fullSearch = "hello world";
+  String fullSearch = "string index of occurence";
   search = fullSearch.split(" ");
   data = loadStrings("charDefs.txt");
   size(200, 200);

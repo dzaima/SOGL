@@ -6,10 +6,10 @@ truthy/falsy values:
 temp: !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
 all the current chars:
 ⁰¹²³⁴⁵⁶⁷⁸T¶⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~←↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡͏→“”‘’
-      ^ \t
+         ^ \t
 
 IO:
-	out: if array, if not specified otherwise, then will output each item in a newline.re
+	out: if array, if not specified otherwise, then will output each item in a newline.
 	, string input
 	. number input 
 	O in a newline output POP
@@ -65,14 +65,13 @@ NT !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklm
 extended charpairs (31): ‾//\\  /\\/--__||[]][())(""''
                          ^ single char exception
 1) converts from either base250 or base256 ("‘ - 250, 9*9/ - 256) to base 2.
-2) reads 3 first bits:
-	000 - custom string:
-		first 3 - the amount of chars (2-9 inclusive)
-		next 5 bits say how many characters of those chars are there gonna be (amountofchars+3 - amountofchars+34 inclusive)
-		next # of bits required to get that many base97 characters (the 2-9) filled with the chars (ceiling(log(97)*X/log(2)))
-		next is the base2-9 length of (3+ - 34+) bits compressing the message
-	001 - simply take next 7 bits and push those to decoded of the defined characters
-	010 - english:
+2) reads a base8 number
+	0 - custom string:
+		first - base32 - the amount of chars (2-33 inclusive)
+		next, reads a base((readAmount>length+2?98:97)-just read) number until it's result is 0
+		next is the actual message with the chars defined above
+	1 - simply take a base97 number and push its corresponding character
+	2 - english:
 		first 2 bits - how many words (1-4 inclusive)
 		repeat that many times
 			1 bit - if either long(1) or short(0):
@@ -80,23 +79,23 @@ extended charpairs (31): ‾//\\  /\\/--__||[]][())(""''
 			long: 16 bits - from the word file which item (513-66049)
 			and a space
 		and a space if this was 4 words long and next is words too
-	011 - ascii string:
+	3 - ascii string:
 		first 4 bits - how many letters (3-18 inclusive)
 		next ceiling(log(97)*X/log(2)) bits are the string to push to decoded
-	100 - box string:
+	4 - box string:
 		first 6 bits - mode:
 			each bit corresponding to " ", "/" and "\", "|", "_", "-", "\n"
 			diffecentChar# = count 1s in ^ + 2nd bit
 		next 5 bits - amount of boxstring chars (differentChar#+2 - differentChar#+33 inclusive)
 		continuing ceiling(log(differentChar#)*char#/log(2)) bits are the encoded string
-	101 - box string:
+	5 - box string:
 		the same as 100 but with instead of 5 bits saying the length but 6, so (34+differentChar# - 98+differentChar# inclusive)
-	110 - TBD
-	111 - custom string:
+	6 - TBD
+	7 - custom string:
 		the same as 000 but with instead of 5 bits saying the length but 6, so (35+amountofchars - 99+amountofchars inclusive)
 note: the actual binary data in the string is reversed because prependng 0s do matter but leading zeroes don't matter (well only when you want to get a custom string with 2 space characters and 5 of them)
 chardefs:
-⁰	(^0)
+⁰	
 ¹	x inputs
 		string: POPs until the popped isn't a string and puts all popped in an array
 			`"hello”"world”¹` = ["hello", "world"]
@@ -112,16 +111,18 @@ chardefs:
 			squares the inputted number
 ³	1 input
 		duplicates POP twice (`123³` = [1, 2, 3, 3, 3])
-⁴	1 input (^4)
+⁴	1 input
 		duplicate the 2nd from the top of the stack
-⁵	1 input (^5)
+⁵	1 input
 		duplicate the 3rd from the top of the stack
-⁶	(^6)
-⁷	(^7)
-⁸	(^8)
+⁶	3 inputs
+		any: puts the 2nd and 3rd from bottom ontop of the stack
+			`234⁶` = [4, 2, 3]
+⁷	
+⁸	
 \t	
 \n	(¶)
-⁹	(^9)
+⁹	
 ±	1 input
 		number: negates the number
 			`8±` = -8
@@ -189,7 +190,7 @@ chardefs:
 		`"⁰²¹»ø’` = [0, 2, 1, 6, 11]
 		`"Look how easily I can display the " character!”` = [Look how easily I can display the " character!]
 #	outputs a quote character (")
-$	
+$	outputs a string ender quote (”)
 %	2 inputs
 		numbers: modulo (`83%` = 1, `93%` = 0)
 &	2 inputs
@@ -324,8 +325,8 @@ V	1 input
 		string: pushes if is fully uppercase
 W	2 inputs
 		number & string, string & number: pop the number and push the nth(1-indexed) thing from the string
-		number & array, array & number: pop the number and push the 1st occurence of it. -1 in case of none.
-		strings: give out an array with the values of where the 1st strings chars were in the 2nd one
+		number & array, array & number: pop the number and push the 1st occurence of it. 0 in case of none.
+		strings: give out the index of the 2nd string in the 1st one (1-indexed, 0 in the case of none)
 		string & array, array & string: pop the string and give out the 1st occurence of the string in the array. 1-indexed, 0 in case of none
 	implicitness: (before ":" is what's already stacked)
 		number: string from who get the number
@@ -368,7 +369,12 @@ k	1 input
 		string: pops the first letter off
 		array: pop the first item off the array
 l	1 input
-		pushes the length of the array/string/number(5l=1, 12.0l=2, 12.345l=5), doesn't pop
+		array: pushes the length of the array, doesn't pop
+		string: pushes the length of the string, doesn't pop
+		number: pushes the length of the number, doesn't pop 
+			`5l`=1
+			`12.0l`=2
+			`12.345l`=5
 m	1 input
 	mold into POP POP 
 		`"hello”9m` = hellohell
@@ -398,7 +404,7 @@ v	1 input
 w	2 inputs
 		number & string, string & number: pop the number and show the 1st occurence(1-indexed) of the number in the string
 		number & array, array & number: pop the number and push the nth(1-indexed) thing from the array. 
-		strings: give out an array with the values of where the 1st string was in the 2nd one. 
+		strings: give out an array with the values of where the 2nd string was in the 1st one. 
 		numbers: 
 	implicitness: (before ":" is what's already stacked)
 		number: string from who get the number
@@ -503,15 +509,17 @@ z	pushes the english alphabet lowercase
 Γ	
 γ	
 Δ	1 input
-		number: pushes range 
+		number: pushes range; inclusive
 			`6Δ` = "123456"
+			`12Δ` = "010203040506070809101112"
 		string: pushes all printable ascii chars up to that point; inclusive
-			` 6Δ` =  "!\"#$%&'()*+,-./0123456"
+			` 6Δ` =  " !\"#$%&'()*+,-./0123456"
 δ	1 input
-		number: pushes range 
+		number: pushes range; exclusive
 			`6δ` = "012345"
+			`11Δ` = "01020304050607080910"
 		string: pushes all printable ascii chars up to that point; exclusive
-			` 6δ` =  "!\"#$%&'()*+,-./012345"
+			` 6δ` =  " !\"#$%&'()*+,-./012345"
 Ε	
 ε	
 Ζ	
@@ -548,11 +556,15 @@ z	pushes the english alphabet lowercase
 φ	
 Χ	
 χ	
-Ψ	
-ψ	
+Ψ	1 input
+		number: get a random number from 1 to the number; inclusive, Doesn't pop
+		string: get a random character from " " to the strings 0th char; inclusive, doesn't pop
+ψ	1 input
+		number: get a random number from 0 to the number. Does pop
+		string: get a random character from the string. Does pop
 Ω	
 ω	
-ā	
+ā	pushes an empty array
 č	1 input
 		string array: joins the array into a single string
 			`["hello ", "foo"]` = "hello foo"

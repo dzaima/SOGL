@@ -39,7 +39,7 @@ ArrayList<int[]> compress (String s, int method) {
   }
 
 
-  if (method == 1) { //<>//
+  if (method == 1) {
     while (s.length()>0) {
       int length = min(s.length(), 18);
       println(length);
@@ -136,7 +136,7 @@ BigInteger toNum (ArrayList<int[]> baseData) {
   }
   return bi;
 }
-String toCmd (ArrayList<int[]> data) {
+String[] toCmd (ArrayList<int[]> data) {
   /*try {
     while (bits.charAt(bits.length()-1)=='0') bits = bits.substring(0, bits.length()-1);
   } catch(Exception e) {}//it's ok, this means it's just empty :p*/
@@ -149,9 +149,9 @@ String toCmd (ArrayList<int[]> data) {
     o+=ALLCHARS.charAt(c&0xFF);
     //println(c&0xFF, ALLCHARS.charAt(c&0xFF));
   }
-  String[] O = {"\""+o+"‘"};
+  String[] O = {o};
   saveStrings ("compressed", O);
-  return o;
+  return O;
 }
 ArrayList<int[]> compress(String s) {//(not so) smart compressor
   ArrayList<int[]> bc = new ArrayList<int[]>();//best = 0123, bc = because = code

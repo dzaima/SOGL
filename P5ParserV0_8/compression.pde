@@ -1,38 +1,7 @@
-import java.util.Comparator;
-import java.util.Collections;
 import java.math.BigInteger;
-boolean decompressInfo = true;
-String ALLCHARS = "⁰¹²³⁴⁵⁶⁷⁸\t¶⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~←↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡͏→“”‘’";
-String compChars = "\n\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+String compChars = "\n\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~                                                                                                                                                             ";
+//note: here anywhere where byte is used it's most probably supposed to be a bit (base is an exception)
 String[] dict;
-void setup() {
-  String[] parts = {"__"};
-  ArrayList<int[]> bits = new ArrayList<int[]>();
-  String raw = "";
-  for (String s : parts) {
-    for (int[] i : compress(s)) {
-      int[] temp = new int[2];
-      temp[0] = i[0];
-      temp[1] = i[1];
-      bits.add(temp);
-    }
-    raw+=s;
-  }
-  //int[][] sb = {{8,0}, {32, 2}, {97,2}, {94, 67}, {27, 0}, {26, 2}, {23, 3}, {19, 2}, {16, 2}, {13, 4}, {7, 6}};//{97, 71}, {26, 2}, {23, 3}, {19, 18}, {3, 1}, {3, 0}, {3, 2}, {3, 2}, {3, 0}, {3, 0}};
-  /*for (int s[] : sb) {
-    bits.add(s);
-  }*/
-  //for (int[] bit : bits)
-  //  println(bit[0]+" "+bit[1]);
-  //println(toNum(bits));
-  println("----------------------------------------------------------------------");
-  String comp = toCmd(bits);
-  println("total: \"",decompress(comp)+"\"");
-  //println(decompress(toCmd("00100000101011101")[0]));
-  println("----------------------------------------------------------------------");
-  println(comp.length() + " bytes, original was "+raw.length()+" bytes. "+ round(comp.length()*1000f/raw.length())/10 + "% of original length");
-  exit();
-}
 BigInteger fromBase (int base, byte[] num) {
   BigInteger o = BigInteger.valueOf(0);
   for (byte b : num) {
