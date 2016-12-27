@@ -459,9 +459,10 @@ z	pushes the english alphabet lowercase
 		number & number: converts the 1st number from base x to base 10
 		string & number: converts the string from base 10 to base x (if starting base is bigger than 10 it'll count it as ASCII) and output number
 ≡	2 inputs
-		string: are the strings excatly identical
-		number: are the numbers excatly identical (`12.0 ≡ 12` would be false (infix and number definitions used for simplicity))
-		array: check if all are equal
+		strings, numbers: are the inputs excatly identical
+		`12”12≡` = true
+		`89.0”89≡` = false
+		arrays: check if all items are equal to their corresponding items in the other array
 ∙	2 inputs
 		number & string, string & number: get an array with number many items all being the string
 		number & array, array & number: multiply the array vertically:

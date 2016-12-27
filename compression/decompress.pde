@@ -12,7 +12,7 @@ String decompb(BigInteger in) {
   decompressable = in;
   String out = "";
   byte last = -1;
-  int lastD = 0;
+  int lastD = -1;
   while(!decompressable.equals(BigInteger.ZERO)) {
     byte eq = read(8);
     if (eq==0 || eq==7) {

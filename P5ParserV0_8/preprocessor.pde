@@ -97,7 +97,8 @@ String preprocessor (String p) {
       i+=2;
       continue;
     }
-    while (sdata[i]!=0) i++;
+    while (i<sdata.length && sdata[i]!=0) i++;
+    if (i>sdata.length-1) break;
     if ("{?[]F∫".contains(p.charAt(i)+"")) {
       loopStack.append(i);
     }

@@ -960,7 +960,7 @@ void EXECUTE(String p) {
         
         if (cc=='’') {
           ptr++;
-          push(ALLCHARS.indexOf(p.charAt(ptr)));
+          push(ALLCHARS.indexOf(p.charAt(ptr))+11);
         }
         
         if (cc=='”') {

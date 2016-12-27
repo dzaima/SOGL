@@ -6,7 +6,7 @@ String ALLCHARS = "⁰¹²³⁴⁵⁶⁷⁸\t¶⁹±∑«»æÆø‽§°¦‚‛
 String compChars = "\n\t !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 String[] dict;
 void setup() {
-  String[] parts = {"__"};
+  String[] parts = {"menu"};
   ArrayList<int[]> bits = new ArrayList<int[]>();
   String raw = "";
   for (String s : parts) {
@@ -27,7 +27,7 @@ void setup() {
   //println(toNum(bits));
   println("----------------------------------------------------------------------");
   String comp = toCmd(bits);
-  println("total: \"",decompress(comp)+"\"");
+  println("total: \""+decompress(comp)+"\"");
   //println(decompress(toCmd("00100000101011101")[0]));
   println("----------------------------------------------------------------------");
   println(comp.length() + " bytes, original was "+raw.length()+" bytes. "+ round(comp.length()*1000f/raw.length())/10 + "% of original length");
