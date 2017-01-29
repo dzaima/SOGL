@@ -285,7 +285,7 @@ E	1 input
 		saves POP on variable "e"
 F	loads the current repeat itiration (1-based)
 G	put the 3rd from the top of the stack ontop (`[1, 2, 3]G` -> [2, 3, 1])
-H	1 input
+H	1 inpus
 		number: decreases by 1
 		string: decreases the last number in stack. If there are none, put a -1 in the stacks start.
 		array: rotate left
@@ -525,12 +525,8 @@ z	pushes the english alphabet lowercase
 ζ	
 Η	
 η	
-Θ	2 inputs
-		string, string: split X with Y
-			`"foo-bar”"-”Θ` -> ["foo", "bar"]
-θ	1 input
-		string: split on spaces
-			`"Hello world”` -> ["Hello", "world"]
+Θ	
+θ	
 Ι	
 ι	essentially ”". 
 	`"helloιworld”` -> "hello", "world"
