@@ -499,8 +499,17 @@ void EXECUTE(String p) {
             } else {
               b = pop();
               if (a.type==BIGDECIMAL&b.type==BIGDECIMAL)push(a.bd.add(b.bd)); 
-              if ((a.type==BIGDECIMAL)&(b.type==STRING)) push(b.s.charAt(a.bd.intValue()-1)+"");
-              if ((b.type==BIGDECIMAL)&(a.type==STRING)) push(a.s.charAt(b.bd.intValue()-1)+"");
+              if ((a.type==BIGDECIMAL)&(b.type==STRING)) {
+                poppable t = a;
+                a = b;
+                b = t;
+              }
+              if ((b.type==BIGDECIMAL)&(a.type==STRING)) {
+                int c = (b.bd.intValue()-1)%a.s.length();
+                if (c<0)
+                  c=c+a.s.length();
+                push(a.s.charAt(c)+"");
+              }
               if (a.type==STRING&b.type==STRING) {
                 push(b.s.indexOf(a.s)+1);
               }

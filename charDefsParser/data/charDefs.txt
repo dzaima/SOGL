@@ -25,7 +25,7 @@ useful chars: "”¶±«»≤≥’→←╥∫
 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 0123456789012345678901234567890123456789012345678901234567890123456789
 00000000001111111111222222222233333333334444444444555555555566666666667777777777
-Quriks:
+Quirks:
 0*0/ - "0" - push "codegolf"
 1*1/ - "1" - push "stackexchange"
 2*2/ - "2" - push "qwertyuiop", "asdfghjkl" and "zxcvbnm"
@@ -110,7 +110,7 @@ chardefs:
 		implicitness:
 			squares the inputted number
 ³	1 input
-		duplicates POP twice (`123³` = [1, 2, 3, 3, 3])
+		duplicates POP thrice (`123³` = [1, 2, 3, 3, 3])
 ⁴	1 input
 		duplicate the 2nd from the top of the stack
 ⁵	1 input

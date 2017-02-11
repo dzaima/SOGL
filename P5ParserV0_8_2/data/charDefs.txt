@@ -261,7 +261,7 @@ $	outputs a string ender quote (”)
 			`"3”5<` = truthy
 			`25<` = truthy
 =	2 inputs
-		number & string, stirng & number: pushes if equal
+		number & string, string & number: pushes if equal
 			`123 "123”=` = truthy
 		array & number, array & string, number & array, string & array: if all in array are equal to the other input
 >	2 inputs
@@ -450,7 +450,7 @@ z	pushes the english alphabet lowercase
 		number: 
 		string, array: remove duplicates
 ─	2 inputs
-		number & number: (2nd is base) convert x from base 10 to base y
+		number & number: (2nd is base) convert x from base 10 to base y. If base is 2 and is constant then instead of an array with the digits it gives a string (e.g. `2─` = "101001101")
 		string & number: convert each letter of string to base y in an array (if base is 2 then convert to base 2 strings with 8 0s)
 	implicitness:
 		number: convert input as string to base specified (or number if input specifies it)
@@ -478,11 +478,13 @@ z	pushes the english alphabet lowercase
 ○	1 input
 		truthy: exit with falsey output (0)
 		falsy: nothing
+		if required, will put a `}` after itself
 ׀	1 input
 		truthy: exit with truthy output (1)
 		falsy: nothing
 		1 input
-		checks if number is prime (the unicode character is called "prime" :D)
+		if required, will put a `}` after itself
+′		checks if number is prime (the unicode character is called "prime" :D)
 ¬	1 input
 		number: loop that many times the continuing code, closed by "}", each time pushing the current loop-point (1-based).
 ⁽	(upper "(")uppercase the first letter of word
@@ -521,7 +523,8 @@ z	pushes the english alphabet lowercase
 			` 6δ` =  " !\"#$%&'()*+,-./012345"
 Ε	
 ε	
-Ζ	
+Ζ	pushes the next two characters as seperate strings
+		`Ζab` -> ["a", "b"]
 ζ	
 Η	
 η	
@@ -549,7 +552,8 @@ z	pushes the english alphabet lowercase
 Π	
 π	
 Ρ	
-ρ	
+ρ	1 input
+	anything: checks if is a palendrome
 Σ	
 σ	
 Τ	1 input
@@ -647,3 +651,6 @@ z	pushes the english alphabet lowercase
 ‘	string ender: compressed string decompressor (long numbers, base250 to ASCII, english)
 ’	string ender: adds to the stack the numeric values of the string (1-indexed)
 		number starter: next character is tanslated to a number (starts with 11, skips 256 as those are already 1-char numbers)
+
+CGSE post generator: SOGL→$  4*→U](https://github.com/dzaima/$→~"#[$~), ”od⁄o" [bytes~/blob/master/chartable.md)”oUd+p"Explanation:”OUO4,{ -=?³d⁄6+;-  *o,o  *O}:3-dWoI}  2*o,o
+usage: next line = the code; next = "-" for new line, " " for continuation of prevoius; next = empty; next = each line as a description for each "-".
