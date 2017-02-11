@@ -1,0 +1,16 @@
+#[SOGL 0.8](https://github.com/dzaima/SOGL), 60 [bytes 0.8](https://github.com/dzaima/SOGL/blob/master/chartable.md)
+    Z"sηΒ…@Ν┘$JP6*š∙╬F▓÷Σ⁷4⌠	⁹{Tīο⁾α⅝½Χ<▼½Ξμ‚‘θ’»∫wGKO",t5~r‘P≥o
+Explanation:
+                                                                  
+    Z                                                             push the uppercase alphabet
+     "sηΒ…@Ν┘$JP6*š∙╬F▓÷Σ⁷4⌠	⁹{Tīο⁾α⅝½Χ<▼½Ξμ‚‘                    push the 27 words separated by spaces using the languages english compression (BCD...XYZA)
+                                              θ                   split on spaces
+                                               ’»∫                repeat 27 times (push 0-based pointer)
+                                                  w               get the 1-indexed item of the array (so 0 = last, 1 = first, 2 = 2nd,...)
+                                                   G              put the 1st thing on stack ontop (the alphabet)
+                                                    K             get the 1st letter and remove it
+                                                     O            output it
+                                                      ",t5~r‘     push compressed " is for "
+                                                             P    append that (and disable last auto-output)
+                                                              ≥   put the 1st thing on the stack below everything
+                                                               o  append the last thing (the word from the word list)

@@ -1,0 +1,157 @@
+SOGL→$  4*→U ](https://github.com/dzaima/$→~"#[$~), ”od⁄o" [bytes~/blob/master/chartable.md)”oUd+p"Explanation:”OUO4,{ -=?³d⁄6+;-  *o,o  *O}:3-dWoI}  2*o,o
+Z"sηΒ…@Ν┘$JP6*š∙╬F▓÷Σ⁷4⌠	⁹{Tīο⁾α⅝½Χ<▼½Ξμ‚‘θ’»∫wGKO",t5~r‘P≥o
+--                                        --  -----      ---
+
+push the uppercase alphabet
+push the 27 words separated by spaces using the languages english compression (BCD...XYZA)
+split on spaces
+repeat 27 times (push 0-based pointer)
+get the 1-indexed item of the array (so 0 = last, 1 = first, 2 = 2nd,...)
+put the 1st thing on stack ontop (the alphabet)
+get the 1st letter and remove it
+output it
+push compressed " is for "
+append that (and disable last auto-output)
+put the 1st thing on the stack below everything
+append the last thing (the word from the word list)
+"BC", [], "against"
+³!○∫ |O@*o \o}I -*
+1
+" A B X”č@┼
+"qπ⁹⁸ΠEH}@|`‛▲ƨN§Β⁷<S@≤tρ$ōυ⁵_▒@β□ķ└ν!ķΝ⅜¡šσ│J¡↔ōBψ⅟↑Ν∆θ³⅜Ιεδ¼═c√1‘"¹‘ ┘ŗ"-/>\_”č"─┌┘┐└”čŗ #Θ
+ - ─ŗ / ┌ŗ > ┘ŗ \ ┐ŗ _ └ŗ #Θ
+ 
+ - ─ŗ
+ / ┌ŗ
+ > ┘ŗ
+ \ ┐ŗ
+ _ └ŗ
+
+-/>\_
+─┌┘┐└
+" A B X”č@┼",⁾o⁵¾§⁹e7'█ΚζΜ↓{Nŗņč]Jω‼n⁷~ŗ◄⁵‽⁾\⁷κ◄fEt}⁽κ⁽yχΙ⌠τκd∫q√≡`fχ≥║D╚⁷0○]	,&⁹─zκqøvāx.┌Ε¾^℮P׀«‘"¹‘Θ
+¼▒#¬⁵÷¹‘
+7x^D
+xx*
+0, ,Θ{r;’⁷*+
+2,3,5,8,13,12,7,10,8,9,17,17,16,15,13,10,5,6,11,8,10,9,10,10
+’∑%"162345735769471597878333300946”r’⁷─w
+2
+{18%r’
+
+
+l"google”≠/
+2─ρ"┌μ3‘θwU
+16
+2─           convert input to base 2
+  ρ          check if is palindrome
+   "┌μ3‘     push "yes no"
+        θ    split on spaces
+		 w   get the nth(is palindrome) element from the array
+		  U  uppercase (compressing is more effective this way)
+
+"YJ¬ņ‘’⁸*"*wōš⁶‘’æ*"¹‘+’Y*+
+"start\n\n”’⁸*"A right\n”’æ* ¶+’Y*+
+{θl464¹=
+
+7"ņVυr11<╝⅔`▒τ¶‘@Θ,Wh-w
+strength
+"ņVυr11<╝⅔`▒τ¶‘
+"«υ▒≥╬A[ŗβ¶℮k‽‘
+
+
+
+
+
+
+
+
+
+VVV
+SOGL→$  4*→U](https://github.com/dzaima/$→~"#[$~), ”od⁄o" [bytes~/blob/master/chartable.md)”oUd+p"Explanation:”OUO4,{ -=?³d⁄6+;-  *o,o  *O}:3-dWoI}  2*o,o
+^^^
+war
+“ignorance¤í‡î—™šÔÃÒry“#DIk1^è
+"╝⌠½b¹‘
+,N∫I;KGʹ?T}X
+⁰¹²³⁴⁵⁶⁷⁸T¶⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~←↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡͏→“”‘’
+""%I│Γ"J∞‛█Τ∙‚+∑(4░║ρ│oΛe2ρ′╗m↔←A<¡►&ŗNō▼ΥικVf÷!╗‼ξ┐Wο1	sY¬ƨ⁾¡»╬j§4¡η╬Σεxτ§¼rķ(Λ‽Kp√½ΗφW≡fC╚⁹≠╬Βηs0θ⅓I+žπƨΒY³Pu⁽šnχ~░5u►℮O¹o│≈+Δ┐š;ΜTV)wm⌠⁄υ∞1;gγ¼τωΚ■FR░ŗΤ`∞‰ŗ⌡šZž█GνhΗ)Δo▲`℮↔uξxKΤ4└χ…⁄ŗ╝cJē∙ΒΤi%⁽Σσk÷YΨ►l"βj;σoƨΩ╚↔f5$φvhē≠¦jO⌠T[±žν⅛◄bk⅜³β⅜UEΙ′Η--<~Y′¦!πƧ⁾=╥ν#○∙2¡TFpπō┌↑#	±⌠℮¬‰Τ>⌠t⅝>ķ'¶↓+w(½⁷↑ø#Ξ%:║θ↕↑DƧ⅞℮5Rr⁴,«xģΜ5Χ▓#⁸\‼∞f.xΣ╬≤∑ΛB;Ο/Sšδ‚^Λ½0S/≥E=÷℮YεDHψκhψB~ν⅓┌e>#∙0℮|θR⁸½N…1─ķφ∙Y⁵№Χ$gx:χZō┐Δ=░⁄κ§o□π|÷øΣxē′↓Κηπε\╤⁽Ιβiμ^ņμΦƧK℮Δnε{ΩA7≠ΓIw¶¤╥γ╝δΞ▼□╚¼Uf↔mK←G▓a⁴ηē¦CΓ°⁵⁄χwƧB2h⌠↓■ņ-AΛ∆Y⅟VYK0○4Gx↕┐ķk#ž6æ3►ΘšXΤΕ█Rtε{►n‰6mI-υō⁰┼¶BķT³‘
+"▼æμp‘č3*č
+"K6x■⌡]^⅜CΗΛ0½χF⁾is⁷‘
+§Χ⁸‘O"A6‘čOƧ!!
+
+”;⁴+→⅞` -=”@SUŗč"ā∆y‘+2/2*±_"tab  ”;"[]\”+č+"δļ┘.«‘G";'”+č"Oν‘++G",./”+č"ο╤?³‘:h++ā"ctrl⅞"win⅞"alt⅞’⁷@*+;+;+"τƨ°‘+;+¹{"ēp‘č;{"_||/”h┼;{ _;+"__”+┼}"yU‽τ±³‘┼}O
+
+:h┼┼→^  ^→SS :i5**^→C"π╤↑Ξ‘i*^→T@3*: =’¶*+O )+4∫9+ƧV *ƧV(+;:kGh+O} ~’æ*O.H5*@*"↔D‘+:čiH5* :*"↔D‘+^;^iH5* :*"4℮ΙA‘+^;^CST"æυ²ķ‘i*^TCC
+490
+:h┼┼→^  ^→SS :i5**^→C@3*: =’¶*+O )+4∫9+ƧV *ƧV(+;:kGh+O} ~’æ*O.H5*@*"↔D‘+:čiH5* :*"↔D‘+^;^iH5* :*"4℮ΙA‘+^;^CS"π╤↑Ξ‘i*^"æυ²ķ‘i*^"π╤↑Ξ‘i*^CC
+:h┼┼→^@3*: =’¶*+O )+4∫9+ƧV *ƧV(+;:kGh+O} ~’æ*O.H5*@*"↔D‘+:čiH5* :*"↔D‘+^;^iH5* :*"4℮ΙA‘+^;^  ^ :i5**^  ^"π╤↑Ξ‘i*^"æυ²ķ‘i*^"π╤↑Ξ‘i*^  ^ :i5**^  ^ :i5**^
+@3*: =’¶*+O )+4∫9+ƧV *ƧV(+;:kGh+O} ~’æ*O.H5*@*"↔D‘+:čiH5* :*"↔D‘+:h┼┼;:h┼┼iH5* :*"4℮ΙA‘+:h┼┼;:h┼┼  :h┼┼ :i5**:h┼┼  :h┼┼"π╤↑Ξ‘i*:h┼┼"æυ²ķ‘i*:h┼┼"π╤↑Ξ‘i*:h┼┼  :h┼┼ :i5**:h┼┼  :h┼┼ :i5**:h┼┼
+
+
+":###:” = "π╤↑Ξ‘
+" ### ” = "æυ²ķ‘
+
+ :*"↔D‘+:č┼iH5* :*"4℮ΙA‘+:h┼┼
+i5* :*:h┼┼
+
+5* :*:
+
+
+
+2.IττU^:2=?4
+34359750709
+
+.H{Ƨ: 7*╥O
+
+ ^"≠‚z|√λ⅜…w╝_└b′℮Χ]υ:.▒█m≤↔t§)U█ā⅛□⁸S$/‘ŗ
+ %ŗ
+
+
+
+
+
+100
+010
+123
+
+1 a
+-1 b
+0 c
+
+ā"ctrl”;⁴+"win”;⁴+"alt”;⁴+’⁷@*+;+;+"τƨ°‘+;+
+` -=”@SUŗč"ā∆y‘+2/2*±_"tab  ”;"[]\”+č+"δļ┘.«‘G";'”+č"Oν‘++G",./”+č"ο╤?³‘:h++ā"ctrl”;⁴+"win”;⁴+"alt”;⁴+’⁷@*+;+;+"τƨ°‘+;+¹{"ēp‘č;{"_||/”h┼;{ _;+"__”+┼}"yU‽τ±³‘┼}O
+
+
+
+")‼¤M‘
+2/2*±_"tab  ”;"[]\”+
+SOML→$  4*→U](https://github.com/dzaima/$→~"#[$~), ”od⁄o" [bytes~/blob/master/chartable.md)”oUd+p"Explanation:”OUO4,{ -=?³d⁄6+;-  *o,o  *O}:3-dWoI}  2*o,o
+č+"δļ┘.«‘G";'”+č"Oν‘++G",./”+č"ο╤?³‘:h++
+
+
+
+
+
+` -=”@SUŗč"ā∆y‘+
+-    -- ---    -
+
+push "` -="
+push " "
+push "1234567890"
+replace " " from "` -=" with "1234567890"
+chop the string into ar array of the chars
+"BS   "
+append to the array
+
+
+
+2/2*±_"tab  ”;"[]\”+č+"δļ┘.«‘G";'”+č"Oν‘++G",./”+č"ο╤?³‘:h++
+¹{"ēp‘č;{"_||/”h┼;{ _;+"__”+┼}"yU‽τ±³‘┼}O
+
+
+
+
+
+` -=”@SUŗč"ā∆y‘+2/2*±_"tab  ”;"[]\”+č+"δļ┘.«‘G";'”+č"Oν‘++G",./”+č"ο╤?³‘:h++¹{"ēp‘č;{"_||/”h┼;{ _;+"__”+┼}"yU‽τ±³‘┼}O
+-    -- ---    --   ---      --    ----      --   ---   - --    ---     -------   ----     ----- ---   ----       ---
