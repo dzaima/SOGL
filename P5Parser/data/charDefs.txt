@@ -330,7 +330,7 @@ U	1 input
 V	1 input
 		string: pushes if is fully uppercase
 W	2 inputs
-		number & string, string & number: pop the number and push the nth(1-indexed) thing from the string
+		number & string, string & number: pop the number and push the nth(1-indexed) char from the string
 		number & array, array & number: pop the number and push the 1st occurence of it. 0 in case of none.
 		strings: give out the index of the 2nd string in the 1st one (1-indexed, 0 in the case of none)
 		string & array, array & string: pop the string and give out the 1st occurence of the string in the array. 1-indexed, 0 in case of none
@@ -388,7 +388,7 @@ n	1 input
 	mold into POP POP 
 		`"hello world”3m` = ["hel", "lo ", "wor", "ldh"]
 o	1 input
-		//append input to a new output line (continuing "O"s will make new lines after this)
+		append input to a new output line (continuing "O"s will make new lines after this)
 p	1 input
 		like "O" (outputs in newline) but disables auto-output
 q	1 inputs
