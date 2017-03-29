@@ -1,8 +1,8 @@
 import java.util.Collections; //<>//
 String ALLCHARS = "⁰¹²³⁴⁵⁶⁷⁸\t\n⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~←↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡͏→“”‘’";
-//numbers         │x xxxx    |  x xx  x    x       x  xxx     xxxxx xxxxxxxxxxx xxxx       xxxxxxxxxx    x /x xxx|xx  xxxxx    xx   xxxx xx xx xx x    xxx    x   x  /     x x       xxx           xx              xxx                      xx                                    x x x│
-//strings         │x  xxx    |  x xx  x            x  xxx     xxx x xxxxxxxxxxx  x x       x  xxxxxxx    x /x xx |x   xxxxx    xx   xxxx xx  x x  x    x               x     x       xx      xxx                x                       x                                         x x x│
-//arrays          │x  x      |        x            x  xxx     / x x xxxxxxxxxxx                 xxxxx       x xx |x x xxxxx        xxxx  x   x x  x              /                                                              /       /                    /                         │
+//numbers         │x xxxx    |  x xx  x    x       x x|xx     xxxxx xxxxxxxxxxx xxxx       xxxxxxxxxx    x /x xxx|xx  xxxxx    xx   xxxx xx xx xx x    xxx    x   x  /     x x       xxx           xx              xxx                      xx                                    x x x│
+//strings         │x  xxx    |  x xx  x            x x|xx     xxx x xxxxxxxxxxx  x x       x  xxxxxxx    x /x xx |x   xxxxx    xx   xxxx xx  x x  x    x               x     x       xx      xxx                x                       x                                         x x x│
+//arrays          │x  x      |        x            x /|xx     / x x xxxxxxxxxxx                 xxxxx       x xx |x x xxxxx        xxxx  x   x x  x              /                                                              /       /                    /                         │
 //^^ are the currently supported functions
 String printableAscii =  " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 boolean prcon = true;
@@ -181,4 +181,23 @@ poppable tp(BigDecimal bd) {
 }
 poppable tp(ArrayList<poppable> bd) {
   return new poppable(bd);
+}
+String spaceup (String s, int l) {
+  while (s.length()<l)
+    s+=" ";
+  return s;
+}
+ArrayList<poppable> spacesquared(ArrayList<poppable> arr) {
+  ArrayList<poppable> res = new ArrayList<poppable>();
+  int l = 0;
+  for (poppable b : arr) {
+    if (b.s.length() > l)
+      l = b.s.length();
+  }
+  int i = 0;
+  for (poppable b : arr) {
+    res.add(tp(spaceup(b.s, l)));
+    i++;
+  }
+  return res;
 }

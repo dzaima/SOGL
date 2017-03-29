@@ -7,7 +7,7 @@ void execute() {
   poppable b = new poppable (B("0123456789"));
   ptr = -1;
   boolean ao = true;
-  for (int TTTT = 0; TTTT < 6000; TTTT++) {//while (true) {//
+  for (int TTTT = 0; TTTT < 1000000; TTTT++) {//while (true) {//
     ptr++;
     try {
       int sptr = ptr;
@@ -513,6 +513,15 @@ void execute() {
           ao = false;
           lastO=cc;
         }
+        if (cc=='Q') {
+          if ("Oqpt".contains(lastO+""))oprintln();
+          a = pop(NONE);
+          if ("Oqpt".contains(lastO+""))oprintln();
+          pop(NONE).print(true);
+          a.print(true);
+          lastO= cc;
+        }
+        
         if (cc=='R') {
           //a = pop();
           //if (a.type==BIGDECIMAL) push (a.bd.toString());
@@ -1233,6 +1242,19 @@ void execute() {
                 a.a.set(i%a.a.size(),tp(a.a.get(i%a.a.size()).s+b.s.charAt(i)));
               }
               push(a);
+            }
+            if (b.type==ARRAY) {
+              while (a.a.size()<b.a.size())
+                a.a.add(new poppable(""));
+              while (b.a.size()<a.a.size())
+                b.a.add(new poppable(""));
+              ArrayList<poppable> s = spacesquared(a.a);
+              ArrayList<poppable> e = spacesquared(b.a);
+              ArrayList<poppable> res = new ArrayList<poppable>();
+              for (int i = 0; i < s.size(); i++) {
+                res.add(tp(s.get(i).s+e.get(i).s));
+              }
+              push(res);
             }
           }
           if (a.type==STRING) {

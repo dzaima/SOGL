@@ -16,7 +16,7 @@ IO:
 	o append (appends to the last line). If an array, then print in classical array outputing.
 	Q output 2 joined.
 	q output in a newline but dont pop
-	P append to last line and disables auto-output once called
+	P append to last line and disables auto-output
 	p output in a newline and disable auto-output
 	t outputs in a newline the last thing in stack (doesn't pop) and disables auto-output
 	T append to last line but don't pop, disables auto output
@@ -101,13 +101,11 @@ note: the actual binary data in the string is reversed because prependng 0s do m
 chardefs:
 ⁰	
 ¹	x inputs
-		string: POPs until the popped isn't a string and puts all popped in an array
+		any: POPs until the popped isn't of the type what the 1st was and puts all popped in an array
 			`"hello”"world”¹` = ["hello", "world"]
 			`123"foo”"bar”¹` = 1,2,3,["foo","bar"]
-		number: POPs until the popped isn't a number and puts all popped in an array
 			`"hello”123¹` = "hello",[1,2,3]
 			`12345¹` = [1,2,3,4,5]
-		array: same as strings but with arrays (arrays must be the same dimension)
 ²	1 input
 		number: squares the number
 		string: joins to itself (`hello"²` = ["hellohello"])
@@ -286,7 +284,7 @@ D	1 input
 E	1 input
 		saves POP on variable "e"
 F	loads the current repeat itiration (1-based)
-G	put the 3rd from the top of the stack ontop (`[1, 2, 3]G` -> [2, 3, 1])
+G	puts the 3rd from the top of the stack ontop (`[1, 2, 3]G` -> [2, 3, 1])
 H	1 input
 		number: decreases by 1
 		string: decreases the last number in stack. If there are none, put a -1 in the stacks start.
