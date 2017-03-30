@@ -20,7 +20,7 @@ IO:
 	p output in a newline and disable auto-output
 	t outputs in a newline the last thing in stack (doesn't pop) and disables auto-output
 	T append to last line but don't pop, disables auto output
-useful chars: "”¶±«»≤≥’→←╥∫
+useful chars: "”¶±«»≤≥’→←╥∫┼
 	"hello”world” to push 2 strings
 	"hello”A6‘ you can mix&match quote types
 

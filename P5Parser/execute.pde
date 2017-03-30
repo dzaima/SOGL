@@ -523,9 +523,14 @@ void execute() {
         }
         
         if (cc=='R') {
-          //a = pop();
-          //if (a.type==BIGDECIMAL) push (a.bd.toString());
-          //if (a.type==STRING) push (B(a.s));
+          a = pop();
+          if (a.type==BIGDECIMAL) push (ASCII.charAt(a.bd.intValue()));
+          ArrayList<poppable> res = ea();
+          if (a.type==STRING) {
+            for (int i = 0; i < a.s.length(); i++)
+              res.add(tp(B(a.s.charAt(i)+0)));
+            push(res);
+          }
         }
         
         if (cc=='T') {
