@@ -19,7 +19,7 @@ String decompb(BigInteger in) {
       int length = read(eq==0?32:64)+(eq==0?2:34);
                       //eq/7*32+32
       lastD = length;
-      if(decompressInfo) print ("custom dictionary "+(eq==7?"long ":"")+"string with characters ");
+      if(logDecompressInfo) print ("custom dictionary "+(eq==7?"long ":"")+"string with characters ");
       
       ArrayList<String> CU = new ArrayList<String>(); //chars used
       int base = 0;
@@ -45,7 +45,7 @@ String decompb(BigInteger in) {
         tout += CU.get(b);
       }
       //while (tout.length()<length) tout = CU.get(0)+tout;
-      if(decompressInfo) println(tout+"\"");
+      if(logDecompressInfo) println(tout+"\"");
       out+=tout;
     }
     if (eq==2) {
@@ -53,7 +53,7 @@ String decompb(BigInteger in) {
       if (last==2 && lastD==4) out+=" ";
       int length = read(4)+1;
       lastD = length;
-      if(decompressInfo) print (length + " english words: \"");
+      if(logDecompressInfo) print (length + " english words: \"");
       String tout = "";
       for (int i = 0; i < length; i++) {
         if (read(2)==0) 
@@ -63,11 +63,11 @@ String decompb(BigInteger in) {
         }
         if (i<length-1) tout+=" ";
       }
-      if(decompressInfo) println(tout+"\".");
+      if(logDecompressInfo) println(tout+"\".");
       out+=tout;
     }
     if (eq==5 | eq==4) {
-      if(decompressInfo) print("boxstring with ");
+      if(logDecompressInfo) print("boxstring with ");
       byte[] mode = read(2,6);
       StringList CU = new StringList(); //chars used
       int i = 0;
@@ -77,7 +77,7 @@ String decompb(BigInteger in) {
         i++;
       }
       int length = read(eq==5?64:32)+(eq==5?34:2)+CU.size();
-      if(decompressInfo) for (String s : CU) print ("\""+(s.equals("\n")?"\\n":s)+"\""+(s==CU.get(CU.size()-1)?", and "+length+" chars \"":", "));
+      if(logDecompressInfo) for (String s : CU) print ("\""+(s.equals("\n")?"\\n":s)+"\""+(s==CU.get(CU.size()-1)?", and "+length+" chars \"":", "));
       lastD = length;
       //println(bin);
       byte[] based = read(CU.size(),length);//toBase(CU.size(),fromBase(2,getb(ceil(log(CU.size())*length/log(2)))));
@@ -86,12 +86,12 @@ String decompb(BigInteger in) {
         tout += CU.get(b);
       }
       tout = pre(tout, length, CU.get(0));
-      if(decompressInfo) println(tout+"\"");
+      if(logDecompressInfo) println(tout+"\"");
       out+=tout;
     }
     if (eq==1) {
       String tout = compChars.charAt(read(97))+"";
-      if(decompressInfo) println ("character \""+tout+"\"");
+      if(logDecompressInfo) println ("character \""+tout+"\"");
       lastD = 1;
       out+= tout;
     }
@@ -103,7 +103,7 @@ String decompb(BigInteger in) {
       for (byte b : base97) {
         tout+=compChars.charAt(b);
       }
-      if(decompressInfo) println (length + " characters: \""+tout+"\"");
+      if(logDecompressInfo) println (length + " characters: \""+tout+"\"");
       out+= tout;
     }
     last = eq;

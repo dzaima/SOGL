@@ -97,8 +97,9 @@ ArrayList<int[]> compress (String s, int method) {
     byte[] used = new byte[6];
     String useds = "";
     int uci = 0;
+    String backslash = "\\";//PDE is strange... Try putting that in the use of the variable
     for (int i = 0; i < 6; i++) 
-      if (s.contains(" /|_-\n".charAt(i)+"") | (i==1 && s.contains("\\"))) {
+      if (s.contains(" /|_-\n".charAt(i)+"") | (i==1 && s.contains(backslash))) {
         used[i] = 1; 
         useds += " /|_-\n".charAt(i);
         uci++;

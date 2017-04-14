@@ -1,4 +1,9 @@
 {
-  "log":true,
-  "debug":true
+  saveDebugToFile = true;
+  saveOutputToFile = true;
+  
+  getDebugInfo = true;
+  logDecompressInfo = true;
+  
+  oldInputSystem = false;
 }
