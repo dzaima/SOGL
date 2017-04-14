@@ -64,7 +64,6 @@ Compression:
 characters:
 ¶T !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
 ^^ newline & tab	
-extended charpairs (31): ‾//\\  /\\/--__||[]][())(""''
                          ^ single char exception
 1) converts from either base250 or base256 ("‘ - 250, 9*9/ - 256) to base 2.
 2) reads a base8 number
@@ -628,7 +627,8 @@ z	pushes the english alphabet lowercase
 		everything else is just the above mixed together
 š	
 ū	
-ž	
+ž	4 inputs
+		array & number & number & array: replace in the 1st array from the positions given (1-indexed) to those + 2nd arrays size with the 2nd array
 ¼	1 input
 		number: push 0.25*n
 ¾	1 input

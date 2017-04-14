@@ -24,7 +24,7 @@ void setup() {
   }*/
   //for (int[] bit : bits)
   //println(bit[0]+" "+bit[1]);
-  println("----------------------------------------------------------------------");
+  println("\n||----------------------------------------------------------------------||");
   String comp = toCmd(bits);
   
   /*for (int i = 0; i < comp.length()-1; i++) {
@@ -34,7 +34,7 @@ void setup() {
   }*/
   println("total: \""+decompress(comp)+"\"");
   //println(decompress(toCmd("00100000101011101")[0]));
-  println("----------------------------------------------------------------------");
+  println("||----------------------------------------------------------------------||");
   println(comp.length() + " bytes, original was "+raw.length()+" bytes. "+ round(comp.length()*1000f/raw.length())/10 + "% of original length");
   println(toNum(bits));
   println(toNum(bits).toString().length());
