@@ -66,9 +66,22 @@ class Executable extends Preprocessable {
             push("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
             ptr++;
           }
+          if (qdata[ptr]==21) {
+            push("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+            ptr++;
+          }
           if (qdata[ptr]==22) {
             push("1234567890");
             ptr+=1;
+          }
+          if (qdata[ptr]==30) {
+            
+          }
+          if (qdata[ptr]==31) {
+            
+          }
+          if (qdata[ptr]==32) {
+            
           }
         } else {
           
@@ -700,6 +713,10 @@ class Executable extends Preprocessable {
             }
           }
           
+          if (cc=='m') {
+            
+          }
+          
           if (cc=='n') {
             a=pop();
             b=pop();
@@ -977,10 +994,21 @@ class Executable extends Preprocessable {
           }
           
           if (cc=='Ƨ') {
-            ptr+=2;
+            ptr+= 2;
             push(p.charAt(ptr-1)+""+p.charAt(ptr));
           }
           
+          if (cc=='Γ') {
+            a = pop(STRING);
+            if (a.type == STRING) {
+              String[] split = a.s.split("\n");
+              split = spacesquared(split);
+              for (int i = 0; i < split.length; i++) {
+                split[i] = split[i] + reverseChars(split[i], true).substring(1);
+              }
+              push (join(split,"\n"));
+            }
+          }
           if (cc=='δ') {
             a = pop();
             if (a.type==STRING) {

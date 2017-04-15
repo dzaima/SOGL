@@ -1,5 +1,5 @@
 String quirkLetters = " 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-String[] quirks = {"0*0/","1*1/","2*2/","3*3/","4*4/","5*5/","6*6/","7*7/","8*8/","9*9/","0/0*","1/1*","2/2*","3/3*","4/4*","5/5*","6/6*","7/7*","8/8*","9/9*","UU","uu","SU","Su","US","uS","!?","²²","!!","2÷"};
+String[] quirks = {"0*0/","1*1/","2*2/","3*3/","4*4/","5*5/","6*6/","7*7/","8*8/","9*9/","0/0*","1/1*","2/2*","3/3*","4/4*","5/5*","6/6*","7/7*","8/8*","9/9*","UU","uu","SU","Su","US","uS","!?","²²","!!","2÷","╥╥","╥╤","ΓΓ"};
 class Preprocessable {
   ArrayList<poppable> stack = new ArrayList<poppable>();
   ArrayList<poppable> usedInputs = new ArrayList<poppable>();
@@ -164,7 +164,7 @@ class Preprocessable {
       return new poppable (inputs[inpCtr], true);
     } 
     catch (Exception e) {
-      oprintln("String input error at inpCtr "+inpCtr+": "+e);
+      eprintln("String input error at inpCtr "+inpCtr+": "+e);
       return new poppable ("", false);
     }
   }
@@ -178,7 +178,7 @@ class Preprocessable {
       return new poppable (B(inputs[inpCtr]), true);
     } 
     catch (Exception e) {
-      oprintln("nI error: "+ e);
+      eprintln("nI error: "+ e);
       return new poppable (B(0), true);
     }
   }

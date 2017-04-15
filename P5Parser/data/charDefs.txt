@@ -21,44 +21,48 @@ IO:
 	t outputs in a newline the last thing in stack (doesn't pop) and disables auto-output
 	T append to last line but don't pop, disables auto output
 useful chars: "”¶±«»≤≥’→←╥∫┼
+
 	"hello”world” to push 2 strings
 	"hello”A6‘ you can mix&match quote types
+	
 
 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 0123456789012345678901234567890123456789012345678901234567890123456789
 00000000001111111111222222222233333333334444444444555555555566666666667777777777
 Quirks:
-0*0/ - "0" - push "codegolf"
-1*1/ - "1" - push "stackexchange"
-2*2/ - "2" - push "qwertyuiop", "asdfghjkl" and "zxcvbnm"
-3*3/ - "3" - push the source code of this
-4*4/ - "4" - execute the top thing on stack as a SOGL program
-5*5/ - "5" - push [".com", ".net", ".co.uk", ".gov"]
-6*6/ - "6" - push "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-7*7/ - "7" - 
-8*8/ - "8" - 
-9*9/ - "9" - decompress everything after this string of chars and have the stack start with it (unless before it there is an unclosed `”`. Any `←`s or anything won't work after it so base 256 can be used.)
-0/0* - "a" - output POP to eout.txt (error out) and "crash".
-1/1* - "b" - 
-2/2* - "c" - push ["qwertyuiop", "asdfghjkl", "zxcvbnm"]
-3/3* - "d" - 
-4/4* - "e" - 
-5/5* - "f" - 
-6/6* - "g" - 
-7/7* - "h" - 
-8/8* - "i" - 
-9/9* - "j" - 
-UU - "k" - 
-uu - "l" - push "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-SU - "m" - push "1234567890"
-Su - "n" - 
-US - "o" - 
-uS - "p" - 
-!? - "q" - 
-²² - "r" - 
-!! - "s" - 
-2÷ - "t" - 
-
+0*0/ - 0 - push "codegolf"
+1*1/ - 1 - push "stackexchange"
+2*2/ - 2 - push "qwertyuiop", "asdfghjkl" and "zxcvbnm"
+3*3/ - 3 - push the source code of this
+4*4/ - 4 - execute POP as a SOGL program
+5*5/ - 5 - push [".com", ".net", ".co.uk", ".gov"]
+6*6/ - 6 - push "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+7*7/ - 7 - 
+8*8/ - 8 - 
+9*9/ - 9 - decompress everything after this string of chars and have the stack start with it (unless before it there is an unclosed `”`. Any `←`s or anything won't work after it so base 256 can be used.)
+0/0* - 10 - output POP to stdout and "crash".
+1/1* - 11 - 
+2/2* - 12 - push ["qwertyuiop", "asdfghjkl", "zxcvbnm"]
+3/3* - 13 - 
+4/4* - 14 - 
+5/5* - 15 - 
+6/6* - 16 - 
+7/7* - 17 - 
+8/8* - 18 - 
+9/9* - 19 - 
+UU - 20 - 
+uu - 21 - push "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+SU - 22 - push "1234567890"
+Su - 23 - 
+US - 24 - 
+uS - 25 - 
+!? - 26 - 
+²² - 27 - 
+!! - 28 - 
+2÷ - 29 - 
+╥╥ - 30 - palendromize vertically (arrays)
+╥╤ - 31 - quad-palendromize
+ΓΓ - 32 - quad-palendromize mirroring "/\[](){}<>"
 Compression:
 (source of words: http://en.wiktionary.org/wiki/Wiktionary:Frequency_lists#Top_English_words_lists)
 characters:
@@ -378,12 +382,12 @@ l	1 input
 			`5l`=1
 			`12.0l`=2
 			`12.345l`=5
-m	1 input
-	mold into POP POP 
-		`"hello”9m` = hellohell
-n	1 input
-	mold into POP POP 
-		`"hello world”3m` = ["hel", "lo ", "wor", "ldh"]
+m	2 inputs
+		string & number, number & string: repeat the string as many times needed to get the specified length
+			`"hello”9m` = hellohell
+n	2 inputs
+	string & number, number & string: mold into POP POP 
+			`"hello world”3m` = ["hel", "lo ", "wor", "ldh"]
 o	1 input
 		append input to a new output line (continuing "O"s will make new lines after this)
 p	1 input
@@ -513,7 +517,11 @@ z	pushes the english alphabet lowercase
 α	
 Β	
 β	
-Γ	
+Γ	1 input
+		string, array: palendromize mirroring `/\[](){}<>`
+			`"/--¶\-”Γ` = "/---\¶\- -/"
+			`"/--¶[|”ΓΓ` = "/---\¶|[ ]|¶\---/"
+			`"/---¶hi”╥Γ` = "/---¶hi¶\---"
 γ	
 Δ	1 input
 		number: pushes range; inclusive
