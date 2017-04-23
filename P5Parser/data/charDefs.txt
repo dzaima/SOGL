@@ -6,6 +6,7 @@ truthy/falsy values:
 temp: !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
 all the current chars:
 ⁰¹²³⁴⁵⁶⁷⁸T¶⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~←↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡͏→“”‘’
+
          ^ \t
 
 IO:
@@ -16,10 +17,10 @@ IO:
 	o append (appends to the last line). If an array, then print in classical array outputing.
 	Q output 2 joined.
 	q output in a newline but dont pop
-	P append to last line and disables auto-output
+	P append to last line and disable auto-output
 	p output in a newline and disable auto-output
-	t outputs in a newline the last thing in stack (doesn't pop) and disables auto-output
-	T append to last line but don't pop, disables auto output
+	t outputs in a newline the last thing in stack (doesn't pop) and disable auto-output
+	T append to last line but don't pop, disable auto output
 useful chars: "”¶±«»≤≥’→←╥∫┼
 
 	"hello”world” to push 2 strings
@@ -56,7 +57,7 @@ SU - 22 - push "1234567890"
 Su - 23 - 
 US - 24 - 
 uS - 25 - 
-!? - 26 - 
+!? - 26 - pushes a string of consonants ("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ")
 ²² - 27 - 
 !! - 28 - 
 2÷ - 29 - 
@@ -146,8 +147,8 @@ chardefs:
 		number: bitshift right
 		string: put the last letter at the start
 		array: put the last item at the start
-æ	pushes an array of vowels ([a,e,i,o,u])
-Æ	
+æ	pushes a string of vowels ("aeiou")
+Æ	pushes a string of vowels in both cases ("aeiouAEIOU")
 ø	pushes an empty string
 ‽	1 input
 		any: if not POP then (ends with `}`)
@@ -543,7 +544,7 @@ z	pushes the english alphabet lowercase
 Η	
 η	
 Θ	2 inputs
-		string, string: split X with Y
+		string, string: 	 X with Y
 			`"foo-bar”"-”Θ` -> ["foo", "bar"]
 θ	1 input
 		string: split on spaces
@@ -566,11 +567,11 @@ z	pushes the english alphabet lowercase
 ξ	
 Ο	3 inputs
 		numbers: constrain 1st from 2nd to 3rd (or if 2nd>3rd then if not in the range (exclusive) then go to the opposite)
-			`725` -> 5
-			`289` -> 8
-			`739` -> 7
-			`365` -> 6
-			`321` -> 1
+			`725Ο` -> 5
+			`289Ο` -> 8
+			`739Ο` -> 7
+			`365Ο` -> 6
+			`321Ο` -> 1
 		number & string & string: repeat number-1 times 1stStr+2ndStr and append 1stStr
 			`3"|”"  ”Ο` -> "|  |  |"
 		string & number & string: repeat number times 1stStr+2ndStr and append 1stStr
@@ -617,7 +618,9 @@ z	pushes the english alphabet lowercase
 		string: split into a char array
 			`"bar"` = ["b", "a", "r"]
 ē	push the number in variable e and increases it after (equal to `e:IE` and `eeIE`) or for a string, push the last char and POP it off of the string.
-ģ	
+ģ	1 input
+		number: increase A by POP
+		string: append POP to A
 ī	
 ķ	
 ļ	
@@ -638,9 +641,9 @@ z	pushes the english alphabet lowercase
 ž	4 inputs
 		array & number & number & array: replace in the 1st array from the positions given (1-indexed) to those + 2nd arrays size with the 2nd array
 ¼	1 input
-		number: push 0.25*n
+		number: push 0.25*pop
 ¾	1 input
-		number: push 0.75*n
+		number: push 0.75*pop
 ⅓	
 ⅔	
 ⅛	
@@ -660,15 +663,14 @@ z	pushes the english alphabet lowercase
 		array & array: appends horizontally
 			`["hello", "world"] ┼ ["foo", "bar"]` = ["hellofoo", "world bar"]
 		array & string, string & array: append the string vertically horizontally on the array
-			`["this", "is", "SPARTAA"] ┼ "hello"` = ["this   hl", "is     eo", "SPARTAAl"]
-╔	
+			`["this", "is", "an example"] ┼ "hello"` = ["this      hl", "is        eo", "an examplel"]
 ╗	
 ╚	
 ╝	
-░	
+░	clear output
 ▒	
 ▓	
-█	
+█	pushes all the possible SOGL characters
 ▲	
 ►	
 ▼	
@@ -678,8 +680,9 @@ z	pushes the english alphabet lowercase
 …	
 ‼	`else` if an `if` is before in the scope
 		`8=?"is 8”‼"isnt 8”`
-⌠	
-⌡	
+⌠	repeat input times
+⌡	1 input
+		any: repeat next command 
 ͏	
 →	in the further code replace all occurences of the next character to the preceding code.
 	Examples:
