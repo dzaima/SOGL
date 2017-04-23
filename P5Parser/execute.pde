@@ -1,15 +1,47 @@
 class Executable extends Preprocessable {
+  int jumpBackTo = 0,
+      jumpBackTimes = 0;
+  poppable jumpObj;
   Executable (String prog, String[] inputs) {
     super(prog, inputs);
+  }
+  Executable setParent(Executable p) {
+    parent = p;
+    return this;
   }
   void execute() {
     poppable a = new poppable (p);
     poppable b = new poppable (B("0123456789"));
     ptr = -1;
     boolean ao = true;
-    for (int TTTT = 0; TTTT < 1000000; TTTT++) {//while (true) {//
-      ptr++;
+    for (int TTTT = 0; true; TTTT++) {//while (true) {//
       try {
+        if (jumpObj != null) {
+          if (jumpObj.type == BIGDECIMAL) {
+            if (jumpObj.bd.intValue() > jumpBackTimes) {
+              jumpBackTimes++;
+              ptr = jumpBackTo;
+            } else
+              jumpObj = null;
+          } else
+          if (jumpObj.type == STRING) {
+            if (jumpObj.s.length() > jumpBackTimes) {
+              ptr = jumpBackTo;
+              push(jumpObj.s.charAt(jumpBackTimes)+"");
+              jumpBackTimes++;
+            } else
+              jumpObj = null;
+          } else
+          if (jumpObj.type == ARRAY) {
+            if (jumpObj.a.size() > jumpBackTimes) {
+              ptr = jumpBackTo;
+              push(jumpObj.a.get(jumpBackTimes)+"");
+              jumpBackTimes++;
+            } else
+              jumpObj = null;
+          }
+        }
+        ptr++;
         int sptr = ptr;
         if (ptr >= p.length()) break;
         char cc = p.charAt(ptr);
@@ -24,9 +56,9 @@ class Executable extends Preprocessable {
             }
           }catch(Exception e){}
           if (p.charAt(ptr)=='‘')
-          push(decompress(res));
+            push(decompress(res));
           else
-          push(res);
+            push(res);
           //ptr++;
         } else if (qdata[ptr] != -1) {
           //quirk handling
@@ -54,8 +86,11 @@ class Executable extends Preprocessable {
             ptr+=1;
           }
           if (qdata[ptr]==4) {
-            new Executable(pop(STRING).s, new String[] {}).execute();
-            ptr+=1;
+            Executable subExec = new Executable(pop(STRING).s, new String[] {}).setParent(this);
+            currentPrinter = subExec;
+            subExec.execute();
+            currentPrinter = this;
+            ptr+=3;
           }
           if (qdata[ptr]==5) {
             String[] exs = { ".com", ".net", ".co.uk", ".gov" };
@@ -72,6 +107,10 @@ class Executable extends Preprocessable {
           }
           if (qdata[ptr]==22) {
             push("1234567890");
+            ptr+=1;
+          }
+          if (qdata[ptr]==26) {
+            push("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ");
             ptr+=1;
           }
           if (qdata[ptr]==30) {
@@ -219,8 +258,20 @@ class Executable extends Preprocessable {
             if (a.type==STRING) push (a.s.charAt(a.s.length()-1)+a.s.substring(0, a.s.length()-1));
           }
           
+          if (cc=='æ') {
+            push("aeiou");
+          }
+          
+          if (cc=='Æ') {
+            push("aeiouAEIOU");
+          }
+          
           if (cc=='ø') {
             push("");
+          }
+          
+          if (cc=='‽') {
+            if (truthy(pop(BIGDECIMAL))) ptr=ldata[ptr];
           }
           
           if (cc=='¦') {
@@ -237,7 +288,17 @@ class Executable extends Preprocessable {
               push (a.s.length());
             }
           }
-         
+          
+          if (cc=='¡') {
+            if (stack.size() > 0)
+              push(truthy(pop()));
+            else {
+              a = pop(BIGDECIMAL);
+              push(a);
+              push(truthy(a));
+            }
+          }
+          
           if (cc==' ') {
             ptr++;
             push(p.charAt(ptr)+"");
@@ -247,7 +308,13 @@ class Executable extends Preprocessable {
           }
           
           if (cc=='!') {
-            push(falsy(pop(BIGDECIMAL)));
+            if (stack.size() > 0)
+              push(falsy(pop()));
+            else {
+              a = pop(BIGDECIMAL);
+              push(a);
+              push(falsy(a));
+            }
           }
           
           if (cc=='\"') {
@@ -1318,6 +1385,32 @@ class Executable extends Preprocessable {
               }
             }
           }
+          if (cc=='░') {
+            clearOutput();
+          }
+          if (cc=='█') {
+            push (ALLCHARS);
+          }
+          
+          if (cc=='⌠') {
+            a = nI();
+            if (a.type==BIGDECIMAL) {
+              data[ptr] = parseJSONObject("{\"N\":\""+a.s+"\",\"T\":3,\"L\":\"0\"}");//3-number, 2-string
+              if (B(data[ptr].getString("N")).intValue()>1) push(B(0));
+            }
+          }
+          
+          if (cc=='⌡') {
+            jumpBackTo = ptr;
+            a = pop(BIGDECIMAL);
+            if (falsy(a) || (a.type == BIGDECIMAL && a.bd.intValue() < 0))
+              ptr++;
+            else {
+              jumpObj = a;
+              jumpBackTimes = 0;
+              //if (a.type == STRING) push(a.s.charAt(0)+"");
+            }
+          }
           
           if (cc=='’') {
             ptr++;
@@ -1331,7 +1424,7 @@ class Executable extends Preprocessable {
         //while (millis()<CTR*20);
         if (getDebugInfo) {
           //eprintln("`"+cc+"`@"+((sptr+"").length()==1?"0"+sptr:sptr)+": "+stack.toString().replace("\n  ", "").replace("\n", ""));
-          eprint("`"+cc+"`@"+up0(sptr, str(p.length()).length())+": [");
+          eprint(getStart(false)+"`"+cc+"`@"+up0(sptr, str(p.length()).length())+": [");
           long EPC=0;
           for (poppable EP : stack) {
             EPC++;
@@ -1343,8 +1436,7 @@ class Executable extends Preprocessable {
         //--------------------------------------loop end--------------------------------------
       } 
       catch (Exception e) {
-          eprintln("executioneE: ");
-          e.printStackTrace();
+          eprintln("*-*executioneE: "+e.toString()+"*-*");
       }
     }
     if (ao) {

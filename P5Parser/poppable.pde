@@ -70,35 +70,35 @@ class poppable {
     inp = imp;
   }
   void print () {
-    if (type==STRING) oprint(s);
-    if (type==BIGDECIMAL) oprint(bd);
+    if (type==STRING) currentPrinter.oprint(s);
+    if (type==BIGDECIMAL) currentPrinter.oprint(bd);
     if (type==ARRAY) printArr();
   }
   void print (boolean normArr) {
-    if (type==STRING) oprint(s);
-    if (type==BIGDECIMAL) oprint(bd);
+    if (type==STRING) currentPrinter.oprint(s);
+    if (type==BIGDECIMAL) currentPrinter.oprint(bd);
     if (type==ARRAY)
       if (normArr)
-        oprint(a.toArray().toString());
+        currentPrinter.oprint(a.toArray().toString());
       else
         printArr();
   }
   void println () {
-    if (type==STRING) oprintln(s);
-    if (type==BIGDECIMAL) oprintln(bd);
+    if (type==STRING) currentPrinter.oprintln(s);
+    if (type==BIGDECIMAL) currentPrinter.oprintln(bd);
     if (type==ARRAY) printArr();
   }
   void println (boolean normArr) {
-    if (type==STRING) oprintln(s);
-    if (type==BIGDECIMAL) oprintln(bd);
+    if (type==STRING) currentPrinter.oprintln(s);
+    if (type==BIGDECIMAL) currentPrinter.oprintln(bd);
     if (type==ARRAY) {
       if (normArr) {
-        eprintln ("[\n");
+        currentPrinter.eprintln ("[\n");
         for (int i = 0; i < a.size()-1; i++) {
           a.get(i).println(true);
-          eprintln(",");
+          currentPrinter.eprintln(",");
         }
-        eprintln("]");
+        currentPrinter.eprintln("]");
       } else {
         printArr();
         println();
@@ -126,7 +126,7 @@ class poppable {
         o+=a.get(i).sline(escape)+(i+1==a.size()?"]":", ");
       return o;
     }
-    return "ERROR";
+    return "*-*sline reached the unreachable!*-*";
   }
   poppable copy() {
     if (type==BIGDECIMAL) {

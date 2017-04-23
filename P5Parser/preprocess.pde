@@ -14,7 +14,10 @@ class Preprocessable {
   poppable[] dataA;
   poppable[] vars;
   String p;
+  Executable parent = null;
   Preprocessable (String prog, String[] inputs) {
+    if (getDebugInfo)
+      eprintln("###");
     preprocess(prog, inputs);
   }
   Preprocessable preprocess(String prog, String[] inputs) {
@@ -119,7 +122,7 @@ class Preprocessable {
       }
       while (i<sdata.length && sdata[i]!=0) i++;
       if (i>sdata.length-1) break;
-      if ("{?[]F∫".contains(p.charAt(i)+"")) {
+      if ("{?[]F∫‽⌠".contains(p.charAt(i)+"")) {
         loopStack.append(i);
       }
       if (p.charAt(i)=='}'|p.charAt(i)=='←') {
@@ -133,6 +136,20 @@ class Preprocessable {
         }
       }
     }
+    /*if (p.contains("⌡")) {
+        //println (p.contains("→"));
+        int i = 0;
+        String res = "";
+        while (i < p.length()) {
+          if (p.charAt(i)!='⌡' && sdata[i] == 0) {
+            eprintln("preprocessor: "+p.replace("\n", "¶"));
+            return preprocess(p.substring(0, i)+p.charAt(i+1)+p.substring(i+2, p.length()-1), inputs);
+          }
+          res+=p.charAt(i);
+          i++;
+        }
+      
+    }*/
     if (loopStack.size()>0) {
       for (int i = 0; i < loopStack.size(); i++) p+='}';
       eprintln("preprocessor: "+p.replace("\n", "¶"));
@@ -152,7 +169,8 @@ class Preprocessable {
     for (int i=0; i<sdata.length; i++)eprint(i%10+"|");
     eprint(" 1s\n|");
     for (int i=0; i<sdata.length; i++)eprint(i/10%10+"|");
-    eprint(" 10s\n\n");
+    eprintln(" 10s");
+    eprintln("###\n");
     return this;
   }
   poppable sI () {
@@ -164,7 +182,7 @@ class Preprocessable {
       return new poppable (inputs[inpCtr], true);
     } 
     catch (Exception e) {
-      eprintln("String input error at inpCtr "+inpCtr+": "+e);
+      eprintln("*-*String input error at inpCtr "+inpCtr+": "+e+"*-*");
       return new poppable ("", false);
     }
   }
@@ -178,7 +196,7 @@ class Preprocessable {
       return new poppable (B(inputs[inpCtr]), true);
     } 
     catch (Exception e) {
-      eprintln("nI error: "+ e);
+      eprintln("*-*nI error: "+e+"*-*");
       return new poppable (B(0), true);
     }
   }
@@ -257,5 +275,64 @@ class Preprocessable {
     }
     poppable g = stack.get(stack.size()-1);
     return g;
+  }
+  String getStart(boolean self) {
+    String beggining = "";
+    if (parent != null)
+      beggining = parent.getStart(true);
+    if (self)
+      beggining += "`" + p.charAt(ptr) + "`@" + up0(ptr, str(p.length()).length()) + ": ";
+    return beggining;
+  }
+  void oprint (String o) {
+    if (getDebugInfo) {
+      System.out.print(o);
+      savedOut.append(o);
+    }
+  }
+  void oprintln (String o) {
+    System.out.println(o);
+    if (saveOutputToFile)
+      savedOut.append(o+"\n");
+  }
+  void oprint (BigDecimal o) {
+    System.out.print(o);
+    if (saveOutputToFile)
+      savedOut.append(o.toString());
+  }
+  void oprintln (BigDecimal o) {
+    System.out.println(o);
+    if (saveOutputToFile)
+      savedOut.append(o.toString()+"\n");
+  }
+  void oprint (JSONArray o) {
+    System.out.print(o);
+    if (saveOutputToFile)
+      savedOut.append(o.toString());
+  }
+  void oprintln (JSONArray o) {
+    System.out.println(o);
+    if (saveOutputToFile)
+      savedOut.append(o.toString()+"\n");
+  }
+  void oprintln () {
+    System.out.println();
+    if (saveOutputToFile)
+      savedOut.append("\n");
+  }
+  
+  void eprintln (String o) {
+    if (getDebugInfo) {
+      System.err.println(o);
+      if (saveDebugToFile)
+        log.append(o+"\n");
+    }
+  }
+  void eprint (String o) {
+    if (getDebugInfo) {
+      System.err.print(o);
+      if (saveDebugToFile)
+        log.append(o);
+    }
   }
 }

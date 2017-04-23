@@ -1,8 +1,8 @@
 import java.util.Collections; //<>//
 String ALLCHARS = "⁰¹²³⁴⁵⁶⁷⁸\t\n⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~←↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡͏→“”‘’";
-//numbers         │x xxxx    |  x xx  x    x       x x|xx     xxxxx xxxxxxxxxxx xxxx       xxxxxxxxxx    x /x xxx|xx  xxxxx    xx   xxxx xx xx xx x    xxx    x   x  /     x x       xxx           xx              xxx          x            xx                                   x x x│
-//strings         │x  xxx    |  x xx  x            x x|xx     xxx x xxxxxxxxxxx  x x       x  xxxxxxx    x /x xx |x   xxxxx    xx   xxxx xx  x x  x    x               x     x      Dxx      xxx                x               xx       x                                        x x x│
-//arrays          │x  x      |        x            x /|xx     / x x xxxxxxxxxxx                 xxxxx       x xx |x x xxxxx        xxxx  x   x x  x              /                                                              x/       /  D                 /                        │
+//numbers         │x xxxx   | |  xxxxxxx   x   x   x x|xx     xxxxx xxxxxxxxxxx xxxx       xxxxxxxxxx    x /x xxx|xx  xxxxx    xx   xxxx xx xx xx x    xxx    x   x  /     x x       xxx           xx              xxx          x            xx                    x  x           x x x│
+//strings         │x  xxx   | |  xxxxxxx      xx   x x|xx     xxx x xxxxxxxxxxx  x x       x  xxxxxxx    x /x xx |x   xxxxx    xx   xxxx xx  x x  x    x               x     x      Dxx      xxx                x               xx       x                         x  x           x x x│
+//arrays          │x  x     | |      xxx       x   x /|xx     / x x xxxxxxxxxxx                 xxxxx       x xx |x x xxxxx        xxxx  x   x x  x              /                                                              x/       /  D                 /    x  x                │
 //^^ are the currently supported functions
 String printableAscii =  " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 String ASCII = "";
@@ -26,15 +26,16 @@ import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+StringList savedOut = new StringList();
 StringList log = new StringList();
-StringList expl = new StringList();
+Executable currentPrinter = null;
 //import java.math.BigInteger;
 //P5ParserV0_6 SK = this;
 void setup () {
   try {
     //System.out.println("hallo");
     if (args == null)
-      args = new String[]{"p.sogl", "N"};
+      args = new String[]{"p.sogl"};
     JSONObject options = loadJSONObject("options.json");
     saveDebugToFile = options.getBoolean("saveDebugToFile");
     saveOutputToFile = options.getBoolean("saveOutputToFile");
@@ -56,20 +57,23 @@ void setup () {
       inputs[i-1]=lines[i];
     }
     //z’¤{«╥q;}x[p     { =4b*I*:O =Ob\"   =”*o        ]I³r3w;3\\+
-    new Executable(program, inputs).execute();
+    Executable main = new Executable(program, inputs);
+    currentPrinter = main;
+    main.execute();
+    
     if (saveOutputToFile) {
-      String j =log.join("");
+      String j =savedOut.join("");
       if (j.charAt(0)=='\n') j=j.substring(1);
       //if (j.charAt(j.length()-1)=='\n') j=j.substring(0,j.length()-2);
       String[]o={j};
       saveStrings("output.txt", o);
     }
     if (saveDebugToFile) {
-      String[]o2={expl.join("")};
+      String[]o2={log.join("")};
       saveStrings("log.txt", o2);
     }
   } catch (Exception e) {
-    
+    e.printStackTrace();
   }
   System.exit(0);
 }
@@ -96,7 +100,7 @@ BigDecimal B (String a) {
     return new BigDecimal(a);
   }
   catch (Exception e) { 
-    println("B-string error from \""+a+"\": "+e.toString());
+    println("*-*B-string error from \""+a+"\": "+e.toString()+"*-*");
     return B(0);
   }
 }
@@ -121,61 +125,6 @@ boolean falsy (poppable p) {
 
 
 
-void oprint (String o) {
-  if (getDebugInfo) {
-    System.out.print(o);
-    log.append(o);
-  }
-}
-void oprintln (String o) {
-  System.out.println(o);
-  if (saveOutputToFile)
-    log.append(o+"\n");
-}
-void oprint (BigDecimal o) {
-  System.out.print(o);
-  if (saveOutputToFile)
-    log.append(o.toString());
-}
-void oprintln (BigDecimal o) {
-  System.out.println(o);
-  if (saveOutputToFile)
-    log.append(o.toString()+"\n");
-}
-void oprint (JSONArray o) {
-  System.out.print(o);
-  if (saveOutputToFile)
-    log.append(o.toString());
-}
-void oprintln (JSONArray o) {
-  System.out.println(o);
-  if (saveOutputToFile)
-    log.append(o.toString()+"\n");
-}
-void oprintln () {
-  System.out.println();
-  if (saveOutputToFile)
-    log.append("\n");
-}
-/*void oprintln (Exception o) {
-  println(o);
-  expl.append(o.toString()+"\n");
-}*/
-
-void eprintln (String o) {
-  if (getDebugInfo) {
-    System.err.println(o);
-    if (saveDebugToFile)
-      expl.append(o+"\n");
-  }
-}
-void eprint (String o) {
-  if (getDebugInfo) {
-    System.err.print(o);
-    if (saveDebugToFile)
-      expl.append(o);
-  }
-}
 String up0 (int num, int a) {
   String res = str(num);
   while (res.length()<a) {
@@ -232,4 +181,8 @@ String readFile(String path, Charset encoding) {
     e.printStackTrace();
     return null;
   }
+}
+void clearOutput() throws Exception { 
+  //I don't know how to clear stdout, nor does the internet give anything that works
+  savedOut = new StringList(); 
 }
