@@ -146,15 +146,15 @@ Characters:
 ⁹	
 ±	1 input
 		number: negates the number
-			`8±` = -8
+			`8±` -> -8
 		string: reverses the string
-			`"hello”±` = "olleh"
+			`"hello”±` -> "olleh"
 		array: reverses the array
 		two of the signs following each other: reverse (or negate) the contents of an array
 ∑	1 input:
 		array: add/join the whole array together 
-			`[1,2,3]∑` = 6
-			`["9+10= ”, 19]∑` = "9+10= 19"
+			`[1,2,3]∑` -> 6
+			`["9+10= ”, 19]∑` -> "9+10= 19"
 		number, string: add/join the whole stack together
 «	1 input:
 		number: bitshift left
@@ -172,7 +172,10 @@ Characters:
 §	
 °	
 ¦	1 input
-		number: sign (`-5` = -1, `0` = 0, `72.6` = 1)
+		number: sign
+            `-5` -> -1
+            `0` -> 0
+            `72.6` -> 1
 		string: makes an array with all the distinct characters in the string in order of ASCII.
 		array: do the above for each item
 ‚	
@@ -192,23 +195,25 @@ Characters:
 		number: divide by 2 (not rounded unlike "»")
 ←	stop the program. Additionally adds a } after it as nothing after it can be executed
  	(space) - pushes the next character.
-			`123` = [1, 2, 3]
-			`12 34` = [1, 2, "3", 4]
-			`12 a43` = [1, 2, "a", 4, 3]
+			`123` -> [1, 2, 3]
+			`12 34` -> [1, 2, "3", 4]
+			`12 a43` -> [1, 2, "a", 4, 3]
 !	1 input
 		number: not
 		string: NOT each character as a number
 		array: NOT all of its contents
 "	starts a string. String enders are (and are explained on ): " “”‘’ ". If at the start, can be removed if the string doesn't contain ".
-			`"hello”` = ["hello"]
-			`"world` = ["world"]
-			`"hi ”+"there` = ["hi there"]
-			`"⁰²¹»ø’` = [0, 2, 1, 6, 11]
-			`"Look how easily I can display the " character!”` = [Look how easily I can display the " character!]
+			`"hello”` -> ["hello"]
+			`"world` -> ["world"]
+			`"hi ”+"there` -> ["hi there"]
+			`"⁰²¹»ø’` -> [0, 2, 1, 6, 11]
+			`"Look how easily I can display the " character!”` -> [Look how easily I can display the " character!]
 #	outputs a quote character (")
 $	outputs a string ender quote (”)
 %	2 inputs
-		numbers: modulo (`83%` = 1, `93%` = 0)
+		numbers: modulo
+            `83%` -> 1
+            `93%` -> 0
 &	2 inputs
 		strings, numbers: logical and.
 		arrays: makes a new array only with the items that are in both arrays
@@ -220,13 +225,13 @@ $	outputs a string ender quote (”)
 		strings: 
 		string & number, number & string: repeats the string the number amount of times
 		1D array & number, number & 1D array: multiply the array horizontally
-			`["hello", "bar"]3*` = ["hellohellohello", "bar  bar  bar  "]
-			`[["ab","cd","ef"],["g","h","i"]]3*` = [["ababab","cdcdcd","efefef"],["g g g ","h h h ","i i i "]]]
-			`[1, 3, 5]7*` = [7, 21, 35]
+			`["hello", "bar"]3*` -> ["hellohellohello", "bar  bar  bar  "]
+			`[["ab","cd","ef"],["g","h","i"]]3*` -> [["ababab","cdcdcd","efefef"],["g g g ","h h h ","i i i "]]]
+			`[1, 3, 5]7*` -> [7, 21, 35]
 +	2 inputs
 		numbers: adds the two
-			`35+` = 8
-			`6544+++` = 19
+			`35+` -> 8
+			`6544+++` -> 19
 		string & number, number & string, strings: joins the two
 			`"hello, ”6+` -> "hello, 6"
 			`"hello”"world”+` -> "helloworld"
@@ -242,7 +247,8 @@ $	outputs a string ender quote (”)
 			basically it adds the thing in the array at the level required so array dimensions stay the same
 ,	takes user input as string
 -	2 inputs
-		numbers: 1st num - 2nd num (so `7 3-` = 4)
+		numbers: 1st num - 2nd num 
+            `73-` -> 4
 		string & number, number & string: remove the nth letter from the string(1-indexed)
 		strings: removes the 1st string from the 2nd string
 		array, string: removes all occurences of that string from the array. Also POPs the string
@@ -266,27 +272,27 @@ $	outputs a string ender quote (”)
 9	pushes 9
 :	1 input
 		duplicates POP once 
-			`123:` = [1, 2, 3, 3]
+			`123:` -> [1, 2, 3, 3]
 ;	2 inputs
 		any: reverse the last 2 things on stack
 <	2 inputs
 		any: if POP is greater than POP
-			`"8”5<` = falsy
-			`85<` = falsy
-			`55<` = falsy
-			`"3”5<` = truthy
-			`25<` = truthy
+			`"8”5<` -> 0
+			`85<` -> 0
+			`55<` -> 0
+			`"3”5<` -> 1
+			`25<` -> 1
 =	2 inputs
 		number & string, string & number: pushes if equal
-			`123 "123”=` = truthy
+			`123 "123”=` -> 1
 		array & number, array & string, number & array, string & array: if all in array are equal to the other input
 >	2 inputs
 		any: if POP is less than POP
-			`"8”5>` = truthy
-			`85>` = truthy
-			`55>` = falsy
-			`"3”5>` = falsy
-			`25>` = falsy
+			`"8”5>` -> 1
+			`85>` -> 1
+			`55>` -> 0
+			`"3”5>` -> 0
+			`25>` -> 0
 ?	if then (ends with `}`)
 @	pushes a space
 A	1 input
@@ -305,12 +311,12 @@ H	1 input
 		number: decreases by 1
 		string: decreases the last number in stack. If there are none, put a -1 in the stacks start.
 		array: rotate left
-			`[["gh","ab"],["ij","cd"],["kl","ef"]]I` = [["ab","cd","ef"]["gh","ij","kl"]]
+			`[["gh","ab"],["ij","cd"],["kl","ef"]]I` -> [["ab","cd","ef"]["gh","ij","kl"]]
 I	1 input
 		number: increases by 1
 		string: increases the last number in stack. If there are none, put a 1 in the stacks start.
 		array: rotate right
-			`[["ab","cd","ef"]["gh","ij","kl"]]I` = [["gh","ab"],["ij","cd"],["kl","ef"]]
+			`[["ab","cd","ef"]["gh","ij","kl"]]I` -> [["gh","ab"],["ij","cd"],["kl","ef"]]
 J	1 input
 		number: sin
 		string: pops the last letter off and pushes it
@@ -350,7 +356,7 @@ W	2 inputs
 		string & array, array & string: pop the string and give out the 1st occurence of the string in the array. 1-indexed, 0 in case of none
 X	1 input
 		any: simply POP and do nothing with it.
-			`"hello”{}X` = ["h", "e", "l", "l"]
+			`"hello”{}X` -> ["h", "e", "l", "l"]
 Y	
 Z	pushes the english alphabet uppercase
 [	while top of the stack is truthy do ... (end with "}" but not required). doesn't pop. e.g. `[1-q` would print all numbers from input (not included) to 0 (included)
@@ -390,15 +396,15 @@ l	1 input
 		array: pushes the length of the array, doesn't pop
 		string: pushes the length of the string, doesn't pop
 		number: pushes the length of the number, doesn't pop 
-			`5l`=1
-			`12.0l`=2
-			`12.345l`=5
+			`5l` -> 1
+			`12.0l` -> 2
+			`12.345l` -> 5
 m	2 inputs
 		string & number, number & string: repeat the string as many times needed to get the specified length
-			`"hello”9m` = hellohell
+			`"hello”9m` -> "hellohell"
 n	2 inputs
 	string & number, number & string: mold into POP POP 
-			`"hello world”3m` = ["hel", "lo ", "wor", "ldh"]
+			`"hello world”3m` -> [["hel", "lo ", "wor", "ldh"]]
 o	1 input
 		append input to a new output line (continuing "O"s will make new lines after this)
 p	1 input
@@ -406,7 +412,8 @@ p	1 input
 q	1 inputs
 		output but dont POP
 r	1 input
-		string: convert to number (`"123”r` = 123 )
+		string: convert to number
+            `"123”r` -> 123
 		number: convert to character (inverse of above)
 s	1 input
 		string: checks if contains multiple cases
@@ -426,7 +433,7 @@ w	2 inputs
 		numbers: 
 x	1 input
 		any: simply POP twice and do nothing with it.
-			`"hello”{}x` = ["h", "e", "l"]
+			`"hello”{}x` -> ["h", "e", "l"]
 y	
 z	pushes the english alphabet lowercase
 {	1 input
@@ -443,50 +450,48 @@ z	pushes the english alphabet lowercase
 ↑	
 ↓	
 ≠	2 inputs
-		string & number, number & string: pushes if aren't equal (their value, `123 "123”=` would give out truthy)
+		string & number, number & string: pushes if aren't equal
+            `123 "123”≠` -> 0
+            `23≠` -> 1
+            `33≠` -> 0
 		array & number, array & string: if at least 1 item in array is not equal to the other input
 ≤	puts the last item of the stack ontop
 ≥	puts the top thing on the stack below everything
 ∞	
 √	1 input
 		number: square root
-		string: convert the string into an array like
-			`"abcdef123”` = [["abc"], ["def"], ["123"]]
-		string-array: converts the contents into an array like
-			`[["abcd”], ["ef12”]]` = [[["ab”], ["cd”]], [["ef”], ["12”]]]
+		string: convert the string into an array of length x and each subpart length x too
+			`"abcdef123”` -> [[["abc"], ["def"], ["123"]]]
+		array: for each final string or number either take square root or convert it into an array of length x and each subpart length x too
+			`["abcd", "ef12", 625]` -> [[["ab”], ["cd”]], [["ef”], ["12”]], 25]
+            
 ═	
 ║	1 input
 		number: 
 		string, array: remove duplicates
 ─	2 inputs
-		number & number: (2nd is base) convert x from base 10 to base y. If base is 2 and is constant then instead of an array with the digits it gives a string (e.g. `2─` = "101001101")
+		number & number: (2nd is base) convert x from base 10 to base y. If base is 2 and is constant then instead of an array with the digits it gives a string
+            `2─` -> "101001101"
 		string & number: convert each letter of string to base y in an array (if base is 2 then convert to base 2 strings with 8 0s)
-	implicitness:
-		number: convert input as string to base specified (or number if input specifies it)
-		string: convert the string to base input
-		array: convert the arrays contents to base input
 		
 │	2 inputs
 		number & number: converts the 1st number from base x to base 10
 		string & number: converts the string from base 10 to base x (if starting base is bigger than 10 it'll count it as ASCII) and output number
-		implicitness:
-			number: convert the input to base specified
-			none: convert input from base x to base 10
 ≡	2 inputs
 		strings, numbers: are the inputs excatly identical
-		`9”9≡` = true
-		`5.0”5≡` = false
-		`55≡` = true
+			`9”9≡` -> 1
+			`5.0”5≡` -> 0
+			`55≡` -> 1
 		arrays: check if all items are equal to their corresponding items in the other array
 ∙	2 inputs
 		number & string, string & number: get an array with number many items all being the string
 		number & array, array & number: multiply the array vertically
-			`["hello", "world"]3∙` = ["hello", "world", "hello", "world", "hello", "world"]
+			`["hello", "world"]3∙` -> [["hello", "world", "hello", "world", "hello", "world"]]
 ∫	1 input
 		number: loop/repeat that many times the continuing code, closed by "}", each time pushing the current loop-point (0-based).
 		string: itirate over the string and push the char looping at twice
 		array: for each item in each item in each item in ... in the array loop, ending with "}" or EOF, each time pushing the current item.
-			`[["ab"], ["cd"], ["76f"]]G` (that's not how you define arrays but used as example) = [a, b, c, d, 7, 6, f]
+			`[["ab"], ["cd"], ["76f"]]G` -> [a, b, c, d, 7, 6, f]
 ○	1 input
 		truthy: exit with falsey output (0)
 		falsy: nothing
@@ -506,17 +511,20 @@ z	pushes the english alphabet lowercase
 ⅟	1 input
 		does 1/POP
 ‰	2 inputs
-		numbers: ((POP-1) modulo) + 1 (`83%` = 1, `93%` = 3, `9%` = ((input-1)%9)+1)
+		numbers: ((POP-1) modulo) + 1
+            `83%` -> 1
+            `93%` -> 3
+            `9%` -> ((input-1)%9)+1)
 ÷	2 inputs
 		numbers: divides and floors
 ╤	1 input
 		string: depalendromize
 ╥	1 input
 		string: palendromize
-			`"hello”` = "hellolleh"
-			`["foo","bar"]╥` = ["fooof","barab"]
-			`["foo","bar"]╥╥` = ["foo","bar","foo"]
-			`["foo","bar"]╥╤` = ["fooof","barab","fooof"]
+			`"hello”` -> "hellolleh"
+			`["foo","bar"]╥` -> [["fooof","barab"]]
+			`["foo","bar"]╥╥` -> [["foo","bar","foo"]]
+			`["foo","bar"]╥╤` -> [["fooof","barab","fooof"]]
 ƨ	pushes the next character repeated twice
 Ƨ	pushes the next two characters as a string
 Α	
@@ -529,22 +537,22 @@ z	pushes the english alphabet lowercase
 β	
 Γ	1 input
 		string, array: palendromize mirroring `/\[](){}<>`
-			`"/--¶\-”Γ` = "/---\¶\- -/"
-			`"/--¶[|”ΓΓ` = "/---\¶|[ ]|¶\---/"
-			`"/---¶hi”╥Γ` = "/---¶hi¶\---"
+			`"/--¶\-”Γ` -> "/---\\¶\\- -/"
+			`"/--¶[|”ΓΓ` -> "/---\\¶|[ ]|¶\\---/"
+			`"/---¶hi”╥Γ` -> "/---¶hi¶\\---"
 γ	
 Δ	1 input
 		number: pushes range; inclusive
-			`6Δ` = "123456"
-			`62*Δ` = "010203040506070809101112"
+			`6Δ` -> "123456"
+			`62*Δ` -> "010203040506070809101112"
 		string: pushes all printable ascii chars up to that point; inclusive
-			` 6Δ` =  " !\"#$%&'()*+,-./0123456"
+			` 6Δ` -> " !\"#$%&'()*+,-./0123456"
 δ	1 input
 		number: pushes range; exclusive
-			`6δ` = "012345"
-			`11Δ` = "01020304050607080910"
+			`6δ` -> "012345"
+			`11Δ` -> "01020304050607080910"
 		string: pushes all printable ascii chars up to that point; exclusive
-			` 6δ` =  " !\"#$%&'()*+,-./012345"
+			` 6δ` -> " !\"#$%&'()*+,-./012345"
 Ε	
 ε	
 Ζ	pushes the next two characters as seperate strings
@@ -622,10 +630,10 @@ z	pushes the english alphabet lowercase
 ω	
 ā	pushes an empty array
 č	1 input
-		string array: joins the array into a single string
-			`["hello ", "foo"]` = "hello foo"
+		array: joins the array into a single string
+			`["hello ", "foo"]` -> "hello foo"
 		string: split into a char array
-			`"bar"` = ["b", "a", "r"]
+			`"bar"` -> ["b", "a", "r"]
 ē	push the number in variable e and increases it after (equal to `e:IE` and `eeIE`) or for a string, push the last char and POP it off of the string.
 ģ	1 input
 		number: increase A by POP
@@ -637,13 +645,13 @@ z	pushes the english alphabet lowercase
 ō	
 ŗ	3 inputs
 		string & string & string: replace with POP POP in POP 
-			`"hello wrd”"r”"orl”ŗ` = "hello world"
+			`"hello wrd”"r”"orl”ŗ` -> "hello world"
 		string & string & array: replace each 1ns string character in the 1st string with the item in the array which corresponds to its count
-			`"h-l-o wo-ld”"-”["e","l","r"]` = "hello world"
+			`"h-l-o wo-ld”"-”["e","l","r"]` -> "hello world"
 		string & array & string: replace from the 1st string any of the array with the 2nd string
-			`"hello world”["h","l","o"]"^”` = "^e^^^ w^r^d"
+			`"hello world”["h","l","o"]"^”` -> "^e^^^ w^r^d"
 		array & string & string: replace in each item of the array occurences of the 1st string with the 2nd string
-			`["hello", "world"]"l”"*”` = ["he**o", "w*rld"]
+			`["hello", "world"]"l”"*”` -> ["he**o", "wor*d"]
 		everything else is just the above mixed together
 š	
 ū	
@@ -670,9 +678,9 @@ z	pushes the english alphabet lowercase
 ╬	
 ┼	2 inputs
 		array & array: appends horizontally
-			`["hello", "world"] ┼ ["foo", "bar"]` = ["hellofoo", "world bar"]
+			`["hello", "world"] ┼ ["foo", "bar"]` -> ["hellofoo", "world bar"]
 		array & string, string & array: append the string vertically horizontally on the array
-			`["this", "is", "an example"] ┼ "hello"` = ["this      hl", "is        eo", "an examplel"]
+			`["this", "is", "an example"] ┼ "hello"` -> ["this      hl", "is        eo", "an examplel"]
 ╗	
 ╚	
 ╝	
