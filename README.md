@@ -9,7 +9,7 @@ note: this language is very much in developement, and can, and probably will cha
 
 ### To run a program, 
 
-  - download [V0.9](https://github.com/dzaima/SOGL/blob/master/P5Parser/P5Parser.zip)
+  - download [V0.8](https://github.com/dzaima/SOGL/blob/master/P5ParserV0_8_2/P5Parser.zip), [V0.9](https://github.com/dzaima/SOGL/blob/master/P5Parser/P5Parser.zip) (for challenges posted before ~27th of April), or the new and possibly very glitchy [V0.10](https://github.com/dzaima/SOGL/blob/master/P5Parser/P5Parser.zip)
   - make a file with the program as its contents
   - launch with the 1st argument as a path (either relative to the `data/` path or a full path) to the file and the continuing args as inputs
   - the output will be on STDOUT and/or (depending on `data/options.txt`) in the file `output.txt`

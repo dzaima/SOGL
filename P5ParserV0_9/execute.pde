@@ -47,44 +47,18 @@ class Executable extends Preprocessable {
         char cc = p.charAt(ptr);
         char lastO = ' ';
         //--------------------------------------loop start--------------------------------------
-        if (sdata[ptr] != 0) {
-          //////////
+        if (sdata[ptr]==3) {
           String res = "";
           try {
-            while (sdata[ptr]!=3) ptr++;
             while (sdata[ptr]==3) {
               res += p.charAt(ptr);
               ptr++;
             }
           }catch(Exception e){}
-          String pushable;
           if (p.charAt(ptr)=='‘')
-            pushable = decompress(res);
+            push(decompress(res));
           else
-            pushable = res;
-          String push = pushable;
-          if (pushable.contains("ŗ")) {
-            a = pop();
-            if (a.type==STRING)
-              push = pushable.replace("ŗ",a.s);
-            else if (a.type==BIGDECIMAL)
-              push = pushable.replace("ŗ",a.bd.toString());
-            else if (a.type==ARRAY) {
-              int index = 0;
-              push = "";
-              for (int i = 0; i < pushable.length(); i++) {
-                if (pushable.charAt(i) == 'ŗ') {
-                  push+= a.a.get(index%a.a.size());
-                  index++;
-                } else {
-                  push+= pushable.charAt(i);
-                }
-              }
-              pushable = pushable.replace("ŗ",a.bd.toString());
-            }
-          }
-          push(push);
-          //////////
+            push(res);
           //ptr++;
         } else if (qdata[ptr] != -1) {
           //quirk handling
@@ -111,6 +85,13 @@ class Executable extends Preprocessable {
             push(p);
             ptr+=1;
           }
+          if (qdata[ptr]==4) {
+            Executable subExec = new Executable(pop(STRING).s, new String[] {}).setParent(this);
+            currentPrinter = subExec;
+            subExec.execute();
+            currentPrinter = this;
+            ptr+=3;
+          }
           if (qdata[ptr]==5) {
             String[] exs = { ".com", ".net", ".co.uk", ".gov" };
             push(exs);
@@ -132,17 +113,6 @@ class Executable extends Preprocessable {
             push("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ");
             ptr+=1;
           }
-          if (qdata[ptr]==28) {
-            Executable subExec = new Executable(pop(STRING).s, new String[] {}).setParent(this);
-            subExec.stack = stack;
-            subExec.usedInputs = usedInputs;
-            subExec.inpCtr = inpCtr;
-            currentPrinter = subExec;
-            subExec.execute();
-            inpCtr = subExec.inpCtr;
-            currentPrinter = this;
-            ptr+=3;
-          }
           if (qdata[ptr]==30) {
             
           }
@@ -153,7 +123,7 @@ class Executable extends Preprocessable {
             
           }
         } else {
-          //char parsing
+          
           if (cc=='¹') {
             a = pop();
             b = a;
@@ -347,8 +317,7 @@ class Executable extends Preprocessable {
             }
           }
           
-          /*if (cc=='\"') {
-            //////////
+          if (cc=='\"') {
             String res = "";
             ptr++;
             while (sdata[ptr]==3) {
@@ -359,8 +328,7 @@ class Executable extends Preprocessable {
               push(decompress(res));
             else
               push(res);
-            //////////
-          }*/
+          }
   
           if (cc=='#') push ("\"");
           
@@ -1141,7 +1109,7 @@ class Executable extends Preprocessable {
             ArrayList<poppable> out = ea();
             int count = a.s.length();
             for (int i = 0; i < count; i++) {
-              if (i < count - b.s.length() && a.s.substring(0,b.s.length()).equals(b.s)) {
+              if (a.s.substring(0,b.s.length()).equals(b.s)) {
                 out.add(new poppable(curr));
                 a.s = a.s.substring(b.s.length());
                 i+=b.s.length()-1;
@@ -1151,7 +1119,7 @@ class Executable extends Preprocessable {
                 a.s = a.s.substring(1);
               }
             }
-            //if (!curr.equals(""))
+            if (!curr.equals(""))
               out.add(new poppable(curr));
             push(out);
           }
@@ -1189,7 +1157,7 @@ class Executable extends Preprocessable {
             a = pop(BIGDECIMAL);
             if (a.type==BIGDECIMAL) {
               ArrayList<poppable> out = ea();
-              for (BigDecimal i = B(1); i.compareTo(a.bd)!=1; i = i.add(B(1))) //<>// //<>//
+              for (BigDecimal i = B(1); i.compareTo(a.bd)!=1; i = i.add(B(1))) //<>//
                 if (a.bd.divideAndRemainder(i)[1].equals(B(0)))
                   out.add(new poppable(i));
               push(out);
@@ -1335,7 +1303,7 @@ class Executable extends Preprocessable {
                 int length = c.s.length();
                 for (int i = 0; i < length; i++) {
                   if (c.s.startsWith(b.s)) {
-                    o+=a.a.get(item%a.a.size()).s;
+                    o+=a.a.get(item%a.a.size());
                     item++;
                   } else {
                     o+=c.s.charAt(0);
@@ -1400,7 +1368,7 @@ class Executable extends Preprocessable {
             }
             if (a.type==STRING) {
               if (b.type==ARRAY) {
-                int maxlen = 0; //<>// //<>//
+                int maxlen = 0; //<>//
                 for (poppable c : b.a) 
                   if (c.s.length()>maxlen) 
                     maxlen = c.s.length();

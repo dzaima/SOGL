@@ -25,10 +25,10 @@ ArrayList<int[]> compress (String s, int method) {
     Collections.sort(used);
     //byte[] chars = new byte[used.size()];
     println(used);
-    add(97, compChars.indexOf(used.get(0)));
-    int base = 97-compChars.indexOf(used.get(0))-1;
+    add(97, compressedChars.indexOf(used.get(0)));
+    int base = 97-compressedChars.indexOf(used.get(0))-1;
     for (int i = 1; i < used.size(); i++) {
-      int diff = compChars.indexOf(used.get(i))-compChars.indexOf(used.get(i-1))-1;
+      int diff = compressedChars.indexOf(used.get(i))-compressedChars.indexOf(used.get(i-1))-1;
       add(base, diff);
       base-=diff;
       if (i>1) base--;
@@ -45,19 +45,19 @@ ArrayList<int[]> compress (String s, int method) {
       println(length);
       if (length==1) {
         add(8,1);
-        add(97,compChars.indexOf(s.charAt(0)));
+        add(97,compressedChars.indexOf(s.charAt(0)));
         s="";
       } else if (length==2) {
         add(8,1);
-        add(97,compChars.indexOf(s.charAt(0)));
+        add(97,compressedChars.indexOf(s.charAt(0)));
         add(8,1);
-        add(97,compChars.indexOf(s.charAt(1)));
+        add(97,compressedChars.indexOf(s.charAt(1)));
         s="";
       } else {
         add(8, 3);
         add(16, length-3);
         for (int i = 0; i < length; i++) {
-          add(97, compChars.indexOf(s.charAt(i)));
+          add(97, compressedChars.indexOf(s.charAt(i)));
         }
         s = s.substring(length);
       }
@@ -147,7 +147,7 @@ String[] toCmd (ArrayList<int[]> data) {
     BigInteger[] temp = bits.divideAndRemainder(BI(250));
     bits = temp[0];
     byte c = temp[1].byteValue();
-    o+=ALLCHARS.charAt(c&0xFF);
+    o+=compressChars.charAt(c&0xFF);
     //println(c&0xFF, ALLCHARS.charAt(c&0xFF));
   }
   String[] O = {o};

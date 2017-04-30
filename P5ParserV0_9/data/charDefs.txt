@@ -6,6 +6,7 @@ truthy/falsy values:
 temp: !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
 all the current chars:
 ⁰¹²³⁴⁵⁶⁷⁸T¶⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~←↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡͏→“”‘’
+
          ^ \t
 
 IO:
@@ -16,55 +17,58 @@ IO:
 	o append (appends to the last line). If an array, then print in classical array outputing.
 	Q output 2 joined.
 	q output in a newline but dont pop
-	P append to last line and disables auto-output once called
+	P append to last line and disable auto-output
 	p output in a newline and disable auto-output
-	t outputs in a newline the last thing in stack (doesn't pop) and disables auto-output
-	T append to last line but don't pop, disables auto output
-useful chars: "”¶±«»≤≥’→←╥∫
+	t outputs in a newline the last thing in stack (doesn't pop) and disable auto-output
+	T append to last line but don't pop, disable auto output
+useful chars: "”¶±«»≤≥’→←╥∫┼
+
 	"hello”world” to push 2 strings
 	"hello”A6‘ you can mix&match quote types
+	
 
 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 0123456789012345678901234567890123456789012345678901234567890123456789
 00000000001111111111222222222233333333334444444444555555555566666666667777777777
 Quirks:
-0*0/ - "0" - push "codegolf"
-1*1/ - "1" - push "stackexchange"
-2*2/ - "2" - push "qwertyuiop", "asdfghjkl" and "zxcvbnm"
-3*3/ - "3" - push the source code of this
-4*4/ - "4" - execute the top thing on stack as a SOGL program
-5*5/ - "5" - push [".com", ".net", ".co.uk", ".gov"]
-6*6/ - "6" - push "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-7*7/ - "7" - 
-8*8/ - "8" - 
-9*9/ - "9" - decompress everything after this string of chars and have the stack start with it (unless before it there is an unclosed `”`. Any `←`s or anything won't work after it so base 256 can be used.)
-0/0* - "a" - output POP to eout.txt (error out) and "crash".
-1/1* - "b" - 
-2/2* - "c" - push ["qwertyuiop", "asdfghjkl", "zxcvbnm"]
-3/3* - "d" - 
-4/4* - "e" - 
-5/5* - "f" - 
-6/6* - "g" - 
-7/7* - "h" - 
-8/8* - "i" - 
-9/9* - "j" - 
-UU - "k" - 
-uu - "l" - push "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-SU - "m" - push "1234567890"
-Su - "n" - 
-US - "o" - 
-uS - "p" - 
-!? - "q" - 
-²² - "r" - 
-!! - "s" - 
-2÷ - "t" - 
-
+0*0/ - 0 - push "codegolf"
+1*1/ - 1 - push "stackexchange"
+2*2/ - 2 - push "qwertyuiop", "asdfghjkl" and "zxcvbnm"
+3*3/ - 3 - push the source code of this
+4*4/ - 4 - execute POP as a SOGL program
+5*5/ - 5 - push [".com", ".net", ".co.uk", ".gov"]
+6*6/ - 6 - push "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+7*7/ - 7 - 
+8*8/ - 8 - 
+9*9/ - 9 - decompress everything after this string of chars and have the stack start with it (unless before it there is an unclosed `”`. Any `←`s or anything won't work after it so base 256 can be used.)
+0/0* - 10 - output POP to stdout and "crash".
+1/1* - 11 - 
+2/2* - 12 - push ["qwertyuiop", "asdfghjkl", "zxcvbnm"]
+3/3* - 13 - 
+4/4* - 14 - 
+5/5* - 15 - 
+6/6* - 16 - 
+7/7* - 17 - 
+8/8* - 18 - 
+9/9* - 19 - 
+UU - 20 - 
+uu - 21 - push "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+SU - 22 - push "1234567890"
+Su - 23 - 
+US - 24 - 
+uS - 25 - 
+!? - 26 - pushes a string of consonants ("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ")
+²² - 27 - 
+!! - 28 - 
+2÷ - 29 - 
+╥╥ - 30 - palendromize vertically (arrays)
+╥╤ - 31 - quad-palendromize
+ΓΓ - 32 - quad-palendromize mirroring "/\[](){}<>"
 Compression:
 (source of words: http://en.wiktionary.org/wiki/Wiktionary:Frequency_lists#Top_English_words_lists)
 characters:
 ¶T !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
 ^^ newline & tab	
-extended charpairs (31): ‾//\\  /\\/--__||[]][())(""''
                          ^ single char exception
 1) converts from either base250 or base256 ("‘ - 250, 9*9/ - 256) to base 2.
 2) reads a base8 number
@@ -101,13 +105,11 @@ note: the actual binary data in the string is reversed because prependng 0s do m
 chardefs:
 ⁰	
 ¹	x inputs
-		string: POPs until the popped isn't a string and puts all popped in an array
+		any: POPs until the popped isn't of the type what the 1st was and puts all popped in an array
 			`"hello”"world”¹` = ["hello", "world"]
 			`123"foo”"bar”¹` = 1,2,3,["foo","bar"]
-		number: POPs until the popped isn't a number and puts all popped in an array
 			`"hello”123¹` = "hello",[1,2,3]
 			`12345¹` = [1,2,3,4,5]
-		array: same as strings but with arrays (arrays must be the same dimension)
 ²	1 input
 		number: squares the number
 		string: joins to itself (`hello"²` = ["hellohello"])
@@ -145,8 +147,8 @@ chardefs:
 		number: bitshift right
 		string: put the last letter at the start
 		array: put the last item at the start
-æ	pushes an array of vowels ([a,e,i,o,u])
-Æ	
+æ	pushes a string of vowels ("aeiou")
+Æ	pushes a string of vowels in both cases ("aeiouAEIOU")
 ø	pushes an empty string
 ‽	1 input
 		any: if not POP then (ends with `}`)
@@ -286,7 +288,7 @@ D	1 input
 E	1 input
 		saves POP on variable "e"
 F	loads the current repeat itiration (1-based)
-G	put the 3rd from the top of the stack ontop (`[1, 2, 3]G` -> [2, 3, 1])
+G	puts the 3rd from the top of the stack ontop (`[1, 2, 3]G` -> [2, 3, 1])
 H	1 input
 		number: decreases by 1
 		string: decreases the last number in stack. If there are none, put a -1 in the stacks start.
@@ -330,7 +332,7 @@ U	1 input
 V	1 input
 		string: pushes if is fully uppercase
 W	2 inputs
-		number & string, string & number: pop the number and push the nth(1-indexed) thing from the string
+		number & string, string & number: pop the number and push the nth(1-indexed) char from the string
 		number & array, array & number: pop the number and push the 1st occurence of it. 0 in case of none.
 		strings: give out the index of the 2nd string in the 1st one (1-indexed, 0 in the case of none)
 		string & array, array & string: pop the string and give out the 1st occurence of the string in the array. 1-indexed, 0 in case of none
@@ -381,14 +383,14 @@ l	1 input
 			`5l`=1
 			`12.0l`=2
 			`12.345l`=5
-m	1 input
-	mold into POP POP 
-		`"hello”9m` = hellohell
-n	1 input
-	mold into POP POP 
-		`"hello world”3m` = ["hel", "lo ", "wor", "ldh"]
+m	2 inputs
+		string & number, number & string: repeat the string as many times needed to get the specified length
+			`"hello”9m` = hellohell
+n	2 inputs
+	string & number, number & string: mold into POP POP 
+			`"hello world”3m` = ["hel", "lo ", "wor", "ldh"]
 o	1 input
-		//append input to a new output line (continuing "O"s will make new lines after this)
+		append input to a new output line (continuing "O"s will make new lines after this)
 p	1 input
 		like "O" (outputs in newline) but disables auto-output
 q	1 inputs
@@ -516,7 +518,11 @@ z	pushes the english alphabet lowercase
 α	
 Β	
 β	
-Γ	
+Γ	1 input
+		string, array: palendromize mirroring `/\[](){}<>`
+			`"/--¶\-”Γ` = "/---\¶\- -/"
+			`"/--¶[|”ΓΓ` = "/---\¶|[ ]|¶\---/"
+			`"/---¶hi”╥Γ` = "/---¶hi¶\---"
 γ	
 Δ	1 input
 		number: pushes range; inclusive
@@ -538,7 +544,7 @@ z	pushes the english alphabet lowercase
 Η	
 η	
 Θ	2 inputs
-		string, string: split X with Y
+		string, string: 	 X with Y
 			`"foo-bar”"-”Θ` -> ["foo", "bar"]
 θ	1 input
 		string: split on spaces
@@ -561,11 +567,11 @@ z	pushes the english alphabet lowercase
 ξ	
 Ο	3 inputs
 		numbers: constrain 1st from 2nd to 3rd (or if 2nd>3rd then if not in the range (exclusive) then go to the opposite)
-			`725` -> 5
-			`289` -> 8
-			`739` -> 7
-			`365` -> 6
-			`321` -> 1
+			`725Ο` -> 5
+			`289Ο` -> 8
+			`739Ο` -> 7
+			`365Ο` -> 6
+			`321Ο` -> 1
 		number & string & string: repeat number-1 times 1stStr+2ndStr and append 1stStr
 			`3"|”"  ”Ο` -> "|  |  |"
 		string & number & string: repeat number times 1stStr+2ndStr and append 1stStr
@@ -612,7 +618,9 @@ z	pushes the english alphabet lowercase
 		string: split into a char array
 			`"bar"` = ["b", "a", "r"]
 ē	push the number in variable e and increases it after (equal to `e:IE` and `eeIE`) or for a string, push the last char and POP it off of the string.
-ģ	
+ģ	1 input
+		number: increase A by POP
+		string: append POP to A
 ī	
 ķ	
 ļ	
@@ -630,11 +638,12 @@ z	pushes the english alphabet lowercase
 		everything else is just the above mixed together
 š	
 ū	
-ž	
+ž	4 inputs
+		array & number & number & array: replace in the 1st array from the positions given (1-indexed) to those + 2nd arrays size with the 2nd array
 ¼	1 input
-		number: push 0.25*n
+		number: push 0.25*pop
 ¾	1 input
-		number: push 0.75*n
+		number: push 0.75*pop
 ⅓	
 ⅔	
 ⅛	
@@ -654,15 +663,14 @@ z	pushes the english alphabet lowercase
 		array & array: appends horizontally
 			`["hello", "world"] ┼ ["foo", "bar"]` = ["hellofoo", "world bar"]
 		array & string, string & array: append the string vertically horizontally on the array
-			`["this", "is", "SPARTAA"] ┼ "hello"` = ["this   hl", "is     eo", "SPARTAAl"]
-╔	
+			`["this", "is", "an example"] ┼ "hello"` = ["this      hl", "is        eo", "an examplel"]
 ╗	
 ╚	
 ╝	
-░	
+░	clear output
 ▒	
 ▓	
-█	
+█	pushes all the possible SOGL characters
 ▲	
 ►	
 ▼	
@@ -672,8 +680,9 @@ z	pushes the english alphabet lowercase
 …	
 ‼	`else` if an `if` is before in the scope
 		`8=?"is 8”‼"isnt 8”`
-⌠	
-⌡	
+⌠	repeat input times
+⌡	1 input
+		any: repeat next command 
 ͏	
 →	in the further code replace all occurences of the next character to the preceding code.
 	Examples:

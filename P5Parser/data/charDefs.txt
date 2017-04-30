@@ -5,9 +5,9 @@ truthy/falsy values:
 		falsy:  0,"”,[]
 temp: !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
 all the current chars:
-⁰¹²³⁴⁵⁶⁷⁸T¶⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~←↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡͏→“”‘’
+⁰¹²³⁴⁵⁶⁷⁸TN⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½← !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡¶→“”‘’
 
-         ^ \t
+|        ^^ \t and \n
 
 IO:
 	out: if array, if not specified otherwise, then will output each item in a newline.
@@ -25,51 +25,17 @@ useful chars: "”¶±«»≤≥’→←╥∫┼
 
 	"hello”world” to push 2 strings
 	"hello”A6‘ you can mix&match quote types
-	
 
-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
-0123456789012345678901234567890123456789012345678901234567890123456789
-00000000001111111111222222222233333333334444444444555555555566666666667777777777
-Quirks:
-0*0/ - 0 - push "codegolf"
-1*1/ - 1 - push "stackexchange"
-2*2/ - 2 - push "qwertyuiop", "asdfghjkl" and "zxcvbnm"
-3*3/ - 3 - push the source code of this
-4*4/ - 4 - execute POP as a SOGL program
-5*5/ - 5 - push [".com", ".net", ".co.uk", ".gov"]
-6*6/ - 6 - push "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-7*7/ - 7 - 
-8*8/ - 8 - 
-9*9/ - 9 - decompress everything after this string of chars and have the stack start with it (unless before it there is an unclosed `”`. Any `←`s or anything won't work after it so base 256 can be used.)
-0/0* - 10 - output POP to stdout and "crash".
-1/1* - 11 - 
-2/2* - 12 - push ["qwertyuiop", "asdfghjkl", "zxcvbnm"]
-3/3* - 13 - 
-4/4* - 14 - 
-5/5* - 15 - 
-6/6* - 16 - 
-7/7* - 17 - 
-8/8* - 18 - 
-9/9* - 19 - 
-UU - 20 - 
-uu - 21 - push "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-SU - 22 - push "1234567890"
-Su - 23 - 
-US - 24 - 
-uS - 25 - 
-!? - 26 - pushes a string of consonants ("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ")
-²² - 27 - 
-!! - 28 - 
-2÷ - 29 - 
-╥╥ - 30 - palendromize vertically (arrays)
-╥╤ - 31 - quad-palendromize
-ΓΓ - 32 - quad-palendromize mirroring "/\[](){}<>"
+
+CGSE post generator: SOGL→$  4*→U](https://github.com/dzaima/$→~"#[$~), ”od⁄o" [bytes~/blob/master/chartable.md)”oUd+p"Explanation:”OUO4,{ -=?³d⁄6+;-  *o,o  *O}:3-dWoI}  2*o,o
+usage: next line = the code; next = "-" for new line, " " for continuation of prevoius; next = empty; next = each line as a description for each "-".
+
+
 Compression:
 (source of words: http://en.wiktionary.org/wiki/Wiktionary:Frequency_lists#Top_English_words_lists)
 characters:
-¶T !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
-^^ newline & tab	
-                         ^ single char exception
+¶ŗ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+^^ newline & replacer
 1) converts from either base250 or base256 ("‘ - 250, 9*9/ - 256) to base 2.
 2) reads a base8 number
 	0 - custom string:
@@ -95,37 +61,88 @@ characters:
 		next 5 bits - amount of boxstring chars (differentChar#+2 - differentChar#+33 inclusive)
 		continuing ceiling(log(differentChar#)*char#/log(2)) bits are the encoded string
 	5 - box string:
-		the same as 100 but with instead of 5 bits saying the length but 6, so (34+differentChar# - 98+differentChar# inclusive)
+		the same as 4 but with instead of 5 bits saying the length but 6, so (34+differentChar# - 98+differentChar# inclusive)
 	6 - TBD
 	7 - custom string:
-		the same as 000 but with instead of 5 bits saying the length but 6, so (35+amountofchars - 99+amountofchars inclusive)
+		the same as 1 but with instead of 5 bits saying the length but 6, so (35+amountofchars - 99+amountofchars inclusive)
 note: the actual binary data in the string is reversed because prependng 0s do matter but leading zeroes don't matter (well only when you want to get a custom string with 2 space characters and 5 of them)
 
 
-chardefs:
+
+
+
+
+0*0/ 0	push "codegolf"
+1*1/ 1	push "stackexchange"
+2*2/ 2	push "qwertyuiop", "asdfghjkl" and "zxcvbnm"
+3*3/ 3	push the source code of this
+4*4/ 4	execute POP as a SOGL program
+5*5/ 5	push [".com", ".net", ".co.uk", ".gov"]
+6*6/ 6	push "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+7*7/ 7	
+8*8/ 8	
+9*9/ 9	
+0/0* 10	output POP to stderr and "crash".
+1/1* 11	
+2/2* 12	push ["qwertyuiop", "asdfghjkl", "zxcvbnm"]
+3/3* 13	
+4/4* 14	
+5/5* 15	
+6/6* 16	
+7/7* 17	
+8/8* 18	
+9/9* 19	
+UU 20	
+uu 21	push "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+SU 22	push "1234567890"
+Su 23	
+US 24	
+uS 25	
+!? 26	pushes a string of consonants ("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ")
+²² 27	
+!! 28	
+2÷ 29	
+╥╥ 30	1 input
+		string: palendromize on newlines
+			`"hello¶world”╥╥` -> "hello¶world¶hello"
+		array: palendromize on newlines
+			`"hello”world”¹╥╥` -> [["hello","world","hello"]]
+╥╤ 31	1 input
+		string: quad-palendromize
+			`"hi¶there”╥╤` -> "hi     ih¶therereht¶hi     ih”
+		array: quad-palendromize
+			`"hi”there”¹╥╤` -> [["hi     ih","therereht","hi     ih”]]
+
+ΓΓ 32	1 input
+		string: quad-palendromize mirroring "/\[](){}<>"
+			`"/^-¶|”ΓΓ` -> "/^-^\¶|   |¶\^-^/"
+		array: quad-palendromize mirroring "/\[](){}<>"
+			`"/^-”|”¹ΓΓ` -> [["/^-^\","|   |","\^-^/"]]
+Characters:
 ⁰	
 ¹	x inputs
 		any: POPs until the popped isn't of the type what the 1st was and puts all popped in an array
-			`"hello”"world”¹` = ["hello", "world"]
-			`123"foo”"bar”¹` = 1,2,3,["foo","bar"]
-			`"hello”123¹` = "hello",[1,2,3]
-			`12345¹` = [1,2,3,4,5]
+			`"hello”"world”¹` -> [["hello", "world"]]
+			`123"foo”"bar”¹` -> [1,2,3,["foo","bar"]]
+			`"hello”123¹` -> ["hello",[1,2,3]]
+			`12345¹` -> [[1,2,3,4,5]]
 ²	1 input
 		number: squares the number
-		string: joins to itself (`hello"²` = ["hellohello"])
+		string: joins to itself 
+			`hello"²` -> ["hellohello"]
 ³	1 input
-		duplicates POP thrice (`123³` = [1, 2, 3, 3, 3])
-⁴	1 input
-		duplicate the 2nd from the top of the stack
-⁵	1 input
-		duplicate the 3rd from the top of the stack
+		any: duplicates POP thrice 
+			`123³` -> [1, 2, 3, 3, 3]
+⁴	duplicate the 2nd from the top of the stack
+⁵	duplicate the 3rd from the top of the stack
 ⁶	3 inputs
 		any: puts the 2nd and 3rd from bottom ontop of the stack
-			`234⁶` = [4, 2, 3]
+			`234⁶` -> [4, 2, 3]
 ⁷	
 ⁸	
 \t	
-\n	(¶)
+\n	in the further code replace all occurences of the last character on the line to everything before it. Kinda line functions.
+			`5{t}Y\n \Y /Y` -> ` \5{t} /5{t}` -> "\\\\\\\\\\/////"
 ⁹	
 ±	1 input
 		number: negates the number
@@ -174,25 +191,20 @@ chardefs:
 ½	1 input
 		number: divide by 2 (not rounded unlike "»")
 ←	stop the program. Additionally adds a } after it as nothing after it can be executed
- 	(space) - pushes the next character. Examples:
-		`123` = [1, 2, 3]
-		`12 34` = [1, 2, "3", 4]
-		`12 a43` = [1, 2, "a", 4, 3]
+ 	(space) - pushes the next character.
+			`123` = [1, 2, 3]
+			`12 34` = [1, 2, "3", 4]
+			`12 a43` = [1, 2, "a", 4, 3]
 !	1 input
 		number: not
 		string: NOT each character as a number
 		array: NOT all of its contents
 "	starts a string. String enders are (and are explained on ): " “”‘’ ". If at the start, can be removed if the string doesn't contain ".
-	“: string array
-	”: normal string ender (also the default one if none are present)
-	‘:
-	’:
-	Examples: 
-		`"hello”` = [hello]
-		`"world` = [world]
-		`"hi ”+"there` = [hi there]
-		`"⁰²¹»ø’` = [0, 2, 1, 6, 11]
-		`"Look how easily I can display the " character!”` = [Look how easily I can display the " character!]
+			`"hello”` = ["hello"]
+			`"world` = ["world"]
+			`"hi ”+"there` = ["hi there"]
+			`"⁰²¹»ø’` = [0, 2, 1, 6, 11]
+			`"Look how easily I can display the " character!”` = [Look how easily I can display the " character!]
 #	outputs a quote character (")
 $	outputs a string ender quote (”)
 %	2 inputs
@@ -213,20 +225,20 @@ $	outputs a string ender quote (”)
 			`[1, 3, 5]7*` = [7, 21, 35]
 +	2 inputs
 		numbers: adds the two
-			`3 5+` = 8
+			`35+` = 8
 			`6544+++` = 19
 		string & number, number & string, strings: joins the two
-			`"hello, ”6+` = "hello, 6"
-			`"hello”"world”` = "helloworld"
-			`6"th place”` = "6th place"
+			`"hello, ”6+` -> "hello, 6"
+			`"hello”"world”+` -> "helloworld"
+			`6"th place”+` -> "6th place"
 		array & number, number & array, array & string, string & array, arrays: adds the array elements together with complications. 
 			(using infix & array definitions for simplicity)
-			`"hello", ["world", "baz"]` = ["hello", "world", "baz"]
-			`[["bar”, "baz”], ["hello”, "world”]] + "foo”` = [["bar”, "baz”], ["hello”, "world”, "foo”]]
-			`"foo” + [["bar”, "baz”], ["hello”, "world”]]` = [["foo”, "bar”, "baz”], ["hello”, "world”]]
-			`["hi”] + ["there”] = ["hi”, "there”]`
-			`["foo”] + [["bar”, "baz”], ["hello”, "world”]]` = [["foo”], ["bar”, "baz”], ["hello”, "world”]]
-			`[["bar”, "baz”], ["hello”, "world”]], ["foo”]` = [["bar”, "baz”], ["hello”, "world”], ["foo”]]
+			`"hello", ["world", "baz"]` -> ["hello", "world", "baz"]
+			`[["bar”, "baz”], ["hello”, "world”]] + "foo”` -> [["bar”, "baz”], ["hello”, "world”, "foo”]]
+			`"foo” + [["bar”, "baz”], ["hello”, "world”]]` -> [["foo”, "bar”, "baz”], ["hello”, "world”]]
+			`["hi”] + ["there”] -> ["hi”, "there”]`
+			`["foo”] + [["bar”, "baz”], ["hello”, "world”]]` -> [["foo”], ["bar”, "baz”], ["hello”, "world”]]
+			`[["bar”, "baz”], ["hello”, "world”]], ["foo”]` -> [["bar”, "baz”], ["hello”, "world”], ["foo”]]
 			basically it adds the thing in the array at the level required so array dimensions stay the same
 ,	takes user input as string
 -	2 inputs
@@ -236,8 +248,8 @@ $	outputs a string ender quote (”)
 		array, string: removes all occurences of that string from the array. Also POPs the string
 		array, number: removes all occurences of that number from the array. Also POPs the number
 	1 input (if the last one is an array, ignore the one before and do)
-		array: subtract each item from the next:
-			`[3, 6, 13, 5]-` = [3, 7, 8]
+		array: subtract each item from the next
+			`[3, 6, 13, 5]-` -> [3, 7, 8]
 .	takes user input as number
 /	2 inputs
 		numbers: divide
@@ -336,11 +348,6 @@ W	2 inputs
 		number & array, array & number: pop the number and push the 1st occurence of it. 0 in case of none.
 		strings: give out the index of the 2nd string in the 1st one (1-indexed, 0 in the case of none)
 		string & array, array & string: pop the string and give out the 1st occurence of the string in the array. 1-indexed, 0 in case of none
-	implicitness: (before ":" is what's already stacked)
-		number: string from who get the number
-		string: pushes the IDs of the string chars which are in the text (in order of appearence in the input)
-		array: pushes the items in the array that appear in the input in the order of appearence
-		none: asks for char and outputs its ID in the english alphabet (1-indexed, 0 for other things).
 X	1 input
 		any: simply POP and do nothing with it.
 			`"hello”{}X` = ["h", "e", "l", "l"]
@@ -354,13 +361,16 @@ Z	pushes the english alphabet uppercase
 		number: does input divide by POP
 ]	do ... while top of the stack is truthy (end with "}"). does pop. e.g. `]1-q:` would print all numbers from input (not included) to 0 (included)
 ^	2 inputs
-		numbers: power (`28^` = 256, `2^` = 2^input, `^` = input^input)
+		numbers: power
+			`28^` -> 256
+			`2^` -> 2^input
+			`^` -> input^input
 _	1 input
 		array: split the array into its contents on the stack
 `	
-a	loads variable "a" to stack. Default is 0
+a	loads variable "a" to stack. Default is 0, unless it's first called with `α` and a string, then it's empty.
 b	loads variable "b" to stack. Default is user input number
-c	loads variable "c" to stack. Default is an array of the 256 ASCII + extended ASCII characters
+c	loads variable "c" to stack. Default is user input string
 d	loads variable "d" to stack. Default is user input string
 e	loads variable "e" to stack. Default is user input number
 f	loads the current repeat itiration (0-based) or the outer loops itiration (1-indexed) if it exists
@@ -414,11 +424,6 @@ w	2 inputs
 		number & array, array & number: pop the number and push the nth(1-indexed) thing from the array. 
 		strings: give out an array with the values of where the 2nd string was in the 1st one. 
 		numbers: 
-	implicitness: (before ":" is what's already stacked)
-		number: string from who get the number
-		string: whichth letter to choose
-		array: whichth item to choose
-		none: asks for char and outputs its ID in ASCII.
 x	1 input
 		any: simply POP twice and do nothing with it.
 			`"hello”{}x` = ["h", "e", "l"]
@@ -445,9 +450,9 @@ z	pushes the english alphabet lowercase
 ∞	
 √	1 input
 		number: square root
-		string: convert the string into an array like:
+		string: convert the string into an array like
 			`"abcdef123”` = [["abc"], ["def"], ["123"]]
-		string-array: converts the contents into an array like:
+		string-array: converts the contents into an array like
 			`[["abcd”], ["ef12”]]` = [[["ab”], ["cd”]], [["ef”], ["12”]]]
 ═	
 ║	1 input
@@ -475,12 +480,12 @@ z	pushes the english alphabet lowercase
 		arrays: check if all items are equal to their corresponding items in the other array
 ∙	2 inputs
 		number & string, string & number: get an array with number many items all being the string
-		number & array, array & number: multiply the array vertically:
+		number & array, array & number: multiply the array vertically
 			`["hello", "world"]3∙` = ["hello", "world", "hello", "world", "hello", "world"]
 ∫	1 input
 		number: loop/repeat that many times the continuing code, closed by "}", each time pushing the current loop-point (0-based).
 		string: itirate over the string and push the char looping at twice
-		array: for each item in each item in each item in ... in the array loop, ending with "}" or EOF, each time pushing the current item. Example:
+		array: for each item in each item in each item in ... in the array loop, ending with "}" or EOF, each time pushing the current item.
 			`[["ab"], ["cd"], ["76f"]]G` (that's not how you define arrays but used as example) = [a, b, c, d, 7, 6, f]
 ○	1 input
 		truthy: exit with falsey output (0)
@@ -515,7 +520,11 @@ z	pushes the english alphabet lowercase
 ƨ	pushes the next character repeated twice
 Ƨ	pushes the next two characters as a string
 Α	
-α	
+α	1 input
+		string: append to variable `a`. If not initialized, set to it
+			`"hello ”α"world”αa` -> "hello world"
+		number: increase `a` by the number
+			
 Β	
 β	
 Γ	1 input
@@ -539,7 +548,7 @@ z	pushes the english alphabet lowercase
 Ε	
 ε	
 Ζ	pushes the next two characters as seperate strings
-		`Ζab` -> ["a", "b"]
+			`Ζab` -> ["a", "b"]
 ζ	
 Η	
 η	
@@ -679,19 +688,15 @@ z	pushes the english alphabet lowercase
 □	
 …	
 ‼	`else` if an `if` is before in the scope
-		`8=?"is 8”‼"isnt 8”`
+			`8=?"is 8”‼"isnt 8”`
 ⌠	repeat input times
 ⌡	1 input
 		any: repeat next command 
-͏	
-→	in the further code replace all occurences of the next character to the preceding code.
-	Examples:
-		`5{t}→Y \Y /Y` -> ` \5{t} /5{t}` -> "\\\\\/////"
+¶	
+→	
 “	string ender: split string in a string-array (each item being a character)
 ”	string ender: pushes the normal string
 ‘	string ender: compressed string decompressor (long numbers, base250 to ASCII, english)
 ’	string ender: adds to the stack the numeric values of the string (1-indexed)
-		number starter: next character is tanslated to a number (starts with 11, skips 256 as those are already 1-char numbers)
-
-CGSE post generator: SOGL→$  4*→U](https://github.com/dzaima/$→~"#[$~), ”od⁄o" [bytes~/blob/master/chartable.md)”oUd+p"Explanation:”OUO4,{ -=?³d⁄6+;-  *o,o  *O}:3-dWoI}  2*o,o
-usage: next line = the code; next = "-" for new line, " " for continuation of prevoius; next = empty; next = each line as a description for each "-".
+		number starter: next character is tanslated to a number (starts with 11, skips 256 and 100 as those are already 1-char numbers)
+^\\?[^\t]\t(?!(\d+|x) inputs?).*\n\t

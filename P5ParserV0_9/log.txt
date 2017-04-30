@@ -1,0 +1,27 @@
+###
+program: "9O"hi”4*4/
+|" 9 O " h i ” 4 * 4 /| chars
+|2|3|3|3|3|3|1|0|0|0|0| strings
+| | | | | | | |4|4|4|4| quirks
+|0|0|0|0|0|0|0|0|0|0|0| loops
+|0|1|2|3|4|5|6|7|8|9|0| 1s
+|0|0|0|0|0|0|0|0|0|0|1| 10s
+###
+
+`"`@00: ["9O\"hi"]
+###
+program: 9O"hi
+|9 O " h i| chars
+|0|0|2|3|3| strings
+| | | | | | quirks
+|0|0|0|0|0| loops
+|0|1|2|3|4| 1s
+|0|0|0|0|0| 10s
+###
+
+`4`@07: `9`@0: [9]
+`4`@07: `O`@1: []
+*-*executioneE: java.lang.ArrayIndexOutOfBoundsException: 5*-*
+*-*String input error at inpCtr 0: java.lang.ArrayIndexOutOfBoundsException: 0*-*
+`4`@07: []
+
