@@ -631,9 +631,9 @@ z	pushes the english alphabet lowercase
 ā	pushes an empty array
 č	1 input
 		array: joins the array into a single string
-			`["hello ", "foo"]` -> "hello foo"
+			`["hello ", "foo"]č` -> "hello foo"
 		string: split into a char array
-			`"bar"` -> ["b", "a", "r"]
+			`"bar”č` -> ["b", "a", "r"]
 ē	push the number in variable e and increases it after (equal to `e:IE` and `eeIE`) or for a string, push the last char and POP it off of the string.
 ģ	1 input
 		number: increase A by POP
