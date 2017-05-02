@@ -49,41 +49,54 @@ class Executable extends Preprocessable {
         //--------------------------------------loop start--------------------------------------
         if (sdata[ptr] != 0) {
           //////////
-          String res = "";
+          String readString = "";
           try {
             while (sdata[ptr]!=3) ptr++;  
             while (sdata[ptr]==3) {
-              res += p.charAt(ptr);
+              readString += p.charAt(ptr);
               ptr++;
             }
           }catch(Exception e){}
-          String pushable;
-          if (p.charAt(ptr)=='‘')
-            pushable = decompress(res);
-          else
-            pushable = res;
-          String push = pushable;
-          if (pushable.contains("ŗ")) {
-            a = pop();
-            if (a.type==STRING)
-              push = pushable.replace("ŗ",a.s);
-            else if (a.type==BIGDECIMAL)
-              push = pushable.replace("ŗ",a.bd.toString());
-            else if (a.type==ARRAY) {
-              int index = 0;
-              push = "";
-              for (int i = 0; i < pushable.length(); i++) {
-                if (pushable.charAt(i) == 'ŗ') {
-                  push+= a.a.get(index%a.a.size());
-                  index++;
-                } else {
-                  push+= pushable.charAt(i);
+          poppable pushable = tp("unsupported ending quote!");
+          switch(p.charAt(ptr)) {
+          case '‘':
+            pushable = tp(decompress(readString));
+          break;
+          case '”':
+            pushable = tp(readString);
+          break;
+          case '’':
+            pushable = tp(ea());
+            for (int i = 0; i < readString.length(); i++) {
+              pushable.a.add(tp(B(ALLCHARS.indexOf(readString.charAt(i)))));
+            }
+          break;
+          }
+          if (pushable.type==STRING) {
+            String push = pushable.s;
+            if (pushable.s.contains("ŗ")) {
+              a = pop();
+              if (a.type==STRING)
+                push = pushable.s.replace("ŗ",a.s);
+              else if (a.type==BIGDECIMAL)
+                push = pushable.s.replace("ŗ",a.bd.toString());
+              else if (a.type==ARRAY) {
+                int index = 0;
+                push = "";
+                for (int i = 0; i < pushable.s.length(); i++) {
+                  if (pushable.s.charAt(i) == 'ŗ') {
+                    push+= a.a.get(index%a.a.size());
+                    index++;
+                  } else {
+                    push+= pushable.s.charAt(i);
+                  }
                 }
               }
-              pushable = pushable.replace("ŗ",a.bd.toString());
             }
+            push(push);
+          } else {
+            push(pushable);
           }
-          push(push);
           //////////
           //ptr++;
         } else if (qdata[ptr] != -1) {
@@ -233,6 +246,17 @@ class Executable extends Preprocessable {
             push(a);
             push(c);
             push(b);
+          }
+          
+          if (cc=='⁷') {
+            poppable d = pop(STRING);
+            poppable c = pop(STRING);
+            b = pop(STRING);
+            a = pop(STRING);
+            push(b);
+            push(c);
+            push(d);
+            push(a);
           }
           
           if (cc=='±') {
@@ -509,7 +533,10 @@ class Executable extends Preprocessable {
           if (cc==':') {
             a = pop(BIGDECIMAL);
             push(a);
-            push(a);
+            if (a.type==ARRAY)
+              push(a.copy());
+            else
+              push(a);
           }
           if (cc=='<') {
             a=pop();//5
@@ -820,7 +847,7 @@ class Executable extends Preprocessable {
           if (cc=='n') {
             a=pop();
             b=pop();
-            String[] splat = new String[ceil(b.s.length()/a.bd.floatValue())];
+              String[] splat = new String[ceil(b.s.length()/a.bd.floatValue())];
             String part = b.s;
             for (int i = 0; i < floor(b.s.length()/a.bd.floatValue()); i++) {
               splat[i] = part.substring(0, a.bd.intValue());
@@ -1139,6 +1166,19 @@ class Executable extends Preprocessable {
             push(p.charAt(ptr+1)+"");
             push(p.charAt(ptr+2)+"");
             ptr+= 2;
+          }
+          
+          if (cc=='ζ') {
+            a = pop();
+            if (a.type==STRING) {
+              push(a.s.length() > 0? a.s.charAt(0) : 0);
+            }
+            if (a.type==BIGDECIMAL) {
+              push((char)a.bd.intValue()+"");
+            }
+            if (a.type==ARRAY) {
+              //todo
+            }
           }
           
           if (cc=='Θ') {

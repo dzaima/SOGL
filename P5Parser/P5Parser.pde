@@ -1,8 +1,8 @@
 import java.util.Collections; //<>//
 String ALLCHARS = "⁰¹²³⁴⁵⁶⁷⁸\t\n⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½← !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡¶→“”‘’";
-//numbers         │x xxxx   | |x xxxxxxx   x   x   x  x|xx     xxxxx xxxxxxxxxxx xxxx       xxxxxxxxxx    x /x xxx|xx  xxxxx    xx   xxxx xx xx xx x   xxx    x   x  /     x x       xxx           xx              xxx          x            xx                    x  x             x x│
-//strings         │x  xxx   | |x xxxxxxx      xx   x  x|xx     xxx x xxxxxxxxxxx  x x       x  xxxxxxx    x /x xx |x   xxxxx    xx   xxxx xx  x x  x   x               x     x      Dxx      xxx                x               xx       x                         x  x             x x│
-//arrays          │x  x     | |x     xxx       x   x  /|xx     / x x xxxxxxxxxxx                 xxxxx       x xx |x x xxxxx        xxxx  x   x x  x             /                                                              x/       /  D                 /    x  x                │
+//numbers         │x xxxx   | |x xxxxxxx   x   x   x  x|xx     xxxxx xxxxxxxxxxx xxxx       xxxxxxxxxx    x /x xxx|xx  xxxxx    xx   xxxx xx xx xx x   xxx    x   x  /     x x       xxx  xx       xx              xxx          x            xx                    x  x             x x│
+//strings         │x  xxx   | |x xxxxxxx      xx   x  x|xx     xxx x xxxxxxxxxxx  x x       x  xxxxxxx    x /x xx |x   xxxxx    xx   xxxx xx  x x  x   x               x     x      Dxx   xx xxx                x               xx       x                         x  x             x  │
+//arrays          │x  x     | |x     xxx       x   x  /|xx     / x x xxxxxxxxxxx                 xxxxx       x xx |x x xxxxx        xxxx  x   x x  x             /                        x                                     x/       /  D                 /    x  x                │
 
 //^^ are the currently supported functions
 String printableAscii =  " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
@@ -11,7 +11,7 @@ String ASCII = "";
 final int NONE = 0;
 final int STRING = 2;
 final int BIGDECIMAL = 3;
-final int ARRAY = 4;
+final int ARRAY = 4;String chars = "⁰¹²³⁴⁵⁶⁷⁸\t\n⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~←↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡͏→“”‘’";
 final int INS = 5;//input string
 final int INN = 6;//input number
 boolean saveDebugToFile;

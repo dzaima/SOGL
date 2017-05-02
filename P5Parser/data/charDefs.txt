@@ -139,7 +139,8 @@ Characters:
 ⁶	3 inputs
 		any: puts the 2nd and 3rd from bottom ontop of the stack
 			`234⁶` -> [4, 2, 3]
-⁷	
+⁷	puts the 4th from the top of the stack ontop 
+		`1234G` -> [2,3,4,1]
 ⁸	
 \t	
 \n	in the further code replace all occurences of the last character on the line to everything before it. Kinda line functions.
@@ -305,8 +306,9 @@ D	1 input
 		any: saves POP on variable "d"
 E	1 input
 		any: saves POP on variable "e"
-F	loads the current repeat itiration (1-based)
-G	puts the 3rd from the top of the stack ontop (`[1, 2, 3]G` -> [2, 3, 1])
+F	loads the current repeat iteration (1-based)
+G	puts the 3rd from the top of the stack ontop 
+		`123G` -> [2, 3, 1]
 H	1 input
 		number: decreases by 1
 		string: decreases the last number in stack. If there are none, use user input
@@ -378,7 +380,7 @@ b	loads variable "b" to stack. Default is user input number
 c	loads variable "c" to stack. Default is user input string
 d	loads variable "d" to stack. Default is user input string
 e	loads variable "e" to stack. Default is user input number
-f	loads the current repeat itiration (0-based) or the outer loops itiration (1-indexed) if it exists
+f	loads the current repeat iteration (0-based) or the outer loops iteration (1-indexed) if it exists
 g	1 input
 		number: greatest common divisor
 h	swaps the 2nd-from-top and 3rd-from-top ([1,2,3]->[2,1,3])
@@ -480,7 +482,7 @@ z	pushes the english alphabet lowercase
 			`["hello", "world"]3∙` -> [["hello", "world", "hello", "world", "hello", "world"]]
 ∫	1 input
 		number: loop/repeat that many times the continuing code, closed by "}", each time pushing the current loop-point (0-based).
-		string: itirate over the string and push the char looping at twice
+		string: iterate over the string and push the char looping at twice
 		array: for each item in each item in each item in ... in the array loop, ending with "}" or EOF, each time pushing the current item.
 			`[["ab"], ["cd"], ["76f"]]G` -> [a, b, c, d, 7, 6, f]
 ○	1 input
@@ -548,7 +550,10 @@ z	pushes the english alphabet lowercase
 ε	
 Ζ	pushes the next two characters as seperate strings
 			`Ζab` -> ["a", "b"]
-ζ	
+ζ	1 input
+        string: pushes its character code
+        number: pushes a string with a char with that code point
+        array: converts each element to either its code point string or character code number
 Η	
 η	
 Θ	2 inputs
@@ -696,6 +701,7 @@ z	pushes the english alphabet lowercase
 “	string ender: split string in a string-array (each item being a character)
 ”	string ender: pushes the normal string
 ‘	string ender: compressed string decompressor (long numbers, base250 to ASCII, english)
-’	string ender: adds to the stack the numeric values of the string (1-indexed)
+’	string ender: adds to the stack the numeric values of the string
+        `⁰¹²³⁴Λ’` -> [0, 1, 2, 3, 4, 173]
 	number starter: next character is tanslated to a number (starts with 11, skips 256 and 100 as those are already 1-char numbers)
 ^\\?[^\t]\t(?!(\d+|x) inputs?).*\n\t
