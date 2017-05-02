@@ -77,7 +77,7 @@ class Preprocessable {
       if (skip) {
         continue;
       }
-      if (p.charAt(i)=='”' || p.charAt(i)=='‘' || p.charAt(i)=='’' || p.charAt(i)=='“') {
+      if (p.charAt(i)=='”'||p.charAt(i)=='‘') {
         sdata[i]=1;
         int j=i-1;
         while (true) {
@@ -97,7 +97,7 @@ class Preprocessable {
         while (true) {
           if (i == p.length()) break;
           sdata[i]=3;
-          if (p.charAt(i)=='”' || p.charAt(i)=='‘' || p.charAt(i)=='’' || p.charAt(i)=='“') {
+          if (p.charAt(i)=='”'||p.charAt(i)=='‘') {
             sdata[i]=1;
             break;
           }
