@@ -92,12 +92,13 @@ note: the actual binary data in the string is reversed because prependng 0s do m
 7/7* 17	
 8/8* 18	
 9/9* 19	
-UU 20	
+UU 20	wait POP seconds
 uu 21	push "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 SU 22	push "1234567890"
-Su 23	
-US 24	
-uS 25	
+Su 23	push seconds since starting
+US 24	push current time as seconds (since epoch)
+uS 25	push an array with time stuff (year, month, day, hour, minute, second, milliscond, weekday, time in 12-hour time, am(= 0)/pm(= 1))
+			`uS` -> [[2017, 5, 2, 16, 0, 2, 747.9, 2, 4, 1]]
 !? 26	pushes a string of consonants ("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ")
 ²² 27	
 !! 28	
@@ -115,9 +116,9 @@ uS 25
 
 ΓΓ 32	1 input
 		string: quad-palendromize mirroring "/\[](){}<>"
-			`"/^-¶|”ΓΓ` -> "/^-^\¶|   |¶\^-^/"
+			`"/^-¶|”ΓΓ` -> "/^-^\\¶|   |¶\\^-^/"
 		array: quad-palendromize mirroring "/\[](){}<>"
-			`"/^-”|”¹ΓΓ` -> [["/^-^\","|   |","\^-^/"]]
+			`"/^-”|”¹ΓΓ` -> [["/^-^\\","|   |","\\^-^/"]]
 Characters:
 ⁰	
 ¹	x inputs
@@ -151,16 +152,16 @@ Characters:
 			`"hello”±` -> "olleh"
 		array: reverses the array
 		two of the signs following each other: reverse (or negate) the contents of an array
-∑	1 input:
+∑	1 input
 		array: add/join the whole array together 
 			`[1,2,3]∑` -> 6
-			`["9+10= ”, 19]∑` -> "9+10= 19"
+			`["9+10= ", 19]∑` -> "9+10= 19"
 		number, string: add/join the whole stack together
-«	1 input:
+«	1 input
 		number: bitshift left
 		string: put the first letter at the end
 		array: put the first item at the end
-»	1 input:
+»	1 input
 		number: bitshift right
 		string: put the last letter at the start
 		array: put the last item at the start
@@ -173,9 +174,9 @@ Characters:
 °	
 ¦	1 input
 		number: sign
-            `-5` -> -1
-            `0` -> 0
-            `72.6` -> 1
+			`-5` -> -1
+			`0` -> 0
+			`72.6` -> 1
 		string: makes an array with all the distinct characters in the string in order of ASCII.
 		array: do the above for each item
 ‚	
@@ -202,18 +203,18 @@ Characters:
 		number: not
 		string: NOT each character as a number
 		array: NOT all of its contents
-"	starts a string. String enders are (and are explained on ): " “”‘’ ". If at the start, can be removed if the string doesn't contain ".
+"	starts a string. String enders are (and are explained on ): " “”‘’ ". If at the start, can be removed if the string doesn't contain ". If at the end and there is no ” then is the same as being at the start (regular string)
 			`"hello”` -> ["hello"]
 			`"world` -> ["world"]
-			`"hi ”+"there` -> ["hi there"]
+			`"there”+"hi ` -> ["hi there"]
 			`"⁰²¹»ø’` -> [0, 2, 1, 6, 11]
-			`"Look how easily I can display the " character!”` -> [Look how easily I can display the " character!]
+			`"Look how easily I can display the " character!”` -> ["Look how easily I can display the \" character!"]
 #	outputs a quote character (")
 $	outputs a string ender quote (”)
 %	2 inputs
 		numbers: modulo
-            `83%` -> 1
-            `93%` -> 0
+			`83%` -> 1
+			`93%` -> 0
 &	2 inputs
 		strings, numbers: logical and.
 		arrays: makes a new array only with the items that are in both arrays
@@ -222,11 +223,12 @@ $	outputs a string ender quote (”)
 )	
 *	2 inputs
 		numbers: multiplies the two
-		strings: 
+		strings: push a 2D array of all the 2 character combinations, one from one and second from second
+			`"abc”123”`" -> [[["a1", "b1", "c1"], ["a2", "b2", "c2"], ["a3", "b3", "c3"]]]
 		string & number, number & string: repeats the string the number amount of times
-		1D array & number, number & 1D array: multiply the array horizontally
+		array & number, number & array: multiply the array horizontally
 			`["hello", "bar"]3*` -> ["hellohellohello", "bar  bar  bar  "]
-			`[["ab","cd","ef"],["g","h","i"]]3*` -> [["ababab","cdcdcd","efefef"],["g g g ","h h h ","i i i "]]]
+			`[["ab","cd","ef"],["g","h","i"]]3*` -> [["ababab","cdcdcd","efefef"], ["g g g ","h h h ","i i i "]]
 			`[1, 3, 5]7*` -> [7, 21, 35]
 +	2 inputs
 		numbers: adds the two
@@ -236,19 +238,17 @@ $	outputs a string ender quote (”)
 			`"hello, ”6+` -> "hello, 6"
 			`"hello”"world”+` -> "helloworld"
 			`6"th place”+` -> "6th place"
-		array & number, number & array, array & string, string & array, arrays: adds the array elements together with complications. 
-			(using infix & array definitions for simplicity)
+		array & number, number & array, array & string, string & array, arrays: adds the array elements together with complications.
 			`"hello", ["world", "baz"]` -> ["hello", "world", "baz"]
-			`[["bar”, "baz”], ["hello”, "world”]] + "foo”` -> [["bar”, "baz”], ["hello”, "world”, "foo”]]
-			`"foo” + [["bar”, "baz”], ["hello”, "world”]]` -> [["foo”, "bar”, "baz”], ["hello”, "world”]]
-			`["hi”] + ["there”] -> ["hi”, "there”]`
-			`["foo”] + [["bar”, "baz”], ["hello”, "world”]]` -> [["foo”], ["bar”, "baz”], ["hello”, "world”]]
-			`[["bar”, "baz”], ["hello”, "world”]], ["foo”]` -> [["bar”, "baz”], ["hello”, "world”], ["foo”]]
-			basically it adds the thing in the array at the level required so array dimensions stay the same
+			`[["bar”, "baz”], ["hello”, "world”]] + "foo”` -> [["bar", "baz"], ["hello", "world", "foo"]]
+			`"foo” + [["bar”, "baz”], ["hello”, "world”]]` -> [["foo", "bar", "baz"], ["hello", "world"]]
+			`["hi”] + ["there”]` -> ["hi", "there"]
+			`["foo”] + [["bar”, "baz”], ["hello”, "world”]]` -> [["foo"], ["bar", "baz"], ["hello", "world"]]
+			`[["bar”, "baz”], ["hello”, "world”]], ["foo”]` -> [["bar", "baz"], ["hello", "world"], ["foo"]]
 ,	takes user input as string
 -	2 inputs
 		numbers: 1st num - 2nd num 
-            `73-` -> 4
+			`73-` -> 4
 		string & number, number & string: remove the nth letter from the string(1-indexed)
 		strings: removes the 1st string from the 2nd string
 		array, string: removes all occurences of that string from the array. Also POPs the string
@@ -259,7 +259,7 @@ $	outputs a string ender quote (”)
 .	takes user input as number
 /	2 inputs
 		numbers: divide
-		
+        strings & number, number & string: divide the strings length (floored) by number
 0	pushes 0
 1	pushes 1
 2	pushes 2
@@ -271,7 +271,7 @@ $	outputs a string ender quote (”)
 8	pushes 8
 9	pushes 9
 :	1 input
-		duplicates POP once 
+		any: duplicates POP once 
 			`123:` -> [1, 2, 3, 3]
 ;	2 inputs
 		any: reverse the last 2 things on stack
@@ -296,46 +296,44 @@ $	outputs a string ender quote (”)
 ?	if then (ends with `}`)
 @	pushes a space
 A	1 input
-		saves POP on variable "a"
+		any: saves POP on variable "a"
 B	1 input
-		saves POP on variable "b"
+		any: saves POP on variable "b"
 C	1 input
-		saves POP on variable "c"
+		any: saves POP on variable "c"
 D	1 input
-		saves POP on variable "d"
+		any: saves POP on variable "d"
 E	1 input
-		saves POP on variable "e"
+		any: saves POP on variable "e"
 F	loads the current repeat itiration (1-based)
 G	puts the 3rd from the top of the stack ontop (`[1, 2, 3]G` -> [2, 3, 1])
 H	1 input
 		number: decreases by 1
-		string: decreases the last number in stack. If there are none, put a -1 in the stacks start.
+		string: decreases the last number in stack. If there are none, use user input
 		array: rotate left
-			`[["gh","ab"],["ij","cd"],["kl","ef"]]I` -> [["ab","cd","ef"]["gh","ij","kl"]]
+			`[["gh","ab"],["ij","cd"],["kl","ef"]]I` -> [["ab","cd","ef"], ["gh","ij","kl"]]
 I	1 input
 		number: increases by 1
-		string: increases the last number in stack. If there are none, put a 1 in the stacks start.
+		string: increases the last number in stack. If there are none, use user input.
 		array: rotate right
 			`[["ab","cd","ef"]["gh","ij","kl"]]I` -> [["gh","ab"],["ij","cd"],["kl","ef"]]
 J	1 input
 		number: sin
 		string: pops the last letter off and pushes it
 		array: pop the last item off the array and pushes it
-		implicitness: number
 K	1 input
 		number: cos
 		string: pops the first letter off and pushes it
 		array: pop the first item off the array and pushes it
-		implicitness: number
 L	pushes 10
 M	pushes 100
 N	pushes 256
 O	1 input
-		output input
+		any: output input
 P	1 input
-		append input to the current output line (appends to the last "O".)
+		any: append input to the current output line (appends to the last "O".)
 Q	2 inputs
-		output both (joined)
+		any: output both (joined)
 R	1 input
 		string: convert to ordinals (stack an array with the values)
 		number: convert to character (inverse of above)
@@ -362,7 +360,8 @@ Z	pushes the english alphabet uppercase
 [	while top of the stack is truthy do ... (end with "}" but not required). doesn't pop. e.g. `[1-q` would print all numbers from input (not included) to 0 (included)
 \	2 inputs
 		numbers: does divide?
-	inplicitness:
+        string & number, number & string: divide the string into two pieces, second being length x
+	implicitness:
 		none: push the number and if divides by 10
 		number: does input divide by POP
 ]	do ... while top of the stack is truthy (end with "}"). does pop. e.g. `]1-q:` would print all numbers from input (not included) to 0 (included)
@@ -406,31 +405,29 @@ n	2 inputs
 	string & number, number & string: mold into POP POP 
 			`"hello world”3m` -> [["hel", "lo ", "wor", "ldh"]]
 o	1 input
-		append input to a new output line (continuing "O"s will make new lines after this)
+		any: append input to a new output line (continuing "O"s will make new lines after this)
 p	1 input
-		like "O" (outputs in newline) but disables auto-output
-q	1 inputs
-		output but dont POP
+		any: like "O" (outputs in newline) but disables auto-output
+q	1 input
+		any: output but dont POP
 r	1 input
 		string: convert to number
-            `"123”r` -> 123
+			`"123”r` -> 123
 		number: convert to character (inverse of above)
 s	1 input
 		string: checks if contains multiple cases
 t	1 input
-		output the string without popping it & disable auto-output
+		any: output the string without popping it & disable auto-output
 u	1 input
 		string: lowercases the string
 		number: floors the number
 		array: does the above on all contents
-		implicitness: string
 v	1 input
 		string: pushes if is fully lowercase
 w	2 inputs
 		number & string, string & number: pop the number and show the 1st occurence(1-indexed) of the number in the string
-		number & array, array & number: pop the number and push the nth(1-indexed) thing from the array. 
-		strings: give out an array with the values of where the 2nd string was in the 1st one. 
-		numbers: 
+		number & array, array & number: pop the number and push the nth(1-indexed) thing from the array.
+		strings: give out an array with the values of where the 2nd string was in the 1st one.
 x	1 input
 		any: simply POP twice and do nothing with it.
 			`"hello”{}x` -> ["h", "e", "l"]
@@ -444,16 +441,13 @@ z	pushes the english alphabet lowercase
 }	loop/if/for each/anything ender. `x+,}{O` would be equal to `[x+,}{O}`
 ~	2 inputs
 		numbers: if abs(a-b)<1
-		strings:
-		arrays:
-
 ↑	
 ↓	
 ≠	2 inputs
 		string & number, number & string: pushes if aren't equal
-            `123 "123”≠` -> 0
-            `23≠` -> 1
-            `33≠` -> 0
+			`123 "123”≠` -> 0
+			`23≠` -> 1
+			`33≠` -> 0
 		array & number, array & string: if at least 1 item in array is not equal to the other input
 ≤	puts the last item of the stack ontop
 ≥	puts the top thing on the stack below everything
@@ -461,19 +455,16 @@ z	pushes the english alphabet lowercase
 √	1 input
 		number: square root
 		string: convert the string into an array of length x and each subpart length x too
-			`"abcdef123”` -> [[["abc"], ["def"], ["123"]]]
+			`"abcdef123”√` -> [[["abc"], ["def"], ["123"]]]
 		array: for each final string or number either take square root or convert it into an array of length x and each subpart length x too
-			`["abcd", "ef12", 625]` -> [[["ab”], ["cd”]], [["ef”], ["12”]], 25]
-            
+			`["abcd", "ef12", 625]√` -> [[["ab"], ["cd"]], [["ef"], ["12"]], 25]
 ═	
 ║	1 input
-		number: 
-		string, array: remove duplicates
+		string, array, number: remove duplicates from right to left
 ─	2 inputs
 		number & number: (2nd is base) convert x from base 10 to base y. If base is 2 and is constant then instead of an array with the digits it gives a string
-            `2─` -> "101001101"
+			`2─` -> "101001101"
 		string & number: convert each letter of string to base y in an array (if base is 2 then convert to base 2 strings with 8 0s)
-		
 │	2 inputs
 		number & number: converts the 1st number from base x to base 10
 		string & number: converts the string from base 10 to base x (if starting base is bigger than 10 it'll count it as ASCII) and output number
@@ -493,14 +484,13 @@ z	pushes the english alphabet lowercase
 		array: for each item in each item in each item in ... in the array loop, ending with "}" or EOF, each time pushing the current item.
 			`[["ab"], ["cd"], ["76f"]]G` -> [a, b, c, d, 7, 6, f]
 ○	1 input
-		truthy: exit with falsey output (0)
-		falsy: nothing
-		if required, will put a `}` after itself
+		number, string, array: if truthy, output 0, exit
+		number, string, array: if falsy, do nothing
+		note: if required, will put a `}` after itself
 ׀	1 input
-		truthy: exit with truthy output (1)
-		falsy: nothing
-		1 input
-		if required, will put a `}` after itself
+		number, string, array: if truthy, output 1, exit
+		number, string, array: if falsy, do nothing
+		note: if required, will put a `}` after itself
 ′		checks if number is prime
 ¬	1 input
 		number: loop that many times the continuing code, closed by "}", each time pushing the current loop-point (1-based).
@@ -509,12 +499,13 @@ z	pushes the english alphabet lowercase
 ⁾	1 input (upper ")")
 		String: lowercase the first letter of word
 ⅟	1 input
-		does 1/POP
+		number: does 1/POP
+        
 ‰	2 inputs
 		numbers: ((POP-1) modulo) + 1
-            `83%` -> 1
-            `93%` -> 3
-            `9%` -> ((input-1)%9)+1)
+			`83%` -> 1
+			`93%` -> 3
+			`9%` -> ((input-1)%9)+1)
 ÷	2 inputs
 		numbers: divides and floors
 ╤	1 input
@@ -532,7 +523,7 @@ z	pushes the english alphabet lowercase
 		string: append to variable `a`. If not initialized, set to it
 			`"hello ”α"world”αa` -> "hello world"
 		number: increase `a` by the number
-			
+			`"3α8αa` -> 11
 Β	
 β	
 Γ	1 input
@@ -630,8 +621,8 @@ z	pushes the english alphabet lowercase
 ω	
 ā	pushes an empty array
 č	1 input
-		array: joins the array into a single string
-			`["hello ", "foo"]č` -> "hello foo"
+		array: joins the array with newlines into a single string
+			`["hello ", "foo"]č` -> "hello \nfoo"
 		string: split into a char array
 			`"bar”č` -> ["b", "a", "r"]
 ē	push the number in variable e and increases it after (equal to `e:IE` and `eeIE`) or for a string, push the last char and POP it off of the string.
@@ -652,7 +643,7 @@ z	pushes the english alphabet lowercase
 			`"hello world”["h","l","o"]"^”` -> "^e^^^ w^r^d"
 		array & string & string: replace in each item of the array occurences of the 1st string with the 2nd string
 			`["hello", "world"]"l”"*”` -> ["he**o", "wor*d"]
-		everything else is just the above mixed together
+		any: mixed from the above
 š	
 ū	
 ž	4 inputs
@@ -696,7 +687,7 @@ z	pushes the english alphabet lowercase
 □	
 …	
 ‼	`else` if an `if` is before in the scope
-			`8=?"is 8”‼"isnt 8”`
+			`38=?"is 8”‼"isnt 8”` -> "isn't 8"
 ⌠	repeat input times
 ⌡	1 input
 		any: repeat next command 
@@ -706,5 +697,5 @@ z	pushes the english alphabet lowercase
 ”	string ender: pushes the normal string
 ‘	string ender: compressed string decompressor (long numbers, base250 to ASCII, english)
 ’	string ender: adds to the stack the numeric values of the string (1-indexed)
-		number starter: next character is tanslated to a number (starts with 11, skips 256 and 100 as those are already 1-char numbers)
+	number starter: next character is tanslated to a number (starts with 11, skips 256 and 100 as those are already 1-char numbers)
 ^\\?[^\t]\t(?!(\d+|x) inputs?).*\n\t

@@ -14,7 +14,7 @@ class Executable extends Preprocessable {
     poppable b = new poppable (B("0123456789"));
     ptr = -1;
     boolean ao = true;
-    for (int TTTT = 0; true; TTTT++) {//while (true) {//
+    while (true) {//while (true) {//
       try {
         if (jumpObj != null) {
           if (jumpObj.type == BIGDECIMAL) {
@@ -51,7 +51,7 @@ class Executable extends Preprocessable {
           //////////
           String res = "";
           try {
-            while (sdata[ptr]!=3) ptr++;
+            while (sdata[ptr]!=3) ptr++;  
             while (sdata[ptr]==3) {
               res += p.charAt(ptr);
               ptr++;
@@ -141,7 +141,7 @@ class Executable extends Preprocessable {
             subExec.execute();
             inpCtr = subExec.inpCtr;
             currentPrinter = this;
-            ptr+=3;
+            ptr+=1;
           }
           if (qdata[ptr]==30) {
             
@@ -256,24 +256,25 @@ class Executable extends Preprocessable {
           
           if (cc=='∑') {
             a = pop();
-            
-            boolean useStrings = false;
-            for (poppable c : a.a) {
-              if (c.type!=BIGDECIMAL) {
-                useStrings = true;
-                break;
-              }
-            }
-            if (useStrings) {
-              String o = "";
+            if (a.type==ARRAY) {
+              boolean useStrings = false;
               for (poppable c : a.a) {
-                if (c.type!=ARRAY)
-                  o+=c.s;
-                else
-                  o+=c.sline(false);
+                if (c.type!=BIGDECIMAL) {
+                  useStrings = true;
+                  break;
+                }
+              }
+              if (useStrings) {
+                String o = "";
+                for (poppable c : a.a) {
+                  if (c.type!=ARRAY)
+                    o+=c.s;
+                  else
+                    o+=c.sline(false);
+                }
+                push(o);
               }
             }
-            
           }
           
           if (cc=='«') {
@@ -1134,6 +1135,12 @@ class Executable extends Preprocessable {
             }
           }
           
+          if (cc=='Ζ') {
+            push(p.charAt(ptr+1)+"");
+            push(p.charAt(ptr+2)+"");
+            ptr+= 2;
+          }
+          
           if (cc=='Θ') {
             b = pop(STRING);
             a = pop(STRING);
@@ -1277,20 +1284,22 @@ class Executable extends Preprocessable {
                 s[i] = a.s.charAt(i)+"";
               push(s);
             } else if (a.type == ARRAY) {
-              boolean string = false;
-                for (poppable c : a.a)
-                  if (c.type==STRING||c.type==ARRAY)
-                    string = true;
-              if (string) {
-                String out = "";
-                for (poppable s : a.a)
-                  out+=s.s;
-                push(out);
-              } else {
-                BigDecimal out = BigDecimal.ZERO;
-                for (poppable bd : a.a)
-                  out=out.add(bd.bd);
-                push(out);
+              boolean useStrings = false;
+              for (poppable c : a.a) {
+                if (c.type!=BIGDECIMAL) {
+                  useStrings = true;
+                  break;
+                }
+              }
+              if (useStrings) {
+                String o = "";
+                for (poppable c : a.a) {
+                  if (c.type!=ARRAY)
+                    o+=c.s+"\n";
+                  else
+                    o+=c.sline(false)+"\n";
+                }
+                push(o.endsWith("\n")? o.substring(0, o.length()-1) : o);
               }
             }
           }

@@ -65,7 +65,7 @@ void setup () {
     if (saveOutputToFile) {
       String j =savedOut.join("");
       if (j.charAt(0)=='\n') j=j.substring(1);
-      //if (j.charAt(j.length()-1)=='\n') j=j.substring(0,j.length()-2);
+      if (j.length() > 0 && j.charAt(j.length()-1)=='\n') j=j.substring(0, j.length()-1);
       String[]o={j};
       saveStrings("output.txt", o);
     }

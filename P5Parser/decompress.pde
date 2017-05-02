@@ -3,7 +3,7 @@ String decompress(String s) {
   for (int i = 0; i < s.length(); i++) {
     bits[s.length()-i-1] = (byte)compressChars.indexOf(s.charAt(i));
   }
-  return decompb(fromBase(250, bits));
+  return decompb(fromBase(compressChars.length(), bits));
 }
 int pos;
 String decompb(BigInteger in) {

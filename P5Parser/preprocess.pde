@@ -22,7 +22,7 @@ class Preprocessable {
   }
   Preprocessable preprocess(String prog, String[] inputs) {
     this.inputs = inputs;
-    p = prog.replace("¶","\n");;
+    p = prog;
     sdata = new int[p.length()];
     ldata = new int[p.length()];
     qdata = new int[p.length()];
@@ -53,19 +53,19 @@ class Preprocessable {
      "}" - starting pointer (for loops)
      */
     //for (int i = 0; i < p.length(); i++) if (p.charAt(i)=='→') CT = true;
-      if (p.contains("→")) {
+      if (p.contains("\n")) {
         //println (p.contains("→"));
         int i = 0;
         String res = "";
-        while (p.charAt(i)!='→') {
+        while (p.charAt(i)!='\n') {
           //println(p.charAt(i)+" → "+(p.charAt(i)!='→'));
           res+=p.charAt(i);
           i++;
         }
-      eprintln("preprocessor: "+p.replace("\n", "¶"));
+      eprintln("preprocessor: "+p.replace("\n", "…"));
       //5{t}→Y \Y /Y
       //println(res+"\n"+i+"\n"+p);
-      return preprocess(p.substring(i+2).replace(p.charAt(i+1)+"", res), inputs);
+      return preprocess(p.substring(i+1).replace(p.charAt(i-1)+"", res.substring(0, res.length()-1)), inputs);
     }
     for (int i = 0; i < p.length(); i++) {
       boolean skip = false;
@@ -152,9 +152,10 @@ class Preprocessable {
     }*/
     if (loopStack.size()>0) {
       for (int i = 0; i < loopStack.size(); i++) p+='}';
-      eprintln("preprocessor: "+p.replace("\n", "¶"));
+      eprintln("preprocessor: "+p.replace("\n", "…"));
       return preprocess(p, inputs);
     }
+    p = p.replace("¶", "\n");
     if (!getDebugInfo) return this;
     eprintln("program: "+p.replace("\n", "¶"));
     eprint("|");
