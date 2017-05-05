@@ -255,7 +255,7 @@ class Preprocessable {
       stack.remove(stack.size()-1);
       return r;
     } catch (Exception e) {
-      println("poppingE: "+e.toString());
+      println("error on pop(): "+e.toString());
       String ns = sI().s;
       boolean isString = false;
       for (char c : ns.toCharArray())

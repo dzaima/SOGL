@@ -703,7 +703,7 @@ class Executable extends Preprocessable {
             if (a.type==STRING)
               push (a.s.toUpperCase());
             else if (a.type==BIGDECIMAL)
-              push (a.bd.divide(B(1), 0, RoundingMode.CEILING));
+              push (a.bd.setScale(0, BigDecimal.ROUND_CEILING));
           }
           
           if (cc=='X') pop(NONE);
@@ -918,8 +918,10 @@ class Executable extends Preprocessable {
           
           if (cc=='u') {
             a = pop(STRING);
-            if (a.type==STRING) push (a.s.toLowerCase());
-            else if (a.type==BIGDECIMAL) push (a.bd.round(new MathContext(1,RoundingMode.FLOOR)));
+            if (a.type==STRING)
+              push (a.s.toUpperCase());
+            else if (a.type==BIGDECIMAL)
+              push (a.bd.setScale(0, BigDecimal.ROUND_FLOOR));
           }
           
           if (cc=='w') {
