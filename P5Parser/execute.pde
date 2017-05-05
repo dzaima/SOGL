@@ -14,7 +14,7 @@ class Executable extends Preprocessable {
     poppable b = new poppable (B("0123456789"));
     ptr = -1;
     boolean ao = true;
-    while (true) {//while (true) {//
+    while (true) {
       try {
         if (jumpObj != null) {
           if (jumpObj.type == BIGDECIMAL) {
@@ -51,87 +51,90 @@ class Executable extends Preprocessable {
           //////////
           String readString = "";
           try {
-            while (sdata[ptr]!=3) ptr++;  
-            while (sdata[ptr]==3) {
+            while (ptr<p.length() && sdata[ptr]!=3) ptr++;  
+            while (ptr<p.length() && sdata[ptr]==3) {
               readString += p.charAt(ptr);
               ptr++;
             }
-          }catch(Exception e){}
-          poppable pushable = tp("unsupported ending quote!");
-          switch(p.charAt(ptr)) {
-          case '‘':
-            pushable = tp(decompress(readString));
-          break;
-          case '”':
-            pushable = tp(readString);
-          break;
-          case '’':
-            pushable = tp(ea());
-            for (int i = 0; i < readString.length(); i++) {
-              pushable.a.add(tp(B(ALLCHARS.indexOf(readString.charAt(i)))));
+            if (lastStringUsed) {
+              continue;
             }
-          break;
-          }
-          if (pushable.type==STRING) {
-            String push = pushable.s;
-            if (pushable.s.contains("ŗ")) {
-              a = pop();
-              if (a.type==STRING)
-                push = pushable.s.replace("ŗ",a.s);
-              else if (a.type==BIGDECIMAL)
-                push = pushable.s.replace("ŗ",a.bd.toString());
-              else if (a.type==ARRAY) {
-                int index = 0;
-                push = "";
-                for (int i = 0; i < pushable.s.length(); i++) {
-                  if (pushable.s.charAt(i) == 'ŗ') {
-                    push+= a.a.get(index%a.a.size());
-                    index++;
-                  } else {
-                    push+= pushable.s.charAt(i);
+            poppable pushable = tp("Unsupported quote ender");
+            switch(ptr<p.length()?p.charAt(ptr):'”') {
+              case '‘':
+                pushable = tp(decompress(readString));
+              break;
+              case '”':
+                pushable = tp(readString);
+              break;
+              case '’':
+                pushable = tp(ea());
+                for (int i = 0; i < readString.length(); i++) {
+                  pushable.a.add(tp(B(ALLCHARS.indexOf(readString.charAt(i)))));
+                }
+              break;
+            }
+            if (pushable.type==STRING) {
+              String push = pushable.s;
+              if (pushable.s.contains("ŗ")) {
+                a = pop();
+                if (a.type==STRING)
+                  push = pushable.s.replace("ŗ",a.s);
+                else if (a.type==BIGDECIMAL)
+                  push = pushable.s.replace("ŗ",a.bd.toString());
+                else if (a.type==ARRAY) {
+                  int index = 0;
+                  push = "";
+                  for (int i = 0; i < pushable.s.length(); i++) {
+                    if (pushable.s.charAt(i) == 'ŗ') {
+                      push+= a.a.get(index%a.a.size());
+                      index++;
+                    } else {
+                      push+= pushable.s.charAt(i);
+                    }
                   }
                 }
               }
+              push(push);
+            } else {
+              push(pushable);
             }
-            push(push);
-          } else {
-            push(pushable);
-          }
+          }catch(Exception e){}
           //////////
           //ptr++;
         } else if (qdata[ptr] != -1) {
           //quirk handling
-          if (qdata[ptr]==12) {
-            String[] qwerty = {"qwertyuiop", "asdfghjkl", "zxcvbnm"};
-            push(qwerty);
-            ptr+=3;
-          }
           if (qdata[ptr]==0) {
             push("codegolf");
-            ptr+=1;
+            ptr+=3;
           }
           if (qdata[ptr]==1) {
             push("stackexchange");
-            ptr+=1;
+            ptr+=3;
           }
           if (qdata[ptr]==2) {
             push("qwertyuiop");
             push("asdfghjkl");
             push("zxcvbnm");
-            ptr+=1;
+            ptr+=3;
           }
           if (qdata[ptr]==3) {
             push(p);
-            ptr+=1;
+            ptr+=3;
           }
           if (qdata[ptr]==5) {
             String[] exs = { ".com", ".net", ".co.uk", ".gov" };
             push(exs);
-            ptr++;
+            ptr+=3;
           }
           if (qdata[ptr]==6) {
             push("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
-            ptr++;
+            ptr+=3;
+          }
+          if (qdata[ptr]==12) {
+            String[] qwerty = {"qwertyuiop", "asdfghjkl", "zxcvbnm"};
+            push(qwerty);
+            ptr+=3;
           }
           if (qdata[ptr]==21) {
             push("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
@@ -199,6 +202,8 @@ class Executable extends Preprocessable {
             a = pop(BIGDECIMAL);
             if (a.type==BIGDECIMAL)
               push (a.bd.multiply(a.bd));
+            if (a.type==STRING)
+              push(a.s+a.s);
           }
   
           if (cc=='³') {
@@ -209,28 +214,21 @@ class Executable extends Preprocessable {
           }
   
           if (cc=='⁴') {
-            a = pop(NONE);
             b = pop(NONE);
-            push (b);
+            a = pop(NONE);
             push (a);
             push (b);
-            //eprintln(":"+a.s+":::"+b.s+":");
-            /*
-          123
-             cba
-             1231
-             cbac
-             */
+            push (a);
           }
   
           if (cc=='⁵') {
-            a = pop(NONE);
-            b = pop(NONE);
             poppable c = pop(NONE);
-            push (c);
-            push (b);
+            b = pop(NONE);
+            a = pop(NONE);
             push (a);
+            push (b);
             push (c);
+            push (a);
             /*
           123
              cba
@@ -339,8 +337,14 @@ class Executable extends Preprocessable {
           
           if (cc=='⁄') {
             a = pop(STRING);
-            if (a.type==STRING|a.type==BIGDECIMAL) {
+            if (a.type==STRING) {
               push (a.s.length());
+            }
+            if (a.type==BIGDECIMAL) {
+              push (a.bd.toString().length());
+            }
+            if (a.type==ARRAY) {
+              push (a.a.size());
             }
           }
           
@@ -358,6 +362,21 @@ class Executable extends Preprocessable {
             ptr++;
             push(p.charAt(ptr)+"");
           }
+          
+          if (cc=='½') {
+            if (stack.size() == 0) {
+              a = pop(BIGDECIMAL);
+              push(a);
+              push(a.bd.divide(B(2)));
+            } else {
+              a = pop(BIGDECIMAL);
+              if (a.type==BIGDECIMAL)
+                push(a.bd.divide(B(2)));
+              else if (a.type==STRING)
+                push(a.s.substring(0, a.s.length()/2));
+            }
+          }
+          
           if (cc=='←') {
             break;
           }
@@ -389,6 +408,8 @@ class Executable extends Preprocessable {
   
           if (cc=='#') push ("\"");
           
+          if (cc=='$') push ("”");
+          
           if (cc=='%') {
             b = pop(BIGDECIMAL);
             a = pop(BIGDECIMAL);
@@ -396,8 +417,6 @@ class Executable extends Preprocessable {
               push (a.bd.remainder(b.bd));
             }
           }
-          
-          if (cc=='$') push ("”");
           
           if (cc=='*') {
             if (stack.size()==0) {
@@ -507,27 +526,21 @@ class Executable extends Preprocessable {
                if (a.type==STRING&b.type==STRING)push(a.s+b.s);//string+string*/
             }
           }
+          
           if (cc=='.') push(nI());
+          
           if (cc=='/') {
-            if (stack.size()==0) {
-              a=pop(BIGDECIMAL);
-              if (a.type==BIGDECIMAL)
-                push(B(0).divide(a.bd));
-            } else {
-              a = pop(BIGDECIMAL);
-              if (a.type==STRING)
-                b = pop(STRING);
-              else
-                b = pop(BIGDECIMAL);
-              if (a.type==BIGDECIMAL&b.type==BIGDECIMAL)push(b.bd.divide(a.bd));
-  
-              /*if (a.type==STRING&b.type==INT)push(a.s+b.i);//int+string, float+string
-               if (a.type==INT&b.type==STRING)push(a.i+b.s);
-               if (a.type==FLOAT&b.type==STRING)push(a.f+b.s);
-               if (a.type==STRING&b.type==FLOAT)push(a.s+b.f);
-               if (a.type==STRING&b.type==STRING)push(a.s+b.s);//string+string*/
+            b = pop(BIGDECIMAL);
+            a = pop(BIGDECIMAL);
+            if (a.type==BIGDECIMAL&b.type==BIGDECIMAL) {
+              try {
+                push(a.bd.divide(a.bd));
+              } catch (Exception e) {
+                push(a.bd.divide(a.bd, precision, RoundingMode.FLOOR));
+              }
             }
           }
+          
           if (cc>='0' & cc <='9') push(int(cc+""));
   
           if (cc==':') {
@@ -539,16 +552,22 @@ class Executable extends Preprocessable {
               push(a);
           }
           if (cc=='<') {
-            a=pop();//5
-            b=pop();//3
-            if (a.bd.subtract(b.bd).toString().charAt(0)=='-')
-              push (false);
-            else
-              push (true);
+            b=pop(BIGDECIMAL);
+            a=pop(BIGDECIMAL);
+            if (a.type==BIGDECIMAL && b.type==BIGDECIMAL)
+              push (a.bd.compareTo(b.bd)<0);
           }
           if (cc=='=') {
             a=pop(STRING);
             b=pop(a.type);
+            if (a.type==BIGDECIMAL) {
+              a.bd = a.bd.divide(B(1), precision-5, RoundingMode.HALF_UP);
+              a.s = a.bd.toString();
+            }
+            if (b.type==BIGDECIMAL) {
+              b.bd = roundForDisplay(b.bd);
+              b.s = b.bd.toString();
+            }
             if (a.s.equals(b.s))
               push (true);
             else
@@ -556,12 +575,10 @@ class Executable extends Preprocessable {
           }
   
           if (cc=='>') {
-            a=pop();//5
-            b=pop();//3
-            if (a.bd.subtract(b.bd).toString().charAt(0)=='-')
-              push (true);
-            else
-              push (false);
+            b=pop(BIGDECIMAL);
+            a=pop(BIGDECIMAL);
+            if (a.type==BIGDECIMAL && b.type==BIGDECIMAL)
+              push (a.bd.compareTo(b.bd)>0);
           }
   
           if (cc=='?') {
@@ -665,7 +682,7 @@ class Executable extends Preprocessable {
           
           if (cc=='R') {
             a = pop();
-            if (a.type==BIGDECIMAL) push (ASCII.charAt(a.bd.intValue()));
+            if (a.type==BIGDECIMAL) push (char(a.bd.intValue())+"");
             ArrayList<poppable> res = ea();
             if (a.type==STRING) {
               for (int i = 0; i < a.s.length(); i++)
@@ -683,8 +700,10 @@ class Executable extends Preprocessable {
           
           if (cc=='U') {
             a = pop(STRING);
-            if (a.type==STRING) push (a.s.toUpperCase());
-            else if (a.type==BIGDECIMAL) push (ceil(a.bd.floatValue()));
+            if (a.type==STRING)
+              push (a.s.toUpperCase());
+            else if (a.type==BIGDECIMAL)
+              push (a.bd.divide(B(1), 0, RoundingMode.CEILING));
           }
           
           if (cc=='X') pop(NONE);
@@ -834,9 +853,14 @@ class Executable extends Preprocessable {
           
           if (cc=='l') {
             a=npop(STRING);
-            if (a.type==STRING|a.type==BIGDECIMAL) {
-              //push (a);
+            if (a.type==STRING) {
               push (a.s.length());
+            }
+            if (a.type==BIGDECIMAL) {
+              push (a.bd.toString().length());
+            }
+            if (a.type==ARRAY) {
+              push (a.a.size());
             }
           }
           
@@ -971,7 +995,7 @@ class Executable extends Preprocessable {
             a = pop(BIGDECIMAL);
             if (a.type==BIGDECIMAL) {
               data[ptr] = parseJSONObject("{\"N\":\""+a.s+"\",\"T\":3,\"L\":\"0\"}");//3-number, 2-string
-              if (B(data[ptr].getString("N")).intValue()>1) push(B(0));
+              if (B(data[ptr].getString("N")).intValue()>1) push(B(1));
             }
           }
           if (cc=='}') {
@@ -1014,7 +1038,7 @@ class Executable extends Preprocessable {
                 if (B(data[ldata[ptr]].getString("N")).intValue()>1) {
                   ptr = ldata[ptr];
                   data[ptr] = parseJSONObject("{\"N\":\""+B(data[ptr].getString("N")).subtract(B(1))+"\",\"T\":3,\"L\":\""+B(data[ptr].getString("L")).add(B(1))+"\"}");
-                  push(int(data[ptr].getString("L")));
+                  push(int(data[ptr].getString("L"))+1);
                   //oprintln(data[ptr].getString("N"));
                 }
               }
@@ -1046,6 +1070,24 @@ class Executable extends Preprocessable {
           
           if (cc=='≥') {
             stack.add(0, pop());
+          }
+          
+          if (cc=='√') {
+            a = pop(BIGDECIMAL);
+            if (a.type==BIGDECIMAL) {
+              BigDecimal base = B(0);//B(Math.sqrt(a.bd.doubleValue()));
+              BigDecimal currentModifier = a.bd.divide(B(2));
+              while (base.multiply(base).subtract(a.bd).abs().subtract(B(1).movePointLeft(precision)).toString().charAt(0) != '-') {
+                if (base.multiply(base).subtract(a.bd).toString().charAt(0) == '-') {
+                  base = base.add(currentModifier);
+                } else {
+                  base = base.subtract(currentModifier);
+                }
+                currentModifier = currentModifier.divide(B(2));
+                //println(base, currentModifier);
+              }
+              push(base);
+            }
           }
           
           if (cc=='─') {
@@ -1092,7 +1134,18 @@ class Executable extends Preprocessable {
           
           if (cc=='⁾') {
             a = pop();
-            push((a.s.charAt(0)+"").toLowerCase()+a.s.substring(1));
+            String s = a.s;
+            boolean nextUppercase = true;
+            for (int i = 0; i < s.length(); i++) {
+              if (".?!".indexOf(s.charAt(i)) >= 0) {
+                nextUppercase = true;
+              }
+              if ((s.charAt(i)+"").matches("\\w") && nextUppercase) {
+                nextUppercase = false;
+                s = s.substring(0, i)+(s.charAt(i)+"").toUpperCase()+s.substring(i+1);
+              }
+            }
+            push(s);
           }
           
           if (cc=='÷') {
@@ -1221,6 +1274,11 @@ class Executable extends Preprocessable {
             push(out);
           }
           
+          if (cc=='Ι') {
+            lastStringUsed = true;
+            push(lastString);
+          }
+          
           if (cc=='λ') {
             a = pop(BIGDECIMAL);
             if (a.type==BIGDECIMAL) {
@@ -1270,9 +1328,15 @@ class Executable extends Preprocessable {
             }
           }
           
+          if (cc=='Ρ') {
+            a = pop(BIGDECIMAL);
+            if (a.type==BIGDECIMAL)
+              push(a.bd.divide(B(1),0,RoundingMode.HALF_UP));
+          }
+          
           if (cc=='ρ') {
             a = pop();
-            if (a.type==STRING) push(new StringBuilder(a.s).reverse().toString().equals(a.s));
+            push(new StringBuilder(a.s).reverse().toString().equals(a.s));
           }
           
           if (cc=='Τ') {

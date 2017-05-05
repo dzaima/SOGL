@@ -76,7 +76,7 @@ note: the actual binary data in the string is reversed because prependng 0s do m
 1*1/ 1	push "stackexchange"
 2*2/ 2	push "qwertyuiop", "asdfghjkl" and "zxcvbnm"
 3*3/ 3	push the source code of this
-4*4/ 4	execute POP as a SOGL program
+4*4/ 4	
 5*5/ 5	push [".com", ".net", ".co.uk", ".gov"]
 6*6/ 6	push "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 7*7/ 7	
@@ -101,7 +101,7 @@ uS 25	push an array with time stuff (year, month, day, hour, minute, second, mil
 			`uS` -> [[2017, 5, 2, 16, 0, 2, 747.9, 2, 4, 1]]
 !? 26	pushes a string of consonants ("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ")
 ²² 27	
-!! 28	
+!! 28	execute POP as a SOGL program
 2÷ 29	
 ╥╥ 30	1 input
 		string: palendromize on newlines
@@ -129,7 +129,7 @@ Characters:
 			`12345¹` -> [[1,2,3,4,5]]
 ²	1 input
 		number: squares the number
-		string: joins to itself 
+		string: joins to itself
 			`hello"²` -> ["hellohello"]
 ³	1 input
 		any: duplicates POP thrice 
@@ -195,6 +195,9 @@ Characters:
 ℮	
 ½	1 input
 		number: divide by 2 (not rounded unlike "»")
+		string: divide length by 2 (floored)
+			`hello”½` -> "he"
+			`h½` -> ""
 ←	stop the program. Additionally adds a } after it as nothing after it can be executed
  	(space) - pushes the next character.
 			`123` -> [1, 2, 3]
@@ -219,7 +222,7 @@ $	outputs a string ender quote (”)
 &	2 inputs
 		strings, numbers: logical and.
 		arrays: makes a new array only with the items that are in both arrays
-'	pushes the next charater
+'	
 (	do while the top value of the stack is not equal to the previous answer.
 )	
 *	2 inputs
@@ -380,7 +383,7 @@ b	loads variable "b" to stack. Default is user input number
 c	loads variable "c" to stack. Default is user input string
 d	loads variable "d" to stack. Default is user input string
 e	loads variable "e" to stack. Default is user input number
-f	loads the current repeat iteration (0-based) or the outer loops iteration (1-indexed) if it exists
+f	loads the current repeat iteration (0-indexed) or the outer loops iteration (1-indexed) if it exists
 g	1 input
 		number: greatest common divisor
 h	swaps the 2nd-from-top and 3rd-from-top ([1,2,3]->[2,1,3])
@@ -499,7 +502,7 @@ z	pushes the english alphabet lowercase
 ⁽	1 input (upper "(")
 		String: uppercase the first letter of word
 ⁾	1 input (upper ")")
-		String: lowercase the first letter of word
+		String: uppercase all letters after any of `.?!` or at the start (sentence case)
 ⅟	1 input
 		number: does 1/POP
         
@@ -561,8 +564,8 @@ z	pushes the english alphabet lowercase
 			`"foo-bar”"-”Θ` -> ["foo", "bar"]
 θ	1 input
 		string: split on spaces
-			`"Hello world”` -> ["Hello", "world"]
-Ι	
+			`"Hello worldθ”` -> ["Hello", "world"]
+Ι	push the last string in the program
 ι	
 Κ	
 κ	
@@ -592,9 +595,10 @@ z	pushes the english alphabet lowercase
 ο	
 Π	
 π	
-Ρ	
+Ρ	1 input
+		number: rounds to nearest (half-up) integer
 ρ	1 input
-	anything: checks if is a palendrome
+		anything: checks if is a palendrome
 Σ	
 σ	
 Τ	1 input

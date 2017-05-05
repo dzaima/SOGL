@@ -6,13 +6,13 @@ String compressChars = "⁰¹²³⁴⁵⁶⁷⁸\t⁹±∑«»æÆø‽§°¦‚
 String compressedChars = "\nŗ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 String[] dict;
 void setup() {
-  ArrayList<int[]> bits = new ArrayList<int[]>();
-  String raw = "";
   //println(toNum1(compress1("niooaaoasoioaiaaaoiineeaei", 0)));
   //println(toCmd1(toNum1(compress1("niooaaoasoioaiaaaoiineeaei", 0))).length());
   //System.exit(0);
   //83042064962495462445816376887696
   //619796102596331877059595140240
+  ArrayList<int[]> bits = new ArrayList<int[]>();
+  String raw = "";
   for (String s : parts) {
     for (int[] i : compress(s)) {
       int[] temp = new int[2];

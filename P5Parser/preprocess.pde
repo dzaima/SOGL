@@ -15,6 +15,8 @@ class Preprocessable {
   poppable[] vars;
   String p;
   Executable parent = null;
+  String lastString = "Hello, World!";
+  boolean lastStringUsed = false;
   Preprocessable (String prog, String[] inputs) {
     if (getDebugInfo)
       eprintln("###");
@@ -80,9 +82,11 @@ class Preprocessable {
       if (p.charAt(i)=='”' || p.charAt(i)=='‘' || p.charAt(i)=='’' || p.charAt(i)=='“') {
         sdata[i]=1;
         int j=i-1;
+        String thisString = "";
         while (true) {
           if (j == -1) break;
           sdata[j]=3;
+          thisString = p.charAt(j) + thisString;
           j--;
           if (j == -1) break;
           if (p.charAt(j)=='"') {
@@ -91,9 +95,11 @@ class Preprocessable {
           }
           if (sdata[j]<3&sdata[j]>0) break;
         }
+        lastString = thisString;
       } else if (p.charAt(i)=='"') {
         sdata[i]=2;
         i++;
+        String thisString = "";
         while (true) {
           if (i == p.length()) break;
           sdata[i]=3;
@@ -101,10 +107,15 @@ class Preprocessable {
             sdata[i]=1;
             break;
           }
+          thisString = thisString + p.charAt(i);
           i++;
           if (i == p.length()) break;
           if (sdata[i]<3&sdata[i]>0) break;
         }
+        if (i < p.length() && p.charAt(i)=='‘')
+          lastString = decompress(thisString);
+        else
+          lastString = thisString;
       } else for (int j = 0; j < quirks.length; j++)
         if (p.substring(i).startsWith(quirks[j]))
           for (int k = 0; k < quirks[j].length(); k++)

@@ -1,8 +1,7 @@
-import java.util.Collections; //<>//
-String ALLCHARS = "⁰¹²³⁴⁵⁶⁷⁸\t\n⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½← !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡¶→“”‘’";
-//numbers         │x xxxx   | |x xxxxxxx   x   x   x  x|xx     xxxxx xxxxxxxxxxx xxxx       xxxxxxxxxx    x /x xxx|xx  xxxxx    xx   xxxx xx xx xx x   xxx    x   x  /     x x       xxx  xx       xx              xxx          x            xx                    x  x             x x│
-//strings         │x  xxx   | |x xxxxxxx      xx   x  x|xx     xxx x xxxxxxxxxxx  x x       x  xxxxxxx    x /x xx |x   xxxxx    xx   xxxx xx  x x  x   x               x     x      Dxx   xx xxx                x               xx       x                         x  x             x  │
-//arrays          │x  x     | |x     xxx       x   x  /|xx     / x x xxxxxxxxxxx                 xxxxx       x xx |x x xxxxx        xxxx  x   x x  x             /                        x                                     x/       /  D                 /    x  x                │
+String ALLCHARS = "⁰¹²³⁴⁵⁶⁷⁸\t\n⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½← !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡¶→“”‘’"; //<>//
+//numbers         │xxxxxxx  | |x xxxxxxxx  x   x   xxxx|xxxx    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xx /x xx|xxx  xxxxx    xxx  xxxx xx xx xx x   xxx x  x   x        x xxx     xx  xx       xx           x  xxx          x            xx                    x  x         x   x x│
+//strings         │xxxxxxx  | |x xxxxxxxx     xx   xxxx|xxx     xxxxxxxxxxxxxxxxxx x xxxxxxxxx xxxxxxxx x xx /x xx| x   xxxxx    xxx xxxxx xx  x x  x   x          x    xx    xxx   Dxx   xx xxx                 x              xx       x                         x  x         x   x  │
+//arrays          │x  xxxx  | |x     xxxx      x     x/|xxx      xxxxxxxxxxxxxxxx     xxxxxxxx   xxxxxx   x   x xx| x x xxxxx      x  xxx  x   x x  x             /x           xx         x                                     x/       /                    /    x  x                │
 
 //^^ are the currently supported functions
 String printableAscii =  " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
@@ -11,7 +10,7 @@ String ASCII = "";
 final int NONE = 0;
 final int STRING = 2;
 final int BIGDECIMAL = 3;
-final int ARRAY = 4;String chars = "⁰¹²³⁴⁵⁶⁷⁸\t\n⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~←↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡͏→“”‘’";
+final int ARRAY = 4;
 final int INS = 5;//input string
 final int INN = 6;//input number
 boolean saveDebugToFile;
@@ -30,7 +29,7 @@ import java.nio.charset.StandardCharsets;
 StringList savedOut = new StringList();
 StringList log = new StringList();
 Executable currentPrinter = null;
-//import java.math.BigInteger;
+import java.util.Collections;
 //P5ParserV0_6 SK = this;
 void setup () {
   try {
@@ -92,7 +91,16 @@ BigDecimal B (float a) {
     return new BigDecimal(a);
   }
   catch (Exception e) { 
-    println("B-floatE: \""+a+"\" - "+e.toString());
+    println("error on B-float: \""+a+"\" - "+e.toString());
+    return B(0);
+  }
+}
+BigDecimal B (double a) {
+  try {
+    return new BigDecimal(a);
+  }
+  catch (Exception e) { 
+    println("error on B-double: \""+a+"\" - "+e.toString());
     return B(0);
   }
 }
@@ -172,7 +180,9 @@ poppable tp(ArrayList<poppable> bd) {
 }
 
 
-
+BigDecimal roundForDisplay(BigDecimal bd) {
+  return bd.divide(B(1), precision-5, RoundingMode.HALF_UP);
+}
 
 String readFile(String path, Charset encoding) {
   try {
