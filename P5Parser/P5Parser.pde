@@ -26,10 +26,11 @@ import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 StringList savedOut = new StringList();
 StringList log = new StringList();
 Executable currentPrinter = null;
-import java.util.Collections;
+int precision = 200;
 //P5ParserV0_6 SK = this;
 void setup () {
   try {
