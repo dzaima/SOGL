@@ -1,7 +1,7 @@
 String ALLCHARS = "⁰¹²³⁴⁵⁶⁷⁸\t\n⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½← !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡¶→“”‘’"; //<>//
-//numbers         │xxxxxxx  | |x xxxxxxxx  x   x   xxxx|xxxx    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xx /x xx|xxx  xxxxx    xxx  xxxx xx xx xx x   xxx x  x   x        x xxx     xx  xx       xx           x  xxx          x            xx                    x  x         x   x x│
-//strings         │xxxxxxx  | |x xxxxxxxx     xx   xxxx|xxx     xxxxxxxxxxxxxxxxxx x xxxxxxxxx xxxxxxxx x xx /x xx| x   xxxxx    xxx xxxxx xx  x x  x   x          x    xx    xxx   Dxx   xx xxx                 x              xx       x                         x  x         x   x  │
-//arrays          │x  xxxx  | |x     xxxx      x     x/|xxx      xxxxxxxxxxxxxxxx     xxxxxxxx   xxxxxx   x   x xx| x x xxxxx      x  xxx  x   x x  x             /x           xx         x                                     x/       /                    /    x  x                │
+//numbers         │xxxxxxx  | |x xxxxxxxx  x   x   xxxx|xxxx x  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xx /x xx|xxx  xxxxx    xxx  xxxx xx xx xx x   xxx x  x   x        x xxx     xx  xx       xx           x  xxx          x            xx                    x  x         x  xxxx│
+//strings         │xxxxxxx  | |x xxxxxxxx     xx   xxxx|xxx  x  xxxxxxxxxxxxxxxxxx x xxxxxxxxx xxxxxxxx x xx /x xx| x   xxxxx    xxx xxxxx xx  x x  x   x          x    xx    xxx   Dxx   xx xxx                 x              xx       x                         x  x         x   xxx│
+//arrays          │x  xxxx  | |x     xxxx      x     x/|xxx      xxxxxxxxxxxxxxxx     xxxxxxxx   xxxxxx   x   x xx| x x xxxxx      x  xxx  x   x x  x             /x           xx         x                                     x/       /                    /    x  x             x x│
 
 //^^ are the currently supported functions
 String printableAscii =  " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
@@ -92,7 +92,7 @@ BigDecimal B (float a) {
     return new BigDecimal(a);
   }
   catch (Exception e) { 
-    println("error on B-float: \""+a+"\" - "+e.toString());
+    currentPrinter.eprintln("error on B-float: \""+a+"\" - "+e.toString());
     return B(0);
   }
 }
@@ -101,7 +101,7 @@ BigDecimal B (double a) {
     return new BigDecimal(a);
   }
   catch (Exception e) { 
-    println("error on B-double: \""+a+"\" - "+e.toString());
+    currentPrinter.eprintln("error on B-double: \""+a+"\" - "+e.toString());
     return B(0);
   }
 }
@@ -110,7 +110,7 @@ BigDecimal B (String a) {
     return new BigDecimal(a);
   }
   catch (Exception e) { 
-    println("*-*B-string error from \""+a+"\": "+e.toString()+"*-*");
+    currentPrinter.eprintln("*-*B-string error from \""+a+"\": "+e.toString()+"*-*");
     return B(0);
   }
 }

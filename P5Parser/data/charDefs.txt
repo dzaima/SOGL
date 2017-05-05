@@ -222,7 +222,7 @@ $	outputs a string ender quote (”)
 &	2 inputs
 		strings, numbers: logical and.
 		arrays: makes a new array only with the items that are in both arrays
-'	
+'	push the next character as a number (skipping ones that can be done otherwise)
 (	do while the top value of the stack is not equal to the previous answer.
 )	
 *	2 inputs
@@ -471,7 +471,7 @@ z	pushes the english alphabet lowercase
 			`2─` -> "101001101"
 		string & number: convert each letter of string to base y in an array (if base is 2 then convert to base 2 strings with 8 0s)
 │	2 inputs
-		number & number: converts the 1st number from base x to base 10
+		number array & number: converts the array from base x to base 10
 		string & number: converts the string from base 10 to base x (if starting base is bigger than 10 it'll count it as ASCII) and output number
 ≡	2 inputs
 		strings, numbers: are the inputs excatly identical
@@ -702,10 +702,9 @@ z	pushes the english alphabet lowercase
 		any: repeat next command 
 ¶	
 →	
-“	string ender: split string in a string-array (each item being a character)
+“	string ender: push converted to a number
 ”	string ender: pushes the normal string
 ‘	string ender: compressed string decompressor (long numbers, base250 to ASCII, english)
-’	string ender: adds to the stack the numeric values of the string
-        `⁰¹²³⁴Λ’` -> [0, 1, 2, 3, 4, 173]
-	number starter: next character is tanslated to a number (starts with 11, skips 256 and 100 as those are already 1-char numbers)
+’	string ender: pushes the indexes of the codepage of the characters in an array
+        `⁰¹²³⁴Λ’` -> [[0, 1, 2, 3, 4, 173]]
 ^\\?[^\t]\t(?!(\d+|x) inputs?).*\n\t

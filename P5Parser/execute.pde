@@ -67,6 +67,9 @@ class Executable extends Preprocessable {
               case '”':
                 pushable = tp(readString);
               break;
+              case '“':
+                pushable = tp(new BigDecimal(decompressNum("\""+readString+"“")));
+              break;
               case '’':
                 pushable = tp(ea());
                 for (int i = 0; i < readString.length(); i++) {
@@ -416,6 +419,11 @@ class Executable extends Preprocessable {
             if (a.type==BIGDECIMAL && b.type==BIGDECIMAL) {
               push (a.bd.remainder(b.bd));
             }
+          }
+          
+          if (cc=='\'') {
+            ptr++;
+            push(new BigDecimal(decompressNum("'"+p.charAt(ptr))));
           }
           
           if (cc=='*') {
@@ -1107,6 +1115,16 @@ class Executable extends Preprocessable {
             }
           }
           
+          if (cc=='│') {
+            b = pop(BIGDECIMAL);
+            a = pop(ARRAY);
+            BigDecimal res = B(0);
+            for (poppable c : a.a) {
+              res = res.multiply(b.bd).add(c.bd);
+            }
+            push(res);
+          }
+          
           if (cc=='∙') {
             a = pop();
             b = pop();
@@ -1559,10 +1577,6 @@ class Executable extends Preprocessable {
             }
           }
           
-          if (cc=='’') {
-            ptr++;
-            push(ALLCHARS.indexOf(p.charAt(ptr))+11);
-          }
           
           if (cc=='”') {
             push("");

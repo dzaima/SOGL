@@ -110,3 +110,31 @@ String decompb(BigInteger in) {
   }
   return out;
 }
+
+
+
+BigInteger decompressNum(String s) {
+  BigInteger res = BI(0);
+  try {
+    if (s.startsWith("'")) {
+      int counter = 0;
+      int i = 0;
+      while (compressChars.indexOf(s.charAt(1)) != i-counter-1) {
+        i++;
+        for (int j = 0; j < presetNums.length; j++) {
+          if (i == presetNums[j]) {
+            counter++;
+            break;
+          }
+        }
+      }
+      return BI(i);
+    }
+    s = s.substring(1, s.length()-1);
+    for (int i = 0; i < s.length(); i++) {
+      res = res.multiply(BI(compressChars.length())).add(BI((i==0?1:0)+compressChars.indexOf(s.charAt(i))));
+    }
+    res = res.add(BI(compressChars.length()+presets.length));
+  } catch (Exception e) {}
+  return res;
+}

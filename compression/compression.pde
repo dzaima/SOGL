@@ -2,10 +2,23 @@ import java.util.Comparator;
 import java.util.Collections;
 import java.math.BigInteger;
 boolean decompressInfo = true;
-String compressChars = "⁰¹²³⁴⁵⁶⁷⁸\t⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½ !#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~←↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡͏→";
+String compressChars = "⁰¹²³⁴⁵⁶⁷⁸\t⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½ !#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~←↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□¶‼⌠⌡→";
 String compressedChars = "\nŗ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+int[] presetNums = {0,1,2,3,4,5,6,7,8,9,10,11,12,14,16,18,20,25,36,50,64,75,99,100,101,128,196,200,255,256,257};
+String[] presets = {"0","1","2","3","4","5","6","7","8","9","L","LI","6«","7«","8«","9«","L«","M¼","6²","M»","N¼","M¾","MH","M","MI","N»","N¾","M«","NH","N","NI"};
 String[] dict;
 void setup() {
+  if (parts.length == 0) {
+    StringList a = new StringList();
+    String number = "177246119000114046333645853355560425803654588383312699418824507932488639103120579583879355722098346878168621975211039727654292095048229380658571993926799381557207107108771283669290199024310441305022540377928006867491783496549423676479794602596675965169658932823616200299842370031833967964423641626917894949547145343275944565300192385211482077882442491254874";
+    a.append(compressNum(BI(number)));
+    println(decompressNum(compressNum(BI(number))));
+    /*for (int i = 0; i < 600; i++) {
+      a.append(compressNum(BI(i))+" "+decompressNum(compressNum(BI(i))));
+    }*/
+    saveStrings("compressed", a.array());
+    System.exit(0);
+  }
   //println(toNum1(compress1("niooaaoasoioaiaaaoiineeaei", 0)));
   //println(toCmd1(toNum1(compress1("niooaaoasoioaiaaaoiineeaei", 0))).length());
   //System.exit(0);

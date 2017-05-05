@@ -202,3 +202,35 @@ void add (int base, int what) {
   temp[1] = what;
   toCompress.add(temp);
 }
+
+String compressNum(BigInteger in) {
+  String res = "";
+  for (int i = 0; i < presetNums.length; i++) {
+    if (in.compareTo(BI(presetNums[i])) == 0) {
+      return presets[i];
+    }
+  }
+  int counter = 0;
+  ml:
+  for (int i = 0; i < 280; i++) {
+    for (int j = 0; j < presetNums.length; j++) {
+      if (i == presetNums[j]) {
+        continue ml;
+      }
+    }
+    if (in.compareTo(BI(i)) == 0) {
+      return "'"+compressChars.charAt(counter);
+    }
+    counter++;
+  }
+  in = in.subtract(BI(compressChars.length()+presets.length));
+  while (in.compareTo(BI(compressChars.length()-1)) > 0) {
+    BigInteger[] temp = in.divideAndRemainder(BI(compressChars.length()));
+    res = compressChars.charAt(temp[1].intValue()) + res;
+    in = temp[0];
+  }
+  if (in.compareTo(BI(0)) > 0)
+    res = compressChars.charAt(in.intValue()-1) + res;
+  res = "\""+res+"“";
+  return res;
+}
