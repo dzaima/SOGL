@@ -90,7 +90,7 @@ class Executable extends Preprocessable {
                   push = "";
                   for (int i = 0; i < pushable.s.length(); i++) {
                     if (pushable.s.charAt(i) == 'ŗ') {
-                      push+= a.a.get(index%a.a.size());
+                      push+= a.a.get(index%a.a.size()).s;
                       index++;
                     } else {
                       push+= pushable.s.charAt(i);

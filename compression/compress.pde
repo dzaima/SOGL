@@ -11,8 +11,10 @@ ArrayList<int[]> compress (String s, int method) {
   if (method == 0) {
     ArrayList<Character> used = new ArrayList<Character>();
     for (int i = 0; i < s.length(); i++) {
-      if (!used.contains(s.charAt(i))) {
-        used.add(s.charAt(i));
+      char c = s.charAt(i);
+      if (c == 'ŗ') c = 11;
+      if (!used.contains(c)) {
+        used.add(c);
       }
     }
     if (s.length()<35+used.size()) {
@@ -22,11 +24,18 @@ ArrayList<int[]> compress (String s, int method) {
       add(8, 7);
       add(64, s.length()-2-used.size()-32);
     }
-    Collections.sort(used);
-    //byte[] chars = new byte[used.size()];
     println(used);
-    add(97, compressedChars.indexOf(used.get(0)));
+    Collections.sort(used);
+    println(used);
+    //byte[] chars = new byte[used.size()];
+    for (int i = 0; i < used.size(); i++) {
+      if (used.get(i) == 11) {
+        used.set(i, 'ŗ');
+        break;
+      }
+    }
     int base = 97-compressedChars.indexOf(used.get(0))-1;
+    add(97, compressedChars.indexOf(used.get(0)));
     for (int i = 1; i < used.size(); i++) {
       int diff = compressedChars.indexOf(used.get(i))-compressedChars.indexOf(used.get(i-1))-1;
       add(base, diff);

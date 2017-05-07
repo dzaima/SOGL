@@ -10,7 +10,7 @@ String[] dict;
 void setup() {
   if (parts.length == 0) {
     StringList a = new StringList();
-    String number = "177246119000114046333645853355560425803654588383312699418824507932488639103120579583879355722098346878168621975211039727654292095048229380658571993926799381557207107108771283669290199024310441305022540377928006867491783496549423676479794602596675965169658932823616200299842370031833967964423641626917894949547145343275944565300192385211482077882442491254874";
+    String number = "86137542";
     a.append(compressNum(BI(number)));
     println(decompressNum(compressNum(BI(number))));
     /*for (int i = 0; i < 600; i++) {
@@ -40,8 +40,10 @@ void setup() {
   /*for (int s[] : sb) {
     bits.add(s);
   }*/
-  //for (int[] bit : bits)
-  //println(bit[0]+" "+bit[1]);
+  //DEBUGGING
+  println("\n||----------------------------------------------------------------------||");
+  for (int[] bit : bits)
+    println(bit[0]+" "+bit[1]);
   println("\n||----------------------------------------------------------------------||");
   String comp = toCmd(bits);
   
@@ -50,10 +52,12 @@ void setup() {
       println("fail");
     }
   }*/
+  println("program: " + comp);
   println("total: \""+decompress(comp)+"\"");
   //println(decompress(toCmd("00100000101011101")[0]));
   println("||----------------------------------------------------------------------||");
   println(comp.length() + " bytes, original was "+raw.length()+" bytes. "+ round(comp.length()*1000f/raw.length())/10 + "% of original length");
+  println("More precisely, " + Math.log(toNum(bits).doubleValue())/log(compressChars.length()) + " bytes");//.multiply(new BigDecimal(2/log(256))));
   println(toNum(bits));
   println(toNum(bits).toString().length());
   exit();
