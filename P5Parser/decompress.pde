@@ -25,7 +25,7 @@ String decompb(BigInteger in) {
       int base = 0;
       int closable = 0;
       int l = 0;//*/
-      while (base<97 && l < 20) {
+      while (base<97 && l < 200) {
         l++;
         byte t = read(97-base+closable);
         base+=t+1;

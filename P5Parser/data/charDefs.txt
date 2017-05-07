@@ -27,7 +27,7 @@ useful chars: "”¶±«»≤≥’→←╥∫┼
 	"hello”A6‘ you can mix&match quote types
 
 
-CGSE post generator: SOGL→$  4*→U](https://github.com/dzaima/$→~"#[$~), ”od⁄o" [bytes~/blob/master/chartable.md)”oUd+p"Explanation:”OUO4,{ -=?³d⁄6+;-  *o,o  *O}:3-dWoI}  2*o,o
+CGSE post generator: "#[SOGL](https://github.com/dzaima/SOGL), ”od⁄o" [bytes](https://github.com/dzaima/SOGL/blob/master/chartable.md)”o  4*d+p"Explanation:”O  4*O4,{ -=?³d⁄6+;-  *o,o  *O}:3-dWoI}  2*o,o
 usage: next line = the code; next = "-" for new line, " " for continuation of prevoius; next = empty; next = each line as a description for each "-".
 
 
