@@ -10,7 +10,7 @@ String[] dict;
 void setup() {
   if (parts.length == 0) {
     StringList a = new StringList();
-    String number = "86137542";
+    String number = "66";
     a.append(compressNum(BI(number)));
     println(decompressNum(compressNum(BI(number))));
     /*for (int i = 0; i < 600; i++) {
@@ -41,9 +41,9 @@ void setup() {
     bits.add(s);
   }*/
   //DEBUGGING
-  println("\n||----------------------------------------------------------------------||");
+  /*println("\n||----------------------------------------------------------------------||");
   for (int[] bit : bits)
-    println(bit[0]+" "+bit[1]);
+    println(bit[0]+" "+bit[1]);//*/
   println("\n||----------------------------------------------------------------------||");
   String comp = toCmd(bits);
   
@@ -91,6 +91,7 @@ byte read (int base) {
   BigInteger[] temp = decompressable.divideAndRemainder(BI(base));
   o = temp[1].byteValue();
   decompressable = temp[0];
+  //println("\nREADING " + base + ", GOT " + o);
   return o;
 }
 int readInt (int base) {

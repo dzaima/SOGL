@@ -1,7 +1,7 @@
 class Executable extends Preprocessable {
   int jumpBackTo = 0,
       jumpBackTimes = 0;
-  poppable jumpObj;
+  Poppable jumpObj;
   Executable (String prog, String[] inputs) {
     super(prog, inputs);
   }
@@ -10,8 +10,8 @@ class Executable extends Preprocessable {
     return this;
   }
   void execute() {
-    poppable a = new poppable (p);
-    poppable b = new poppable (B("0123456789"));
+    Poppable a = new Poppable (p);
+    Poppable b = new Poppable (B("0123456789"));
     ptr = -1;
     boolean ao = true;
     while (true) {
@@ -59,7 +59,7 @@ class Executable extends Preprocessable {
             if (lastStringUsed) {
               continue;
             }
-            poppable pushable = tp("Unsupported quote ender");
+            Poppable pushable = tp("Unsupported quote ender");
             switch(ptr<p.length()?p.charAt(ptr):'”') {
               case '‘':
                 pushable = tp(decompress(readString));
@@ -176,7 +176,7 @@ class Executable extends Preprocessable {
           if (cc=='¹') {
             a = pop();
             b = a;
-            ArrayList<poppable> ot = ea();
+            ArrayList<Poppable> ot = ea();
             while (true) {
               if (stack.size()==0) {
                 if (a.type==b.type)
@@ -193,7 +193,7 @@ class Executable extends Preprocessable {
               //println(ot.get(ot.size()-1).a.get(0).s);
               a = pop();
             }
-            ArrayList<poppable> o = ea();
+            ArrayList<Poppable> o = ea();
             //tp(ot).println();
             for (int i = 0; i < ot.size(); i++) {
               o.add(ot.get(ot.size()-i-1));
@@ -225,7 +225,7 @@ class Executable extends Preprocessable {
           }
   
           if (cc=='⁵') {
-            poppable c = pop(NONE);
+            Poppable c = pop(NONE);
             b = pop(NONE);
             a = pop(NONE);
             push (a);
@@ -243,15 +243,15 @@ class Executable extends Preprocessable {
           if (cc=='⁶') {
             a = pop(BIGDECIMAL);
             b = pop(BIGDECIMAL);
-            poppable c = pop(BIGDECIMAL);
+            Poppable c = pop(BIGDECIMAL);
             push(a);
             push(c);
             push(b);
           }
           
           if (cc=='⁷') {
-            poppable d = pop(STRING);
-            poppable c = pop(STRING);
+            Poppable d = pop(STRING);
+            Poppable c = pop(STRING);
             b = pop(STRING);
             a = pop(STRING);
             push(b);
@@ -271,7 +271,7 @@ class Executable extends Preprocessable {
             } else if (a.type==BIGDECIMAL) {
               push (BigDecimal.ZERO.subtract(a.bd));
             } else if (a.type==ARRAY) {
-              ArrayList<poppable> o = ea();
+              ArrayList<Poppable> o = ea();
               for (int i = 0; i < a.a.size(); i++) {
                   o.add(a.a.get(a.a.size()-i-1));
               }
@@ -283,7 +283,7 @@ class Executable extends Preprocessable {
             a = pop();
             if (a.type==ARRAY) {
               boolean useStrings = false;
-              for (poppable c : a.a) {
+              for (Poppable c : a.a) {
                 if (c.type!=BIGDECIMAL) {
                   useStrings = true;
                   break;
@@ -291,7 +291,7 @@ class Executable extends Preprocessable {
               }
               if (useStrings) {
                 String o = "";
-                for (poppable c : a.a) {
+                for (Poppable c : a.a) {
                   if (c.type!=ARRAY)
                     o+=c.s;
                   else
@@ -437,13 +437,13 @@ class Executable extends Preprocessable {
               a = pop();
               if (stack.size()==0) {
                 b = pop(BIGDECIMAL);
-                poppable t = a;
+                Poppable t = a;
                 a=b;
                 b=t;
               } else
                 b = pop();
               if (((a.type==BIGDECIMAL)&&(b.type==STRING))||((a.type==ARRAY)&&(b.type==BIGDECIMAL))) {
-                poppable t = a;
+                Poppable t = a;
                 a = b;
                 b = t;
               }
@@ -456,10 +456,10 @@ class Executable extends Preprocessable {
                 push(res);
               }
               if ((a.type==BIGDECIMAL)&&(b.type==ARRAY)) {
-                ArrayList<poppable> arr = ea(); 
+                ArrayList<Poppable> arr = ea(); 
                 for (int i = 0; i < b.a.size(); i++) {
                   String so = b.a.get(i).s;
-                  arr.add(new poppable(""));
+                  arr.add(new Poppable(""));
                   for (int j = 0; j < a.bd.intValue(); j++) {
                     arr.get(i).s+=so;
                   }
@@ -483,7 +483,7 @@ class Executable extends Preprocessable {
                   b = pop(BIGDECIMAL);
                 else
                   b = pop(STRING);
-                poppable t = a;
+                Poppable t = a;
                 a=b;
                 b=t;
               } else
@@ -494,13 +494,13 @@ class Executable extends Preprocessable {
                 b.a.add(a);
                 push(b);
               } else if (a.type==ARRAY && b.type==STRING) {
-                ArrayList<poppable> o = ea();
+                ArrayList<Poppable> o = ea();
                 o.add(tp(b.s));
                 for (int i = 0; i < a.a.size(); i++)
                   o.add(a.a.get(i));
                 push(o);
               } else if (a.type==ARRAY && b.type==BIGDECIMAL) {
-                ArrayList<poppable> o = ea();
+                ArrayList<Poppable> o = ea();
                 o.add(b);
                 for (int i = 0; i < a.a.size(); i++)
                   o.add(a.a.get(i));
@@ -562,19 +562,22 @@ class Executable extends Preprocessable {
           if (cc=='<') {
             b=pop(BIGDECIMAL);
             a=pop(BIGDECIMAL);
+            a.roundForDisplay();
+            b.roundForDisplay();
             if (a.type==BIGDECIMAL && b.type==BIGDECIMAL)
               push (a.bd.compareTo(b.bd)<0);
+            else
+              push (a.s.compareTo(b.s)<0);
           }
           if (cc=='=') {
             a=pop(STRING);
-            b=pop(a.type);
+            b=pop(STRING);
+            
             if (a.type==BIGDECIMAL) {
-              a.bd = a.bd.divide(B(1), precision-5, RoundingMode.HALF_UP);
-              a.s = a.bd.toString();
+              a.s = roundForDisplay(a.bd).toString();
             }
             if (b.type==BIGDECIMAL) {
-              b.bd = roundForDisplay(b.bd);
-              b.s = b.bd.toString();
+              b.s = roundForDisplay(b.bd).toString();
             }
             if (a.s.equals(b.s))
               push (true);
@@ -616,7 +619,7 @@ class Executable extends Preprocessable {
           if (cc=='G') {
             a = pop(BIGDECIMAL);
             b = pop(BIGDECIMAL);
-            poppable c = pop(BIGDECIMAL);
+            Poppable c = pop(BIGDECIMAL);
             push (b);
             push (a);
             push (c);
@@ -691,7 +694,7 @@ class Executable extends Preprocessable {
           if (cc=='R') {
             a = pop();
             if (a.type==BIGDECIMAL) push (char(a.bd.intValue())+"");
-            ArrayList<poppable> res = ea();
+            ArrayList<Poppable> res = ea();
             if (a.type==STRING) {
               for (int i = 0; i < a.s.length(); i++)
                 res.add(tp(B(a.s.charAt(i)+0)));
@@ -728,7 +731,7 @@ class Executable extends Preprocessable {
                 b = pop(STRING);
               if (a.type==BIGDECIMAL&b.type==BIGDECIMAL)push(a.bd.add(b.bd)); 
               if ((a.type==BIGDECIMAL)&(b.type==STRING)) {
-                poppable t = a;
+                Poppable t = a;
                 a = b;
                 b = t;
               }
@@ -742,7 +745,7 @@ class Executable extends Preprocessable {
                 push(b.s.indexOf(a.s)+1);
               }
               if (a.type==STRING && b.type==ARRAY) {
-                poppable t = a;
+                Poppable t = a;
                 a = b;
                 b = t;
               }
@@ -799,7 +802,7 @@ class Executable extends Preprocessable {
                   b = pop(STRING);
                 else
                   b = pop(BIGDECIMAL);
-                poppable t = a;
+                Poppable t = a;
                 a=b;
                 b=t;
               } else
@@ -820,13 +823,13 @@ class Executable extends Preprocessable {
           
           if (cc>='a' & cc <='e') {
             int cv = cc-'a';
-            push(new poppable (vars[cv], cv, this));
+            push(new Poppable (vars[cv], cv, this));
           }
           
           if (cc=='h') {
             a = pop(STRING);
             b = pop();
-            poppable c = pop();
+            Poppable c = pop();
             push(b);
             push(c);
             push(a);
@@ -943,7 +946,7 @@ class Executable extends Preprocessable {
                   b = pop(BIGDECIMAL);
                 else
                   b = pop(STRING);
-                poppable t = a;
+                Poppable t = a;
                 a=b;
                 b=t;
               } else
@@ -954,7 +957,7 @@ class Executable extends Preprocessable {
               if ((b.type==BIGDECIMAL)&(a.type==STRING)) push(a.s.indexOf(b.bd.toString())+1);
               
               if (a.type==BIGDECIMAL && b.type==ARRAY) {
-                poppable t = a;
+                Poppable t = a;
                 a = b;
                 b = t;
               }
@@ -1036,7 +1039,7 @@ class Executable extends Preprocessable {
               } else if (data[ldata[ptr]].getInt("T")==ARRAY) {
                 if (dataA[ldata[ptr]].a.size()>0) {
                   ptr = ldata[ptr];
-                  poppable A = dataA[ptr];
+                  Poppable A = dataA[ptr];
                   push(A.a.get(0));
                   A.a.remove(0);
                   data[ptr] = parseJSONObject("{\"T\":4,\"L\":\""+B(data[ptr].getString("L")).add(B(1))+"\"}");
@@ -1107,9 +1110,9 @@ class Executable extends Preprocessable {
               if (b.bd.intValue()==2 && !b.inp)
                 push(BAtoString(toBase(2, a.bd.toBigInteger())));
               else {
-                ArrayList<poppable> out = ea();
+                ArrayList<Poppable> out = ea();
                 for (byte cb : toBase(b.bd.intValue(), a.bd.toBigInteger()))
-                  out.add(new poppable(B(cb)));
+                  out.add(new Poppable(B(cb)));
                 push(out);
               }
             }
@@ -1119,7 +1122,7 @@ class Executable extends Preprocessable {
             b = pop(BIGDECIMAL);
             a = pop(ARRAY);
             BigDecimal res = B(0);
-            for (poppable c : a.a) {
+            for (Poppable c : a.a) {
               res = res.multiply(b.bd).add(c.bd);
             }
             push(res);
@@ -1129,12 +1132,12 @@ class Executable extends Preprocessable {
             a = pop();
             b = pop();
             if (((a.type==BIGDECIMAL)&&(b.type==STRING))||((a.type==STRING)&&(b.type==BIGDECIMAL))||((a.type==ARRAY)&&(b.type==BIGDECIMAL))) {
-              poppable t = a;
+              Poppable t = a;
               a = b;
               b = t;
             }
             if ((a.type==BIGDECIMAL)&&(b.type==ARRAY)) {
-              ArrayList<poppable> out = new ArrayList<poppable>();
+              ArrayList<Poppable> out = new ArrayList<Poppable>();
               for (int i = 0; i < b.a.size()*a.bd.longValue(); i++) {
                 out.set(i,a.a.get(i%a.a.size()));
               }
@@ -1177,7 +1180,7 @@ class Executable extends Preprocessable {
           
           if (cc=='╥') {
             a = npop(STRING);
-            if (a.type==BIGDECIMAL)a=new poppable(a.toString());
+            if (a.type==BIGDECIMAL)a=new Poppable(a.toString());
             String s = a.s;
             for (int i = s.length()-2; i > -1; i--) {
               s+=s.charAt(i);
@@ -1258,11 +1261,11 @@ class Executable extends Preprocessable {
             b = pop(STRING);
             a = pop(STRING);
             String curr = "";
-            ArrayList<poppable> out = ea();
+            ArrayList<Poppable> out = ea();
             int count = a.s.length();
             for (int i = 0; i < count; i++) {
               if (i < count - b.s.length() && a.s.substring(0,b.s.length()).equals(b.s)) {
-                out.add(new poppable(curr));
+                out.add(new Poppable(curr));
                 a.s = a.s.substring(b.s.length());
                 i+=b.s.length()-1;
                 curr = "";
@@ -1272,17 +1275,17 @@ class Executable extends Preprocessable {
               }
             }
             //if (!curr.equals(""))
-              out.add(new poppable(curr));
+              out.add(new Poppable(curr));
             push(out);
           }
           if (cc=='θ') {
             a = pop();
             String curr = "";
-            ArrayList<poppable> out = ea();
+            ArrayList<Poppable> out = ea();
             int count = a.s.length();
             for (int i = 0; i < count; i++) {
               if (a.s.charAt(0)==' ') {
-                out.add(new poppable(curr));
+                out.add(new Poppable(curr));
                 curr = "";
               } else {
                 curr+=a.s.charAt(0);
@@ -1290,7 +1293,7 @@ class Executable extends Preprocessable {
               a.s = a.s.substring(1);
             }
             if (!curr.equals(""))
-              out.add(new poppable(curr));
+              out.add(new Poppable(curr));
             push(out);
           }
           
@@ -1302,10 +1305,10 @@ class Executable extends Preprocessable {
           if (cc=='λ') {
             a = pop(BIGDECIMAL);
             if (a.type==BIGDECIMAL) {
-              ArrayList<poppable> out = ea();
+              ArrayList<Poppable> out = ea();
               for (BigDecimal i = B(1); i.compareTo(a.bd)!=0; i = i.add(B(1)))
                 if (a.bd.divideAndRemainder(i)[1].equals(B(0)))
-                  out.add(new poppable(i));
+                  out.add(new Poppable(i));
               push(out);
             }
           }
@@ -1313,24 +1316,25 @@ class Executable extends Preprocessable {
           if (cc=='Λ') {
             a = pop(BIGDECIMAL);
             if (a.type==BIGDECIMAL) {
-              ArrayList<poppable> out = ea();
+              ArrayList<Poppable> out = ea();
               for (BigDecimal i = B(1); i.compareTo(a.bd)!=1; i = i.add(B(1))) //<>// //<>//
                 if (a.bd.divideAndRemainder(i)[1].equals(B(0)))
-                  out.add(new poppable(i));
+                  out.add(new Poppable(i));
               push(out);
             }
           }
           
           if (cc=='Ο') {
-            poppable c = pop();
+            Poppable c = pop();
             b = pop(c.type);
             a = pop(BIGDECIMAL);
+            BigDecimal res = a.bd;
             if (a.type==BIGDECIMAL&&b.type==BIGDECIMAL&&c.type==BIGDECIMAL) {
               if (a.bd.compareTo(b.bd)==-1)
-                a.bd=b.bd;
+                res=b.bd;
               if (a.bd.compareTo(c.bd)==1)
-                a.bd=c.bd;
-              push(a);
+                res=c.bd;
+              push(res);
             }
             if (a.type==BIGDECIMAL&&b.type==STRING&&c.type==STRING) {
               String o = "";
@@ -1407,9 +1411,14 @@ class Executable extends Preprocessable {
               for (int i = 0; i < a.s.length(); i++)
                 s[i] = a.s.charAt(i)+"";
               push(s);
+            } else if (a.type == BIGDECIMAL) {
+              String[] s = new String[a.s.length()];
+              for (int i = 0; i < a.s.length(); i++)
+                s[i] = a.s.charAt(i)+"";
+              push(s);
             } else if (a.type == ARRAY) {
               boolean useStrings = false;
-              for (poppable c : a.a) {
+              for (Poppable c : a.a) {
                 if (c.type!=BIGDECIMAL) {
                   useStrings = true;
                   break;
@@ -1417,7 +1426,7 @@ class Executable extends Preprocessable {
               }
               if (useStrings) {
                 String o = "";
-                for (poppable c : a.a) {
+                for (Poppable c : a.a) {
                   if (c.type!=ARRAY)
                     o+=c.s+"\n";
                   else
@@ -1429,60 +1438,110 @@ class Executable extends Preprocessable {
           }
           
           if (cc=='ŗ') {
-            a = pop();//last (to what to replace) 1st array
-            b = pop();//middle (what to replace) 2nd arrat
-            poppable c = pop();//first (from what to replace) 3rd array
+            Poppable c = pop(STRING);
+            b = pop(STRING);
+            a = pop(STRING);
+            String[] todo;
+            boolean endArray;
+            if (a.type==ARRAY) {
+              todo = new String[a.a.size()];
+              int i = 0;
+              for (Poppable p : a.a) {
+                todo[i] = p.s;
+                i++;
+              }
+              endArray = true;
+            } else {
+              todo = new String[]{a.s};
+              endArray = false;
+            }
+            String[] whatToReplace;
+            if (b.type==ARRAY) {
+              int i = 0;
+              whatToReplace = new String[b.a.size()];
+              for (Poppable p : b.a) {
+                whatToReplace[i] = p.s;
+                i++;
+              }
+            } else {
+              whatToReplace = new String[] {b.s};
+            }
+            String[] replaceTo;
+            if (c.type==ARRAY) {
+              int i = 0;
+              replaceTo = new String[c.a.size()];
+              for (Poppable p : c.a) {
+                replaceTo[i] = p.s;
+                i++;
+              }
+            } else {
+              replaceTo = new String[] {c.s};
+            }
+            ArrayList out = new ArrayList<Poppable>();
+            int item = 0;
+            for (String currentS : todo) {
+              String o = "";
+              while (currentS.length() > 0) {
+                boolean replaced = false;
+                for (String cRT : whatToReplace) {
+                  if (currentS.startsWith(cRT)) {
+                    o+=replaceTo[item%replaceTo.length];
+                    currentS = currentS.substring(min(cRT.length(), currentS.length()));
+                    item++;
+                    replaced = true;
+                    break;
+                  }
+                }
+                if (!replaced) {
+                  o+=currentS.charAt(0);
+                  currentS = currentS.substring(1);
+                }
+              }
+              out.add(tp(o));
+            }
+            if (endArray) {
+              push(out);
+            } else {
+              push((String)out.get(0));
+            }
             //poppable t;
-            int ac = (a.type==ARRAY?1:0)+(b.type==ARRAY?1:0)+(c.type==ARRAY?1:0);
-            /*if (b.type==ARRAY && a.type!=ARRAY) {
-              t = a;
-              a = b;
-              b = t;
-            }
-            if (c.type==ARRAY && b.type!=ARRAY) {
-              t = b;
-              b = c;
-              c = t;
-            }
-            if (b.type==ARRAY && a.type!=ARRAY) {
-              t = a;
-              a = b;
-              b = t;
-            }*/
-            if (ac == 0) {
-              push(c.s.replace(b.s,a.s));
-            } else if (ac==1) {
-              if (c.type==ARRAY) {
+            //int ac = (a.type==ARRAY?1:0)+(b.type==ARRAY?1:0)+(c.type==ARRAY?1:0);//array count
+            /*if (ac == 0) {
+              push(a.s.replace(b.s,c.s));
+            } else if (ac>1) {
+              ArrayList
+              if (a.type==ARRAY) {
                 ArrayList<poppable> o = new ArrayList<poppable>();
                 for (int i = 0; i < a.a.size(); i++)
-                  o.add(tp(a.a.get(i).s.replace(b.s,a.s)));
+                  o.add(tp(a.a.get(i).s.replace(b.s,c.s)));
                 push(o);
-              } else if (b.type==ARRAY) {
-                String o = c.s;
+              }
+              if (b.type==ARRAY) {
+                String o = a.s;
                 for (poppable p : b.a)
-                  o = o.replace(p.s, a.s);
+                  o = o.replace(p.s, c.s);
                 push (o);
               } else {
                 String o = "";
                 int item = 0;
-                int length = c.s.length();
+                int length = a.s.length();
                 for (int i = 0; i < length; i++) {
-                  if (c.s.startsWith(b.s)) {
-                    o+=a.a.get(item%a.a.size()).s;
+                  if (a.s.startsWith(b.s)) {
+                    o+=c.a.get(item%a.a.size()).s;
                     item++;
                   } else {
-                    o+=c.s.charAt(0);
+                    o+=a.s.charAt(0);
                   }
-                  c.s = c.s.substring(1);
+                  a.s = a.s.substring(1);
                 }
                 push(o);
               }
-            }
+            }*/
           }
           
           if (cc=='ž') {
-            poppable d = pop(ARRAY);
-            poppable c = pop(BIGDECIMAL);
+            Poppable d = pop(ARRAY);
+            Poppable c = pop(BIGDECIMAL);
             b = pop(BIGDECIMAL);
             a = pop(ARRAY);
             
@@ -1506,38 +1565,38 @@ class Executable extends Preprocessable {
             if (a.type==ARRAY) {
               if (b.type==STRING) {
                 int maxlen = 0;
-                for (poppable c : a.a) 
+                for (Poppable c : a.a) 
                   if (c.s.length()>maxlen) 
                     maxlen = c.s.length();
-                for (poppable c : a.a) 
+                for (Poppable c : a.a) 
                   while (c.s.length()<maxlen)
                     c.s+=" ";
                 for (int i = 0; i < b.s.length(); i++) {
                   a.a.set(i%a.a.size(),tp(a.a.get(i%a.a.size()).s+b.s.charAt(i)));
                 }
-                push(a);
+                push(spacesquared(a.a));
               }
               if (b.type==ARRAY) {
                 while (a.a.size()<b.a.size())
-                  a.a.add(new poppable(""));
+                  a.a.add(new Poppable(""));
                 while (b.a.size()<a.a.size())
-                  b.a.add(new poppable(""));
-                ArrayList<poppable> s = spacesquared(a.a);
-                ArrayList<poppable> e = spacesquared(b.a);
-                ArrayList<poppable> res = new ArrayList<poppable>();
+                  b.a.add(new Poppable(""));
+                ArrayList<Poppable> s = spacesquared(a.a);
+                ArrayList<Poppable> e = spacesquared(b.a);
+                ArrayList<Poppable> res = new ArrayList<Poppable>();
                 for (int i = 0; i < s.size(); i++) {
                   res.add(tp(s.get(i).s+e.get(i).s));
                 }
-                push(res);
+                push(spacesquared(res));
               }
             }
             if (a.type==STRING) {
               if (b.type==ARRAY) {
                 int maxlen = 0; //<>// //<>//
-                for (poppable c : b.a) 
+                for (Poppable c : b.a) 
                   if (c.s.length()>maxlen) 
                     maxlen = c.s.length();
-                for (poppable c : b.a) 
+                for (Poppable c : b.a) 
                   while (c.s.length()<maxlen)
                     c.s+=" ";
                 for (int i = 0; i < a.s.length(); i++) {
@@ -1546,7 +1605,7 @@ class Executable extends Preprocessable {
                 for (int i = a.s.length();i%b.a.size()!=0;i++) {
                   b.a.set(i%b.a.size(),tp(" "+b.a.get(i%b.a.size()).s));
                 }
-                push(b);
+                push(spacesquared(b.a));
               }
             }
           }
@@ -1587,7 +1646,7 @@ class Executable extends Preprocessable {
           //eprintln("`"+cc+"`@"+((sptr+"").length()==1?"0"+sptr:sptr)+": "+stack.toString().replace("\n  ", "").replace("\n", ""));
           eprint(getStart(false)+"`"+cc+"`@"+up0(sptr, str(p.length()).length())+": [");
           long EPC=0;
-          for (poppable EP : stack) {
+          for (Poppable EP : stack) {
             EPC++;
             eprint(EP.sline(true));
             if (EPC<stack.size()) eprint(", ");

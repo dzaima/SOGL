@@ -13,6 +13,7 @@ final int BIGDECIMAL = 3;
 final int ARRAY = 4;
 final int INS = 5;//input string
 final int INN = 6;//input number
+final BigDecimal ZERO = BigDecimal.ZERO;
 boolean saveDebugToFile;
 boolean saveOutputToFile;
 boolean logDecompressInfo;
@@ -114,7 +115,7 @@ BigDecimal B (String a) {
     return B(0);
   }
 }
-boolean truthy (poppable p) {
+boolean truthy (Poppable p) {
   if (p.type==BIGDECIMAL) 
     return !p.bd.equals(B(0));
   else if (p.type==STRING)
@@ -123,7 +124,7 @@ boolean truthy (poppable p) {
     return false;
   return p.a.size()!=0;
 }
-boolean falsy (poppable p) {
+boolean falsy (Poppable p) {
   if (p.type==BIGDECIMAL) 
     return p.bd.equals(B(0));
   else if (p.type==STRING)
@@ -142,20 +143,20 @@ String up0 (int num, int a) {
   }
   return res;
 }
-poppable array (String[] arr) {
-  ArrayList<poppable> o = new ArrayList<poppable>();
+Poppable array (String[] arr) {
+  ArrayList<Poppable> o = new ArrayList<Poppable>();
   for (String s : arr)
     o.add(tp(s));
-  return new poppable(o);
+  return new Poppable(o);
 }
-ArrayList<poppable> array (poppable[] arr) {
-  ArrayList<poppable> o = new ArrayList<poppable>();
-  for (poppable s : arr)
+ArrayList<Poppable> array (Poppable[] arr) {
+  ArrayList<Poppable> o = new ArrayList<Poppable>();
+  for (Poppable s : arr)
     o.add(s);
   return o;
 }
-poppable[] array (ArrayList<poppable> arr) {
-  poppable[] o = new poppable[arr.size()];
+Poppable[] array (ArrayList<Poppable> arr) {
+  Poppable[] o = new Poppable[arr.size()];
   for (int i = 0; i < o.length; i++)
     o[i] = (arr.get(i));
   return o;
@@ -167,23 +168,30 @@ poppable[] array (ArrayList<poppable> arr) {
   }
   return s;
 }*/
-ArrayList<poppable> ea() {
-  return new ArrayList<poppable>();
+ArrayList<Poppable> ea() {
+  return new ArrayList<Poppable>();
 }
-poppable tp(String s) {//to poppable
-  return new poppable(s);
+Poppable tp(String s) {//to poppable
+  return new Poppable(s);
 }
-poppable tp(BigDecimal bd) {
-  return new poppable(bd);
+Poppable tp(BigDecimal bd) {
+  return new Poppable(bd);
 }
-poppable tp(ArrayList<poppable> bd) {
-  return new poppable(bd);
+Poppable tp(ArrayList<Poppable> bd) {
+  return new Poppable(bd);
 }
-
 
 BigDecimal roundForDisplay(BigDecimal bd) {
-  return bd.divide(B(1), precision-5, RoundingMode.HALF_UP);
+  return bd.setScale(precision-5, BigDecimal.ROUND_HALF_UP);
 }
+BigDecimal StrToBD(String s, BigDecimal fail) {
+  try {
+    return new BigDecimal(s);
+  } catch (Exception e) {
+    return fail;
+  }
+}
+
 
 String readFile(String path, Charset encoding) {
   try {

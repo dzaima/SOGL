@@ -1,8 +1,8 @@
 String quirkLetters = " 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 String[] quirks = {"0*0/","1*1/","2*2/","3*3/","4*4/","5*5/","6*6/","7*7/","8*8/","9*9/","0/0*","1/1*","2/2*","3/3*","4/4*","5/5*","6/6*","7/7*","8/8*","9/9*","UU","uu","SU","Su","US","uS","!?","²²","!!","2÷","╥╥","╥╤","ΓΓ"};
 class Preprocessable {
-  ArrayList<poppable> stack = new ArrayList<poppable>();
-  ArrayList<poppable> usedInputs = new ArrayList<poppable>();
+  ArrayList<Poppable> stack = new ArrayList<Poppable>();
+  ArrayList<Poppable> usedInputs = new ArrayList<Poppable>();
   int ptr = 0;
   int inpCtr = -1;
   String[] inputs;
@@ -11,8 +11,8 @@ class Preprocessable {
   int[] qdata;
   int[] lef; 
   JSONObject[] data;
-  poppable[] dataA;
-  poppable[] vars;
+  Poppable[] dataA;
+  Poppable[] vars;
   String p;
   Executable parent = null;
   String lastString = "Hello, World!";
@@ -29,19 +29,19 @@ class Preprocessable {
     ldata = new int[p.length()];
     qdata = new int[p.length()];
     data = new JSONObject[p.length()];
-    dataA = new poppable[p.length()];
+    dataA = new Poppable[p.length()];
     for (int i = 0; i < sdata.length; i++) {
       sdata[i]=0;
       ldata[i]=0;
       qdata[i]=-1;
     }
     //variable defaults
-    vars = new poppable[5];
-    vars[0] = new poppable (B(0));
-    vars[1] = new poppable (INN);
-    vars[2] = new poppable (ea());
-    vars[3] = new poppable (INS);
-    vars[4] = new poppable (INN);
+    vars = new Poppable[5];
+    vars[0] = new Poppable (B(0));
+    vars[1] = new Poppable (INN);
+    vars[2] = new Poppable (ea());
+    vars[3] = new Poppable (INS);
+    vars[4] = new Poppable (INN);
     char[] skippingChars = {' ', 'Ζ', 'ƨ', 'Ƨ'};
     int[] skippingCharsL = { 1,   2,   2,   2 };
     /*
@@ -185,73 +185,73 @@ class Preprocessable {
     eprintln("###\n");
     return this;
   }
-  poppable sI () {
+  Poppable sI () {
     try {
       inpCtr++;
       if (inpCtr>=inputs.length)
         inpCtr = 0;
-      usedInputs.add(new poppable(inputs[inpCtr], true));
-      return new poppable (inputs[inpCtr], true);
+      usedInputs.add(new Poppable(inputs[inpCtr], true));
+      return new Poppable (inputs[inpCtr], true);
     } 
     catch (Exception e) {
       eprintln("*-*String input error at inpCtr "+inpCtr+": "+e+"*-*");
-      return new poppable ("", false);
+      return new Poppable ("", false);
     }
   }
 
-  poppable nI () {
+  Poppable nI () {
     try {
       inpCtr++;
       if (inpCtr>=inputs.length)
         inpCtr = 0;
-      usedInputs.add(new poppable(B(inputs[inpCtr]), true));
-      return new poppable (B(inputs[inpCtr]), true);
+      usedInputs.add(new Poppable(B(inputs[inpCtr]), true));
+      return new Poppable (B(inputs[inpCtr]), true);
     } 
     catch (Exception e) {
       eprintln("*-*nI error: "+e+"*-*");
-      return new poppable (B(0), true);
+      return new Poppable (B(0), true);
     }
   }
-  void setvar (int v, poppable p) {
+  void setvar (int v, Poppable p) {
     vars[v]=p;
     }
   void push (String s) {
-    stack.add(new poppable(s));
+    stack.add(new Poppable(s));
   }
   void push (long l) {
-    stack.add(new poppable(new BigDecimal(l)));
+    stack.add(new Poppable(new BigDecimal(l)));
   }
   void push (float l) {
-    stack.add(new poppable(new BigDecimal(l)));
+    stack.add(new Poppable(new BigDecimal(l)));
   }
-  void push (ArrayList<poppable> a) {
-    stack.add(new poppable(a));
+  void push (ArrayList<Poppable> a) {
+    stack.add(new Poppable(a));
   }
   void push (String[] a) {
-    stack.add(new poppable(array(a)));
+    stack.add(new Poppable(array(a)));
   }
   void push (boolean b) {
-    stack.add(new poppable(B(b?"1":"0")));
+    stack.add(new Poppable(B(b?"1":"0")));
   }
   void push (BigDecimal d) {
-    stack.add(new poppable(d));
+    stack.add(new Poppable(d));
   }
-  void push (poppable p) {
-    stack.add(new poppable(p));
+  void push (Poppable p) {
+    stack.add(new Poppable(p));
   }
   
-  poppable pop (int implicitType) {
+  Poppable pop (int implicitType) {
     if (stack.size()>0) {
       return pop();
     }
     if (implicitType == BIGDECIMAL) return nI();
     else if (implicitType == STRING) return sI();
-    else return new poppable(B("0"));
+    else return new Poppable(B("0"));
   }
   
-  poppable pop () {
+  Poppable pop () {
     try {
-      poppable r = gl();
+      Poppable r = gl();
       stack.remove(stack.size()-1);
       return r;
     } catch (Exception e) {
@@ -271,7 +271,7 @@ class Preprocessable {
     }
   }
   
-  poppable npop (int implicitType) {
+  Poppable npop (int implicitType) {
     if (stack.size()>0) {
       return gl();
     }
@@ -279,13 +279,13 @@ class Preprocessable {
       return nI();
     else if (implicitType == STRING)
       return sI();
-    else return new poppable();
+    else return new Poppable(0);
   }
-  poppable gl () {//get last
+  Poppable gl () {//get last
     if (stack.size()==0) {
-      return new poppable (B(0));
+      return new Poppable (B(0));
     }
-    poppable g = stack.get(stack.size()-1);
+    Poppable g = stack.get(stack.size()-1);
     return g;
   }
   String getStart(boolean self) {

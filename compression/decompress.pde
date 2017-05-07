@@ -114,7 +114,7 @@ String decompb(BigInteger in) {
 BigInteger decompressNum(String s) {
   BigInteger res = BI(0);
   try {
-    if (s.startsWith("’")) {
+    if (s.startsWith("'")) {
       int counter = 0;
       int i = 0;
       while (compressChars.indexOf(s.charAt(1)) != i-counter-1) {

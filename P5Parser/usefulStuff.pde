@@ -3,14 +3,14 @@ String spaceup (String s, int l) {
     s+=" ";
   return s;
 }
-ArrayList<poppable> spacesquared(ArrayList<poppable> arr) {
-  ArrayList<poppable> res = new ArrayList<poppable>();
+ArrayList<Poppable> spacesquared(ArrayList<Poppable> arr) {
+  ArrayList<Poppable> res = new ArrayList<Poppable>();
   int l = 0;
-  for (poppable b : arr) {
+  for (Poppable b : arr) {
     if (b.s.length() > l)
       l = b.s.length();
   }
-  for (poppable b : arr) {
+  for (Poppable b : arr) {
     res.add(tp(spaceup(b.s, l)));
   }
   return res;

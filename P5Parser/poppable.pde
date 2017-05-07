@@ -1,70 +1,74 @@
-class poppable {
-  BigDecimal bd = new BigDecimal("0");
+class Poppable {
+  BigDecimal bd;//these should really be final
   String s = "";
-  ArrayList<poppable> a = new ArrayList<poppable>();
+  ArrayList<Poppable> a = new ArrayList<Poppable>();
   int type = 0;
   boolean inp = false;
-  poppable (String ii) {
+  Poppable (String ii) {
+    bd = BigDecimal.ZERO;
     type = STRING;
     s = ii;
   }
-  poppable (BigDecimal ii) {
+  Poppable (BigDecimal ii) {
     type = BIGDECIMAL;
     bd = ii;
     s = ii.toString();
   }
-  poppable (int ii) {
+  Poppable (int ii) {
+    bd = BigDecimal.ZERO;
     type = ii;
     //bd = B(ii);
   }
-  poppable (ArrayList<poppable> ii) {
+  Poppable (ArrayList<Poppable> ii) {
+    bd = BigDecimal.ZERO;
     type = ARRAY;
     a = ii;
   }
-  poppable () {
-  }
-  poppable (poppable tc) {
+  Poppable (Poppable tc) {
     type = tc.type;
     s = tc.s;
     a = tc.a;
     bd = tc.bd;
     inp = tc.inp;
   }
-  poppable (poppable o, int varsave, Executable ex) {
+  Poppable (Poppable o, int varsave, Executable ex) {
     type = o.type;
     if (o.type==INS) {
       type = STRING;
       s = ex.sI().s;
+      bd = StrToBD(s, ZERO);
       inp = true;
       ex.setvar(varsave, this);
-    }
-    if (o.type==INN) {
+    } else if (o.type==INN) {
       type = BIGDECIMAL;
       bd = ex.nI().bd;
       s = bd.toString();
       inp = true;
       ex.setvar(varsave, this);
-    }
-    if (o.type==BIGDECIMAL) {
+    } else if (o.type==BIGDECIMAL) {
       bd = o.bd;
       s = bd.toString();
+    } else {
+      bd = ZERO;
     }
     if (o.type==STRING) {
       s = o.s;
     }
   }
-  poppable (BigDecimal ii, boolean imp) {
+  Poppable (BigDecimal ii, boolean imp) {
     type = BIGDECIMAL;
     bd = ii;
     s = ii.toString();
     inp = imp;
   }
-  poppable (String ii, boolean imp) {
+  Poppable (String ii, boolean imp) {
+    bd = BigDecimal.ZERO;
     type = STRING;
     s = ii;
     inp = imp;
   }
-  poppable (ArrayList<poppable> ii, boolean imp) {
+  Poppable (ArrayList<Poppable> ii, boolean imp) {
+    bd = BigDecimal.ZERO;
     type = ARRAY;
     a = ii;
     inp = imp;
@@ -128,17 +132,21 @@ class poppable {
     }
     return "*-*sline reached the unreachable!*-*";
   }
-  poppable copy() {
+  Poppable copy() {
     if (type==BIGDECIMAL) {
       return tp(bd);
     }
     if (type==BIGDECIMAL) {
       return tp(s);
     }
-    ArrayList<poppable> out = ea();
-    for (poppable cc : a) {
+    ArrayList<Poppable> out = ea();
+    for (Poppable cc : a) {
       out.add(cc.copy());
     }
     return tp(out);
+  }
+  Poppable roundForDisplay() {
+    bd = bd.setScale(precision-5, BigDecimal.ROUND_HALF_UP);
+    return this;
   }
 }

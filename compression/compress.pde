@@ -17,16 +17,16 @@ ArrayList<int[]> compress (String s, int method) {
         used.add(c);
       }
     }
-    if (s.length()<35+used.size()) {
+    if (s.length()<34+used.size()) {
       add(8, 0);
       add(32, s.length()-2-used.size());
     } else {
       add(8, 7);
       add(64, s.length()-2-used.size()-32);
     }
-    println(used);
+    //println(used);
     Collections.sort(used);
-    println(used);
+    //println(used);
     //byte[] chars = new byte[used.size()];
     for (int i = 0; i < used.size(); i++) {
       if (used.get(i) == 11) {
@@ -34,11 +34,13 @@ ArrayList<int[]> compress (String s, int method) {
         break;
       }
     }
+    //println(used);
     int base = 97-compressedChars.indexOf(used.get(0))-1;
     add(97, compressedChars.indexOf(used.get(0)));
     for (int i = 1; i < used.size(); i++) {
       int diff = compressedChars.indexOf(used.get(i))-compressedChars.indexOf(used.get(i-1))-1;
       add(base, diff);
+      //println(base, diff, compressedChars.indexOf(used.get(i-1)), compressedChars.indexOf(used.get(i)));
       base-=diff;
       if (i>1) base--;
     }
@@ -224,7 +226,7 @@ String compressNum(BigInteger in) {
       }
     }
     if (in.compareTo(BI(i)) == 0) {
-      return "’"+compressChars.charAt(counter);
+      return "'"+compressChars.charAt(counter);
     }
     counter++;
   }
