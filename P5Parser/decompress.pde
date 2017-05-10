@@ -1,4 +1,5 @@
 String decompress(String s) {
+  s = s.replace("\n", "¶");
   byte[] bits = new byte[s.length()];
   for (int i = 0; i < s.length(); i++) {
     bits[s.length()-i-1] = (byte)compressChars.indexOf(s.charAt(i));
@@ -20,7 +21,6 @@ String decompb(BigInteger in) {
                       //eq/7*32+32
       lastD = length;
       if(logDecompressInfo) currentPrinter.eprint ("custom dictionary "+(eq==7?"long ":"")+"string with characters ");
-      
       ArrayList<String> CU = new ArrayList<String>(); //chars used
       int base = 0;
       int closable = 0;

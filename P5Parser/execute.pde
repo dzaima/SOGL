@@ -1543,7 +1543,7 @@ class Executable extends Preprocessable {
             } else {
               replaceTo = new String[] {c.s};
             }
-            ArrayList out = new ArrayList<Poppable>();
+            ArrayList<Poppable> out = new ArrayList<Poppable>();
             int item = 0;
             for (String currentS : todo) {
               String o = "";
@@ -1568,7 +1568,7 @@ class Executable extends Preprocessable {
             if (endArray) {
               push(out);
             } else {
-              push((String)out.get(0));
+              push(out.get(0).s);
             }
             //poppable t;
             //int ac = (a.type==ARRAY?1:0)+(b.type==ARRAY?1:0)+(c.type==ARRAY?1:0);//array count
