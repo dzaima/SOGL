@@ -239,7 +239,9 @@ class Preprocessable {
   void push (Poppable p) {
     stack.add(new Poppable(p));
   }
-  
+  void push (String[][] a) {
+    stack.add(new Poppable(array(a)));
+  }
   Poppable pop (int implicitType) {
     if (stack.size()>0) {
       return pop();

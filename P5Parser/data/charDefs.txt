@@ -8,6 +8,7 @@ all the current chars:
 ⁰¹²³⁴⁵⁶⁷⁸TN⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½← !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡¶→“”‘’
 
 |        ^^ \t and \n
+½ ∑ ℮ « № »
 
 IO:
 	out: if array, if not specified otherwise, then will output each item in a newline.
@@ -314,12 +315,14 @@ G	puts the 3rd from the top of the stack ontop
 		`123G` -> [2, 3, 1]
 H	1 input
 		number: decreases by 1
-		string: decreases the last number in stack. If there are none, use user input
+		string: rotate left
+			`hello”H` -> [["o"],["l"],["l"],["e"],["h"]]
 		array: rotate left
-			`[["gh","ab"],["ij","cd"],["kl","ef"]]I` -> [["ab","cd","ef"], ["gh","ij","kl"]]
+			`[["gh","ab"],["ij","cd"],["kl","ef"]]H` -> [["ab","cd","ef"], ["gh","ij","kl"]]
 I	1 input
 		number: increases by 1
-		string: increases the last number in stack. If there are none, use user input.
+		string: rotate right
+			`hello”I` -> [["h"],["e"],["l"],["l"],["o"]]
 		array: rotate right
 			`[["ab","cd","ef"]["gh","ij","kl"]]I` -> [["gh","ab"],["ij","cd"],["kl","ef"]]
 J	1 input
@@ -407,8 +410,9 @@ m	2 inputs
 		string & number, number & string: repeat the string as many times needed to get the specified length
 			`"hello”9m` -> "hellohell"
 n	2 inputs
-	string & number, number & string: mold into POP POP 
+	string & number, number & string, array & number, number & array: mold into POP POP 
 			`"hello world”3m` -> [["hel", "lo ", "wor", "ldh"]]
+            `["a", "b", "c"]2m` -> [[["a", "b"], ["c", "a"]]]
 o	1 input
 		any: append input to a new output line (continuing "O"s will make new lines after this)
 p	1 input
@@ -657,6 +661,7 @@ z	pushes the english alphabet lowercase
 ū	
 ž	4 inputs
 		array & number & number & array: replace in the 1st array from the positions given (1-indexed) to those + 2nd arrays size with the 2nd array
+		array & number & number & string, string & number & number & array, string & number & number & string: replace in the 1st input from the positions given (1-indexed) to those + 2nd inputs size with the 2nd array
 ¼	1 input
 		number: push 0.25*pop
 ¾	1 input

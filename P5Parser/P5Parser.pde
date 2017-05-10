@@ -149,6 +149,16 @@ Poppable array (String[] arr) {
     o.add(tp(s));
   return new Poppable(o);
 }
+Poppable array (String[][] arr) {
+  ArrayList<Poppable> o = new ArrayList<Poppable>();
+  for (String[] a1 : arr) {
+    o.add(tp(new ArrayList<Poppable>()));
+    for (String a2 : a1) {
+      o.get(o.size()-1).a.add(tp(a2));
+    }
+  }
+  return new Poppable(o);
+}
 ArrayList<Poppable> array (Poppable[] arr) {
   ArrayList<Poppable> o = new ArrayList<Poppable>();
   for (Poppable s : arr)
@@ -202,7 +212,84 @@ String readFile(String path, Charset encoding) {
     return null;
   }
 }
+ArrayList<Poppable> chop (Poppable p) {
+  ArrayList<Poppable> o = new ArrayList<Poppable>();
+  for (char c : p.s.toCharArray())
+    o.add(new Poppable(c+""));
+  return o;
+}
+int getLongestXFrom (ArrayList<Poppable> b) {
+  return getLongestXFrom (new Poppable(b));
+}
+int getLongestXFrom (Poppable in) {
+  int hlen = 0;
+  for (Poppable p : in.a) {
+    if (p.type == STRING) if (p.s.length() > hlen) hlen = p.s.length();
+    if (p.type == ARRAY) if (p.a.size() > hlen) hlen = p.a.size();
+  }
+  return hlen;
+}
+ArrayList<Poppable> item0 (Poppable p) {
+  ArrayList<Poppable> out = new ArrayList<Poppable>();
+  out.add(p);
+  return out;
+}
+Poppable toArray (Poppable p) {
+  if (p.type==STRING || p.type==BIGDECIMAL) {
+    return array(p.s.split("\n"));
+  }
+  return p;
+}
+ArrayList<Poppable> to2DMLSA (ArrayList<Poppable> in) {//to 2D multiline string array
+  if (in.get(0).type==ARRAY) return in;
+  else {
+    ArrayList<Poppable> out = new ArrayList<Poppable>();
+    for (Poppable p : in) {
+      out.add(tp(item0(p)));
+    }
+    return out;
+  }
+}
+ArrayList<Poppable> to1DMLSA (ArrayList<Poppable> in) {//to 1D multiline string array
+  if (in.size() > 0 && in.get(0).type==ARRAY) {
+    ArrayList<Poppable> out = new ArrayList<Poppable>();
+    for (Poppable p : in) {
+      String current = "";
+      for (Poppable p2 : p.a) {
+        current+= p2.s;
+      }
+      out.add(tp(current));
+    }
+    return out;
+  } else return in;
+}
+String[] emptySA(int xs, int ys) {
+  String[] out = new String[ys];
+  for (int y = 0; y < ys; y++) {
+    out[y] = "";
+    for (int x = 0; x < xs; x++) {
+      out[y]+= " ";
+    }
+  }
+  return out;
+}
+String[] write(String[] a, int xp, int yp, ArrayList<Poppable> b) {
+  //println("wrs");
+  for (int x = 0; x < getLongestXFrom(b); x++) {
+    for (int y = 0; y < b.size(); y++) {
+      //println("\"" +a[y+yp-1]+ "\"", x+xp, y+yp-1);
+      a[y+yp-1] = a[y+yp-1].substring(0, x+xp-1) + b.get(y).s.charAt(x) + a[y+yp-1].substring(x+xp);
+      //println("\"" +a[y+yp-1]+ "\"");
+    }
+  }
+  //println("wre");
+  return a;
+}
+
 void clearOutput() throws Exception { 
   //I don't know how to clear stdout, nor does the internet give anything that works
   savedOut = new StringList(); 
+}
+int divCeil (int a, int b) {
+  return (a+b-1)/b;
 }

@@ -14,7 +14,9 @@ class Executable extends Preprocessable {
     Poppable b = new Poppable (B("0123456789"));
     ptr = -1;
     boolean ao = true;
-    while (true) {
+    int ctr = 0;
+    while (ctr < 3000) {
+      ctr++;
       try {
         if (jumpObj != null) {
           if (jumpObj.type == BIGDECIMAL) {
@@ -109,47 +111,40 @@ class Executable extends Preprocessable {
           //quirk handling
           if (qdata[ptr]==0) {
             push("codegolf");
-            ptr+=3;
           }
           if (qdata[ptr]==1) {
             push("stackexchange");
-            ptr+=3;
           }
           if (qdata[ptr]==2) {
             push("qwertyuiop");
             push("asdfghjkl");
             push("zxcvbnm");
-            ptr+=3;
           }
           if (qdata[ptr]==3) {
             push(p);
-            ptr+=3;
           }
           if (qdata[ptr]==5) {
             String[] exs = { ".com", ".net", ".co.uk", ".gov" };
             push(exs);
-            ptr+=3;
           }
           if (qdata[ptr]==6) {
             push("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
-            ptr+=3;
           }
           if (qdata[ptr]==12) {
             String[] qwerty = {"qwertyuiop", "asdfghjkl", "zxcvbnm"};
             push(qwerty);
-            ptr+=3;
+          }
+          if (qdata[ptr]==20) {
+            delay(pop(BIGDECIMAL).bd.intValue()*1000);
           }
           if (qdata[ptr]==21) {
             push("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
-            ptr++;
           }
           if (qdata[ptr]==22) {
             push("1234567890");
-            ptr+=1;
           }
           if (qdata[ptr]==26) {
             push("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ");
-            ptr+=1;
           }
           if (qdata[ptr]==28) {
             Executable subExec = new Executable(pop(STRING).s, new String[] {}).setParent(this);
@@ -160,7 +155,6 @@ class Executable extends Preprocessable {
             subExec.execute();
             inpCtr = subExec.inpCtr;
             currentPrinter = this;
-            ptr+=1;
           }
           if (qdata[ptr]==30) {
             
@@ -171,6 +165,7 @@ class Executable extends Preprocessable {
           if (qdata[ptr]==32) {
             
           }
+          ptr+= quirks[qdata[ptr]].length()-1;
         } else {
           //char parsing
           if (cc=='¹') {
@@ -634,12 +629,62 @@ class Executable extends Preprocessable {
             if (a.type==BIGDECIMAL) {
               push (a.bd.subtract(B(1)));
             }
+            if (a.type==STRING) {
+              ArrayList tmp = new ArrayList<Poppable>();
+              tmp.add(new Poppable(chop(a)));
+              a = new Poppable (tmp);
+            }
+            if (a.type==ARRAY) {
+              int hlen = 0;
+              for (Poppable p : a.a) {
+                if (p.a.size() > hlen) {
+                  hlen = p.a.size();
+                }
+              }
+              ArrayList<Poppable> out = new ArrayList<Poppable>();
+              for (int i = 0; i < hlen; i++) {
+                out.add(new Poppable(new ArrayList<Poppable>()));
+              }
+              for (Poppable p : a.a) {
+                int j = 0;
+                for (Poppable p2 : p.a) {
+                  out.get(out.size()-j-1).a.add(p2);
+                  j++;
+                }
+              }
+              push(out);
+            }
           }
   
           if (cc=='I') {
             a = pop(BIGDECIMAL);
             if (a.type==BIGDECIMAL) {
               push (a.bd.add(B(1)));
+            }
+            if (a.type==STRING) {
+              ArrayList tmp = new ArrayList<Poppable>();
+              tmp.add(new Poppable(chop(a)));
+              a = new Poppable (tmp);
+            }
+            if (a.type==ARRAY) {
+              int hlen = 0;
+              for (Poppable p : a.a) {
+                if (p.a.size() > hlen) {
+                  hlen = p.a.size();
+                }
+              }
+              ArrayList<Poppable> out = new ArrayList<Poppable>();
+              for (int i = 0; i < hlen; i++) {
+                out.add(new Poppable(new ArrayList<Poppable>()));
+              }
+              for (Poppable p : a.a) {
+                int j = 0;
+                for (Poppable p2 : p.a) {
+                  out.get(j).a.add(0, p2);
+                  j++;
+                }
+              }
+              push(out);
             }
           }
   
@@ -659,11 +704,17 @@ class Executable extends Preprocessable {
             a = pop(BIGDECIMAL);
             if (a.type==STRING) {
               String c = a.s.charAt(0)+"";
-              push (a.s.substring(1));
+              push(a.s.substring(1));
               push(c);
             }
             if (a.type==BIGDECIMAL) {
-              push (B(cos(a.bd.floatValue())));
+              push(B(cos(a.bd.floatValue())));
+            }
+            if (a.type==ARRAY) {
+              Poppable tmp = a.a.get(0);
+              a.a.remove(0);
+              push(a.a);
+              push(tmp);
             }
           }
   
@@ -880,19 +931,30 @@ class Executable extends Preprocessable {
           }
           
           if (cc=='n') {
-            a=pop();
             b=pop();
-              String[] splat = new String[ceil(b.s.length()/a.bd.floatValue())];
-            String part = b.s;
-            for (int i = 0; i < floor(b.s.length()/a.bd.floatValue()); i++) {
-              splat[i] = part.substring(0, a.bd.intValue());
-              part = part.substring(a.bd.intValue());
-              //println(part);
+            a=pop();
+            String[] splat = new String[ceil(a.s.length()/b.bd.floatValue())];
+            int plen = b.bd.intValue();
+            if (a.type==STRING) {
+              String part = a.s;
+              for (int i = 0; i < floor(a.s.length()/b.bd.floatValue()); i++) {
+                splat[i] = part.substring(0, b.bd.intValue());
+                part = part.substring(plen);
+                //println(part);
+              }
+              //println(part+"h");
+              if (part.length()>0)
+                splat[splat.length-1] = part + a.s.substring(0, b.bd.intValue()-part.length());
+              push (array(splat));
             }
-            //println(part+"h");
-            if (part.length()>0)
-              splat[splat.length-1] = part + b.s.substring(0, a.bd.intValue()-part.length());
-            push (array(splat));
+            if (a.type==ARRAY) {
+              ArrayList<Poppable> out = new ArrayList<Poppable>();
+              for (int i = 0; i < divCeil(a.a.size(),plen)*plen; i++) {
+                if (i%plen == 0) out.add(tp(ea()));
+                out.get(out.size()-1).a.add(a.a.get(i%a.a.size()));
+              }
+              push(out);
+            }
           }
           
           if (cc=='o') {
@@ -1131,7 +1193,7 @@ class Executable extends Preprocessable {
           if (cc=='∙') {
             a = pop();
             b = pop();
-            if (((a.type==BIGDECIMAL)&&(b.type==STRING))||((a.type==STRING)&&(b.type==BIGDECIMAL))||((a.type==ARRAY)&&(b.type==BIGDECIMAL))) {
+            if (((a.type==BIGDECIMAL)&&(b.type==STRING))||((a.type==ARRAY)&&(b.type==BIGDECIMAL))) {
               Poppable t = a;
               a = b;
               b = t;
@@ -1140,6 +1202,13 @@ class Executable extends Preprocessable {
               ArrayList<Poppable> out = new ArrayList<Poppable>();
               for (int i = 0; i < b.a.size()*a.bd.longValue(); i++) {
                 out.set(i,a.a.get(i%a.a.size()));
+              }
+              push(out);
+            }
+            if ((a.type==STRING)&&(b.type==BIGDECIMAL)) {
+              ArrayList<Poppable> out = ea();
+              for (int i = 0; i < b.bd.intValue(); i++) {
+                out.add(a);
               }
               push(out);
             }
@@ -1407,10 +1476,7 @@ class Executable extends Preprocessable {
           if (cc=='č') {
             a = pop(STRING);
             if (a.type == STRING) {
-              String[] s = new String[a.s.length()];
-              for (int i = 0; i < a.s.length(); i++)
-                s[i] = a.s.charAt(i)+"";
-              push(s);
+              push(chop(a));
             } else if (a.type == BIGDECIMAL) {
               String[] s = new String[a.s.length()];
               for (int i = 0; i < a.s.length(); i++)
@@ -1544,7 +1610,19 @@ class Executable extends Preprocessable {
             Poppable c = pop(BIGDECIMAL);
             b = pop(BIGDECIMAL);
             a = pop(ARRAY);
-            
+            if (a.type != ARRAY) {
+              a = toArray(a);
+            }
+            int axs = getLongestXFrom(a);
+            int ays = a.a.size();
+            int dxs = getLongestXFrom(d);
+            int dys = d.a.size();
+            int x = b.bd.intValue();
+            int y = c.bd.intValue();
+            String[] res = emptySA(max(axs, dxs+x-1), max(ays, dys+y-1));
+            res = write(res, 1, 1, spacesquared(to1DMLSA(a.a)));
+            res = write(res, x, y, spacesquared(to1DMLSA(d.a)));
+            push(res);
           }
           
           if (cc=='¼') {
@@ -1656,7 +1734,8 @@ class Executable extends Preprocessable {
         //--------------------------------------loop end--------------------------------------
       } 
       catch (Exception e) {
-          eprintln("*-*executioneE: "+e.toString()+"*-*");
+        eprintln("*-*Error trough the execution: "+e.toString()+"*-*");
+        e.printStackTrace();
       }
     }
     if (ao) {

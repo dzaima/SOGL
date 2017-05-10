@@ -125,12 +125,13 @@ class Poppable {
     if (type==STRING) return "\""+toEscape+"\"";
     if (type==BIGDECIMAL) return bd.toString();
     if (type==ARRAY) {
+      if (a.size() == 0) return "[]";
       String o = "[";
       for (int i = 0; i < a.size(); i++) 
         o+=a.get(i).sline(escape)+(i+1==a.size()?"]":", ");
       return o;
     }
-    return "*-*sline reached the unreachable!*-*";
+    return "*-*sline reached the unreachable type of "+type+"!*-*";
   }
   Poppable copy() {
     if (type==BIGDECIMAL) {
