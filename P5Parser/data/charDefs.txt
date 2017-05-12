@@ -6,22 +6,20 @@ truthy/falsy values:
 temp: !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
 all the current chars:
 ⁰¹²³⁴⁵⁶⁷⁸TN⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½← !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡¶→“”‘’
-
 |        ^^ \t and \n
-½ ∑ ℮ « № »
 
 IO:
-	out: if array, if not specified otherwise, then will output each item in a newline.
-	, string input
-	. number input 
-	O in a newline output POP
-	o append (appends to the last line). If an array, then print in classical array outputing.
-	Q output 2 joined.
-	q output in a newline but dont pop
-	P append to last line and disable auto-output
-	p output in a newline and disable auto-output
-	t outputs in a newline the last thing in stack (doesn't pop) and disable auto-output
-	T append to last line but don't pop, disable auto output
+      newline             
+     POP | disable auto-output
+      |  |  |             
+   q           
+   t        x  
+   Q     x     
+   T     x  x  
+   o  x        
+   p  x     x  
+   O  x  x     
+   P  x  x  x  
 useful chars: "”¶±«»≤≥’→←╥∫┼
 
 	"hello”world” to push 2 strings
@@ -103,7 +101,8 @@ uS 25	push an array with time stuff (year, month, day, hour, minute, second, mil
 !? 26	pushes a string of consonants ("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ")
 ²² 27	
 !! 28	execute POP as a SOGL program
-2÷ 29	
+2÷ 29	1 input
+		push string of the contents of POP (either file or website, whichever it is)
 ╥╥ 30	1 input
 		string: palendromize on newlines
 			`"hello¶world”╥╥` -> "hello¶world¶hello"
@@ -264,7 +263,7 @@ $	outputs a string ender quote (”)
 .	takes user input as number
 /	2 inputs
 		numbers: divide
-        strings & number, number & string: divide the strings length (floored) by number
+		strings & number, number & string: divide the strings length (floored) by number
 0	pushes 0
 1	pushes 1
 2	pushes 2
@@ -337,18 +336,19 @@ L	pushes 10
 M	pushes 100
 N	pushes 256
 O	1 input
-		any: output input
+		any: output in a new line, pops
 P	1 input
-		any: append input to the current output line (appends to the last "O".)
-Q	2 inputs
-		any: output both (joined)
+		any: output in a new line, pops and disables auto-output
+Q	1 input
+		any: output in a new line, doesn't pop
 R	1 input
 		string: convert to ordinals (stack an array with the values)
 		number: convert to character (inverse of above)
 		array: do above for all contents
 S	1 input
 		string: swaps case
-T	append to last line but don't pop, disables auto output
+T	1 input
+		any: output in a new line, doesn't pop and disables auto-output
 U	1 input
 		string: UPPERCASES the string
 		number: ceilings the number
@@ -368,7 +368,7 @@ Z	pushes the english alphabet uppercase
 [	while top of the stack is truthy do ... (end with "}" but not required). doesn't pop. e.g. `[1-q` would print all numbers from input (not included) to 0 (included)
 \	2 inputs
 		numbers: does divide?
-        string & number, number & string: divide the string into two pieces, second being length x
+		string & number, number & string: divide the string into two pieces, second being length x
 	implicitness:
 		none: push the number and if divides by 10
 		number: does input divide by POP
@@ -412,13 +412,13 @@ m	2 inputs
 n	2 inputs
 	string & number, number & string, array & number, number & array: mold into POP POP 
 			`"hello world”3m` -> [["hel", "lo ", "wor", "ldh"]]
-            `["a", "b", "c"]2m` -> [[["a", "b"], ["c", "a"]]]
+			`["a", "b", "c"]2m` -> [[["a", "b"], ["c", "a"]]]
 o	1 input
-		any: append input to a new output line (continuing "O"s will make new lines after this)
+		any: appends to current output line, pops the value
 p	1 input
-		any: like "O" (outputs in newline) but disables auto-output
+		any: appends to current output line, pops and disables auto-output
 q	1 input
-		any: output but dont POP
+		any: appends to current output line, doesn't pop
 r	1 input
 		string: convert to number
 			`"123”r` -> 123
@@ -426,7 +426,7 @@ r	1 input
 s	1 input
 		string: checks if contains multiple cases
 t	1 input
-		any: output the string without popping it & disable auto-output
+		any: appends to current output line, doesn't pop and disables auto-output
 u	1 input
 		string: lowercases the string
 		number: floors the number
@@ -509,7 +509,6 @@ z	pushes the english alphabet lowercase
 		String: uppercase all letters after any of `.?!` or at the start (sentence case)
 ⅟	1 input
 		number: does 1/POP
-        
 ‰	2 inputs
 		numbers: ((POP-1) modulo) + 1
 			`83%` -> 1
@@ -558,9 +557,9 @@ z	pushes the english alphabet lowercase
 Ζ	pushes the next two characters as seperate strings
 			`Ζab` -> ["a", "b"]
 ζ	1 input
-        string: pushes its character code
-        number: pushes a string with a char with that code point
-        array: converts each element to either its code point string or character code number
+		string: pushes its character code
+		number: pushes a string with a char with that code point
+		array: converts each element to either its code point string or character code number
 Η	
 η	
 Θ	2 inputs
@@ -642,7 +641,7 @@ z	pushes the english alphabet lowercase
 ģ	1 input
 		number: increase A by POP
 		string: append POP to A
-ī	
+ī	push 0.1
 ķ	
 ļ	
 ņ	
@@ -693,7 +692,7 @@ z	pushes the english alphabet lowercase
 ▒	
 ▓	
 █	pushes all the possible SOGL characters
-▲	
+▲	extra commands 1
 ►	
 ▼	
 ◄	
@@ -711,5 +710,4 @@ z	pushes the english alphabet lowercase
 ”	string ender: pushes the normal string
 ‘	string ender: compressed string decompressor (long numbers, base250 to ASCII, english)
 ’	string ender: pushes the indexes of the codepage of the characters in an array
-        `⁰¹²³⁴Λ’` -> [[0, 1, 2, 3, 4, 173]]
-^\\?[^\t]\t(?!(\d+|x) inputs?).*\n\t
+		`⁰¹²³⁴Λ’` -> [[0, 1, 2, 3, 4, 173]]
