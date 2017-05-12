@@ -77,7 +77,7 @@ ArrayList<int[]> compress (String s, int method) {
 
 
   if (method == 2) {
-    if (dict == null) dict = loadStrings("words2.0_wiktionary.org-Frequency_lists.txt");
+    if (dict == null) dict = loadStrings("words3.0_wiktionary.org-Frequency_lists.txt");
     String[] words = s.split(" ");
     for (int j = 0; j < words.length/4+(words.length%4>0?1:0); j++) {
       add(8, 2);

@@ -1,9 +1,6 @@
 class Executable extends Preprocessable {
   int jumpBackTo = 0,
       jumpBackTimes = 0;
-  char lastO = ' ';
-  char cc;
-  boolean ao;
   Poppable jumpObj;
   Executable (String prog, String[] inputs) {
     super(prog, inputs);
@@ -16,9 +13,9 @@ class Executable extends Preprocessable {
     Poppable a = new Poppable (p);
     Poppable b = new Poppable (B("0123456789"));
     ptr = -1;
-    ao = true;
+    boolean ao = true;
     int ctr = 0;
-    while (true) {//ctr < 3000
+    while (ctr < 3000) {
       ctr++;
       try {
         if (jumpObj != null) {
@@ -49,7 +46,8 @@ class Executable extends Preprocessable {
         ptr++;
         int sptr = ptr;
         if (ptr >= p.length()) break;
-        cc = p.charAt(ptr);
+        char cc = p.charAt(ptr);
+        char lastO = ' ';
         //--------------------------------------loop start--------------------------------------
         if (sdata[ptr] != 0) {
           //////////
@@ -137,7 +135,7 @@ class Executable extends Preprocessable {
             push(qwerty);
           }
           if (qdata[ptr]==20) {
-            delay(int(pop(BIGDECIMAL).bd.floatValue()*1000));
+            delay(pop(BIGDECIMAL).bd.intValue()*1000);
           }
           if (qdata[ptr]==21) {
             push("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
@@ -539,9 +537,9 @@ class Executable extends Preprocessable {
             a = pop(BIGDECIMAL);
             if (a.type==BIGDECIMAL&b.type==BIGDECIMAL) {
               try {
-                push(a.bd.divide(b.bd));
+                push(a.bd.divide(a.bd));
               } catch (Exception e) {
-                push(a.bd.divide(b.bd, precision, RoundingMode.FLOOR));
+                push(a.bd.divide(a.bd, precision, RoundingMode.FLOOR));
               }
             }
           }
@@ -725,13 +723,23 @@ class Executable extends Preprocessable {
           if (cc=='N') push(B(256));
   
           if (cc=='O') {
-            output(true, true, true);
+            oprintln();
+            pop(NONE).print();
+            lastO=cc;
           }
           if (cc=='P') {
-            output(true, true, true);
+            if ("Oqpt".contains(lastO+""))oprintln();
+            pop(NONE).print();
+            ao = false;
+            lastO=cc;
           }
           if (cc=='Q') {
-            output(false, true, false);
+            if ("Oqpt".contains(lastO+""))oprintln();
+            a = pop(NONE);
+            if ("Oqpt".contains(lastO+""))oprintln();
+            pop(NONE).print(true);
+            a.print(true);
+            lastO= cc;
           }
           
           if (cc=='R') {
@@ -746,7 +754,10 @@ class Executable extends Preprocessable {
           }
           
           if (cc=='T') {
-            output(false, true, true);
+            if ("Oqpt".contains(lastO+""))oprintln();
+            npop(NONE).print(true);
+            lastO=cc;
+            ao = false;
           }
           
           if (cc=='U') {
@@ -947,15 +958,22 @@ class Executable extends Preprocessable {
           }
           
           if (cc=='o') {
-            output(true, false, false);
+            if ("Oqpt".contains(lastO+""))oprintln();
+            pop(NONE).print(true);
+            lastO=cc;
           }
           
           if (cc=='p') {
-            output(true, false, true);
+            oprintln();
+            pop(NONE).print();
+            ao = false;
+            lastO=cc;
           }
           
           if (cc=='q') {
-            output(false, false, false);
+            oprintln();
+            npop(NONE).print();
+            lastO=cc;
           }
           
           if (cc=='r') {
@@ -965,7 +983,10 @@ class Executable extends Preprocessable {
           }
   
           if (cc=='t') {
-            output(false, false, true);
+            oprintln();
+            npop(NONE).print();
+            ao = false;
+            lastO=cc;
           }
           
           if (cc=='u') {
@@ -1482,10 +1503,6 @@ class Executable extends Preprocessable {
             }
           }
           
-          if (cc=='ī') {
-            push(B("0.1"));
-          }
-          
           if (cc=='ŗ') {
             Poppable c = pop(STRING);
             b = pop(STRING);
@@ -1620,10 +1637,6 @@ class Executable extends Preprocessable {
               push (a.bd.multiply(B(3)).divide(B(4)));
           }
           
-          if (cc=='↔') {
-            push(-1);
-          }
-          
           if (cc=='┼') {
             b = pop();
             a = pop();
@@ -1729,18 +1742,5 @@ class Executable extends Preprocessable {
       oprintln();
       pop(STRING).print();
     }
-  }
-  void output(boolean pop, boolean newline, boolean dao) {
-    if (newline) {
-      oprintln();
-    } else {
-      if ("OQPT".contains(lastO+"")) oprintln();
-    }
-    Poppable popped;
-    if (pop) popped = pop(STRING);
-    else     popped = npop(STRING);
-    popped.print();
-    if (dao) ao = false;
-    lastO=cc;
   }
 }

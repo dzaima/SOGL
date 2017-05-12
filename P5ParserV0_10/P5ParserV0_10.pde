@@ -1,8 +1,4 @@
-import java.util.zip.GZIPInputStream; //<>//
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-String ALLCHARS = "⁰¹²³⁴⁵⁶⁷⁸\t\n⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½← !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡¶→“”‘’"; //<>// //<>// //<>//
+String ALLCHARS = "⁰¹²³⁴⁵⁶⁷⁸\t\n⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½← !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡¶→“”‘’"; //<>//
 //numbers         │xxxxxxx  | |x xxxxxxxx  x   x   xxxx|xxxx x  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xx /x xx|xxx  xxxxx    xxx  xxxx xx xx xx x   xxx x  x   x        x xxx     xx  xx       xx           x  xxx          x            xx                    x  x         x  xxxx│
 //strings         │xxxxxxx  | |x xxxxxxxx     xx   xxxx|xxx  x  xxxxxxxxxxxxxxxxxx x xxxxxxxxx xxxxxxxx x xx /x xx| x   xxxxx    xxx xxxxx xx  x x  x   x          x    xx    xxx   Dxx   xx xxx                 x              xx       x                         x  x         x   xxx│
 //arrays          │x  xxxx  | |x     xxxx      x     x/|xxx      xxxxxxxxxxxxxxxx     xxxxxxxx   xxxxxx   x   x xx| x x xxxxx      x  xxx  x   x x  x             /x           xx         x                                     x/       /                    /    x  x             x x│
@@ -17,8 +13,6 @@ final int BIGDECIMAL = 3;
 final int ARRAY = 4;
 final int INS = 5;//input string
 final int INN = 6;//input number
-final int JSONOBJ = 7;
-final int JSONARR = 8;
 final BigDecimal ZERO = BigDecimal.ZERO;
 boolean saveDebugToFile;
 boolean saveOutputToFile;
@@ -65,7 +59,6 @@ void setup () {
       inputs[i-1]=lines[i];
     }
     //z’¤{«╥q;}x[p     { =4b*I*:O =Ob\"   =”*o        ]I³r3w;3\\+
-    //currentPrinter = new Executable("", null);
     Executable main = new Executable(program, inputs);
     currentPrinter = main;
     main.execute();

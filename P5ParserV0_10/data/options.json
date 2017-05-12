@@ -1,0 +1,9 @@
+{
+  saveDebugToFile = true;
+  saveOutputToFile = true;
+  
+  getDebugInfo = true;
+  logDecompressInfo = false;
+  
+  oldInputSystem = false;
+}

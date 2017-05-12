@@ -48,7 +48,7 @@ String decompb(BigInteger in) {
       out+=tout;
     }
     if (eq==2) {
-      if (dict == null) dict = loadStrings("words2.0_wiktionary.org-Frequency_lists.txt");
+      if (dict == null) dict = loadStrings("words3.0_wiktionary.org-Frequency_lists.txt");
       if (last==2 && lastD==4) out+=" ";
       int length = read(4)+1;
       lastD = length;
