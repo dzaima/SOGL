@@ -971,7 +971,7 @@ class Executable extends Preprocessable {
           if (cc=='u') {
             a = pop(STRING);
             if (a.type==STRING)
-              push (a.s.toUpperCase());
+              push (a.s.toLowerCase());
             else if (a.type==BIGDECIMAL)
               push (a.bd.setScale(0, BigDecimal.ROUND_FLOOR));
           }
