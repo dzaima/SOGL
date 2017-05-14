@@ -1733,9 +1733,10 @@ class Executable extends Preprocessable {
   void output(boolean pop, boolean newline, boolean dao) {
     if (newline) {
       oprintln();
-    } else {
+    } 
+    /*else {
       if ("OQPT".contains(lastO+"")) oprintln();
-    }
+    }*/
     Poppable popped;
     if (pop) popped = pop(STRING);
     else     popped = npop(STRING);
