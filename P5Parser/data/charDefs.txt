@@ -642,10 +642,10 @@ z	pushes the english alphabet lowercase
 		number: increase A by POP
 		string: append POP to A
 ī	push 0.1
-ķ	
-ļ	
-ņ	
-ō	
+ķ	outputs next character in a new line
+ļ	outputs next character, appending
+ņ	outputs the next two characters in a new line
+ō	outputs the next two characters, appending
 ŗ	3 inputs
 		string & string & string: replace with POP POP in POP 
 			`"hello wrd”"r”"orl”ŗ` -> "hello world"

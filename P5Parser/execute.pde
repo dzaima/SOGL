@@ -1486,6 +1486,30 @@ class Executable extends Preprocessable {
             push(B("0.1"));
           }
           
+          if (cc=='ķ') {
+            ptr++;
+            push(p.charAt(ptr)+"");
+            output(true, true, false);
+          }
+          
+          if (cc=='ļ') {
+            ptr++;
+            push(p.charAt(ptr)+"");
+            output(true, false, false);
+          }
+          
+          if (cc=='ņ') {
+            ptr+= 2;
+            push(p.charAt(ptr-1) +""+ p.charAt(ptr));
+            output(true, true, false);
+          }
+          
+          if (cc=='ō') {
+            ptr+= 2;
+            push(p.charAt(ptr-1) +""+ p.charAt(ptr));
+            output(true, false, false);
+          }
+          
           if (cc=='ŗ') {
             Poppable c = pop(STRING);
             b = pop(STRING);
