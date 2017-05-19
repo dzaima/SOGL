@@ -1648,6 +1648,14 @@ class Executable extends Preprocessable {
             push(-1);
           }
           
+          if (cc=='┌') {
+            push("-");
+          }
+          
+          if (cc=='┐') {
+            push("|");
+          }
+          
           if (cc=='┼') {
             b = pop();
             a = pop();
