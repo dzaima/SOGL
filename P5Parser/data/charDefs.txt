@@ -11,15 +11,15 @@ all the current chars:
 IO:
       newline             
      POP | disable auto-output
-      |  |  |             
-   q           
-   t        x  
-   Q     x     
-   T     x  x  
-   o  x        
-   p  x     x  
-   O  x  x     
-   P  x  x  x  
+      |  |  |           
+   q         
+   t        x
+   Q     x   
+   T     x  x
+   o  x      
+   p  x     x
+   O  x  x   
+   P  x  x  x
 useful chars: "”¶±«»≤≥’→←╥∫┼
 
 	"hello”world” to push 2 strings
@@ -186,7 +186,7 @@ Characters:
 		string, number: get the length of POP
 		array: get an identical array with each value being correspondings length
 ¡	1 input
-		any: same as `!!` - if value is truthy, return 1, else 0
+		any: normalize; same as `!!` - if value is truthy, return 1, else 0
 ¤	2 inputs
 		string array & array, array & string array: get a string with each item of the 1st array repeated the amount of corresponding 2nd array, joined
 		number array & number array: get a string with each item of the 1st array repeated the amount of corresponding 2nd array, joined
@@ -675,8 +675,8 @@ z	pushes the english alphabet lowercase
 ↕	
 ∆	
 ≈	
-┌	
-┐	
+┌	push "-"
+┐	push "|"
 └	
 ┘	
 ╬	

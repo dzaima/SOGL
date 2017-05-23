@@ -24,7 +24,7 @@ class Preprocessable {
   }
   Preprocessable preprocess(String prog, String[] inputs) {
     this.inputs = inputs;
-    p = prog;
+    p = prog.replace("…", "\n");
     sdata = new int[p.length()];
     ldata = new int[p.length()];
     qdata = new int[p.length()];

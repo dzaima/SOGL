@@ -1482,6 +1482,21 @@ class Executable extends Preprocessable {
             }
           }
           
+          if (cc=='ē') {
+            a = new Poppable (vars[4], 4, this);
+            if (a.type==BIGDECIMAL) {
+              push(a);
+              setvar(4, tp(a.bd.add(BigDecimal.ONE)));
+            } else if (a.type==STRING) {
+              push(a.s.charAt(a.s.length()-1)+"");
+              setvar(4, tp(a.s.substring(0, a.s.length()-1)));
+            } else if (a.type==ARRAY) {
+              push(a.a.get(a.a.size()-1));
+              setvar(4, a.a.remove(a.a.size()-1));
+            }
+            
+          }
+          
           if (cc=='ī') {
             push(B("0.1"));
           }
