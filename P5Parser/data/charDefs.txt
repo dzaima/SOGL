@@ -55,7 +55,7 @@ characters:
 		next ceiling(log(97)*X/log(2)) bits are the string to push to decoded
 	4 - box string:
 		first 6 bits - mode:
-			each bit corresponding to " ", "/" and "\", "|", "_", "-", "\n"
+			each bit corresponding to " ", "/" and "\ ", "|", "_", "-", "\n"
 			diffecentChar# = count 1s in ^ + 2nd bit
 		next 5 bits - amount of boxstring chars (differentChar#+2 - differentChar#+33 inclusive)
 		continuing ceiling(log(differentChar#)*char#/log(2)) bits are the encoded string
@@ -213,8 +213,8 @@ Characters:
 			`"there”+"hi ` -> ["hi there"]
 			`"⁰²¹»ø’` -> [0, 2, 1, 6, 11]
 			`"Look how easily I can display the " character!”` -> ["Look how easily I can display the \" character!"]
-#	outputs a quote character (")
-$	outputs a string ender quote (”)
+#	outputs a quote character (`"`)
+$	outputs a string ender quote (`”`)
 %	2 inputs
 		numbers: modulo
 			`83%` -> 1
@@ -228,7 +228,7 @@ $	outputs a string ender quote (”)
 *	2 inputs
 		numbers: multiplies the two
 		strings: push a 2D array of all the 2 character combinations, one from one and second from second
-			`"abc”123”`" -> [[["a1", "b1", "c1"], ["a2", "b2", "c2"], ["a3", "b3", "c3"]]]
+			`"abc”123”*` -> [[["a1", "b1", "c1"], ["a2", "b2", "c2"], ["a3", "b3", "c3"]]]
 		string & number, number & string: repeats the string the number amount of times
 		array & number, number & array: multiply the array horizontally
 			`["hello", "bar"]3*` -> ["hellohellohello", "bar  bar  bar  "]
@@ -404,8 +404,8 @@ l	1 input
 		string: pushes the length of the string, doesn't pop
 		number: pushes the length of the number, doesn't pop 
 			`5l` -> 1
-			`12.0l` -> 2
-			`12.345l` -> 5
+			`12.0”rl` -> 2
+			`12.345”rl` -> 5
 m	2 inputs
 		string & number, number & string: repeat the string as many times needed to get the specified length
 			`"hello”9m` -> "hellohell"
@@ -469,7 +469,7 @@ z	pushes the english alphabet lowercase
 			`["abcd", "ef12", 625]√` -> [[["ab"], ["cd"]], [["ef"], ["12"]], 25]
 ═	
 ║	1 input
-		string, array, number: remove duplicates from right to left
+		string, array, number: remove duplicates from left to right
 ─	2 inputs
 		number & number: (2nd is base) convert x from base 10 to base y. If base is 2 and is constant then instead of an array with the digits it gives a string
 			`2─` -> "101001101"

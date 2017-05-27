@@ -691,7 +691,7 @@ class Executable extends Preprocessable {
           }
   
           if (cc=='J') {
-            a = pop(BIGDECIMAL);
+            a = pop(STRING);
             if (a.type==STRING) {
               String c = a.s.charAt(a.s.length()-1)+"";
               push (a.s.substring(0, a.s.length()-1));
@@ -703,7 +703,7 @@ class Executable extends Preprocessable {
           }
   
           if (cc=='K') {
-            a = pop(BIGDECIMAL);
+            a = pop(STRING);
             if (a.type==STRING) {
               String c = a.s.charAt(0)+"";
               push(a.s.substring(1));
@@ -876,7 +876,7 @@ class Executable extends Preprocessable {
           }
           
           if (cc=='j') {
-            a = pop(BIGDECIMAL);
+            a = pop(STRING);
             if (a.type==STRING) {
               if (a.s.length()==0) 
                 push(""); 
@@ -893,7 +893,7 @@ class Executable extends Preprocessable {
           }
           
           if (cc=='k') {
-            a = pop(BIGDECIMAL);
+            a = pop(STRING);
             if (a.type==STRING) {
               push (a.s.substring(1));
             }
@@ -1141,6 +1141,24 @@ class Executable extends Preprocessable {
                 //println(base, currentModifier);
               }
               push(base);
+            }
+          }
+          
+          if (cc=='║') {
+            a = pop(ARRAY);
+            if (a.type==ARRAY) {
+              ArrayList<Poppable> o = new ArrayList<Poppable>();
+              for (Poppable p : a.a) {
+                boolean found = false;
+                for (Poppable pa : o) {
+                  if (pa.s.equals(p.s)) {
+                    found = true;
+                    break;
+                  }
+                }
+                if (!found) o.add(p);
+              }
+              push(o);
             }
           }
           
@@ -1428,6 +1446,19 @@ class Executable extends Preprocessable {
             a = pop();
             if (a.type==BIGDECIMAL && b.type==BIGDECIMAL)
               push(log(a.bd.floatValue())/log(b.bd.floatValue()));
+          }
+          
+          if (cc=='Χ') {
+            a = pop(BIGDECIMAL);
+            if (a.type==ARRAY) {
+              BigDecimal greatest = ZERO;
+              for (Poppable p : a.a) {
+                if (p.type==STRING) p = tp(B(p.s));
+                if (p.bd.compareTo(greatest)>0)
+                  greatest = p.bd;
+              }
+              push(greatest);
+            }
           }
           
           if (cc=='Ψ') {
@@ -1756,14 +1787,15 @@ class Executable extends Preprocessable {
         //while (millis()<CTR*20);
         if (getDebugInfo) {
           //eprintln("`"+cc+"`@"+((sptr+"").length()==1?"0"+sptr:sptr)+": "+stack.toString().replace("\n  ", "").replace("\n", ""));
-          eprint(getStart(false)+"`"+cc+"`@"+up0(sptr, str(p.length()).length())+": [");
-          long EPC=0;
+          eprint("\n"+getStart(false)+"`"+cc+"`@"+up0(sptr, str(p.length()).length())+": [");
+          
+          int EPC=0;
           for (Poppable EP : stack) {
             EPC++;
             eprint(EP.sline(true));
             if (EPC<stack.size()) eprint(", ");
           }
-          eprintln("]");
+          eprint("]");
         }
         //--------------------------------------loop end--------------------------------------
       } 

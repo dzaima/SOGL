@@ -117,7 +117,7 @@ class Preprocessable {
         else
           lastString = thisString;
       } else for (int j = 0; j < quirks.length; j++)
-        if (p.substring(i).startsWith(quirks[j]))
+        if (p.substring(i).startsWith(quirks[j]) && qdata[i] == -1)
           for (int k = 0; k < quirks[j].length(); k++)
             qdata[k+i] = j;
     }
@@ -337,14 +337,16 @@ class Preprocessable {
   
   void eprintln (String o) {
     if (getDebugInfo) {
-      System.err.println(o);
+      if (printDebugInfo)
+        System.err.println(o);
       if (saveDebugToFile)
         log.append(o+"\n");
     }
   }
   void eprint (String o) {
     if (getDebugInfo) {
-      System.err.print(o);
+      if (printDebugInfo)
+        System.err.print(o);
       if (saveDebugToFile)
         log.append(o);
     }

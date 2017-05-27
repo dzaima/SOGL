@@ -48,6 +48,8 @@ class Poppable {
     } else if (o.type==BIGDECIMAL) {
       bd = o.bd;
       s = bd.toString();
+    } else if (o.type==ARRAY) {
+      a = o.copy().a;
     } else {
       bd = ZERO;
     }
@@ -137,7 +139,7 @@ class Poppable {
     if (type==BIGDECIMAL) {
       return tp(bd);
     }
-    if (type==BIGDECIMAL) {
+    if (type==STRING) {
       return tp(s);
     }
     ArrayList<Poppable> out = ea();
@@ -149,5 +151,10 @@ class Poppable {
   Poppable roundForDisplay() {
     bd = bd.setScale(precision-5, BigDecimal.ROUND_HALF_UP);
     return this;
+  }
+  boolean equals(Poppable c) {
+    if ((c.type==STRING && c.s.equals(s)) || (c.type==BIGDECIMAL && c.bd.equals(bd))) return true;
+    
+    return false;
   }
 }

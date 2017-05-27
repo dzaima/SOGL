@@ -1,11 +1,7 @@
-import java.util.zip.GZIPInputStream; //<>//
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-String ALLCHARS = "⁰¹²³⁴⁵⁶⁷⁸\t\n⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½← !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡¶→“”‘’"; //<>// //<>// //<>//
-//numbers         │xxxxxxx  | |x xxxxxxxx  x   x   xxxx|xxxx x  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xx /x xx|xxx  xxxxx    xxx  xxxx xx xx xx x   xxx x  x   x        x xxx     xx  xx       xx           x  xxx          x   xxxxx    xx      x             x  x         x  xxxx│
-//strings         │xxxxxxx  | |x xxxxxxxx     xx   xxxx|xxx  x  xxxxxxxxxxxxxxxxxx x xxxxxxxxx xxxxxxxx x xx /x xx| x   xxxxx    xxx xxxxx xx  x x  x   x          x    xx    xxx   Dxx   xx xxx                 x              xx  xxxxxx           x             x  x         x   xxx│
-//arrays          │x  xxxx  | |x     xxxx      x     x/|xxx      xxxxxxxxxxxxxxxx     xxxxxxxx   xxxxxx   x   x xx| x x xxxxx      x  xxx  x   x x  x             /x           xx         x                                     x/  xxxxx/  /        x        /    x  x             x x│
+String ALLCHARS = "⁰¹²³⁴⁵⁶⁷⁸\t\n⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½← !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡¶→“”‘’"; //<>// //<>// //<>// //<>//
+//numbers         │xxxxxxx  | |x xxxxxxxx  x   x   xxxx|xxxx x  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xx /x xx|xxx  xxxxx    xxx  xxxx xx xx xx x   xxx x  x   x        x xxx     xx  xx       xx           x  xxxx     xx  x   xxxxx    xx      x             x  x         x  xxxx│
+//strings         │xxxxxxx  | |x xxxxxxxx     xx   xxxx|xxx  x  xxxxxxxxxxxxxxxxxx x xxxxxxxxx xxxxxxxx x xx /x xx| x   xxxxx    xxx xxxxx xx  x x  x   x          x    xx    xxx   Dxx   xx xxx                 x          //  xx  xxxxxx           x             x  x         x   xxx│
+//arrays          │x  xxxx  | |x     xxxx      x     x/|xxx      xxxxxxxxxxxxxxxx     xxxxxxxx   xxxxxx   x   x xx| x x xxxxx      x  xxx  x   x x  x           x /x           xx         x                                     x/  xxxxx/  /        x        /    x  x             x x│
 //^^ are the currently supported functions
 String printableAscii =  " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 String ASCII = "";
@@ -24,6 +20,7 @@ boolean saveOutputToFile;
 boolean logDecompressInfo;
 boolean oldInputSystem;
 boolean getDebugInfo;
+boolean printDebugInfo;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
@@ -49,6 +46,7 @@ void setup () {
     logDecompressInfo = options.getBoolean("logDecompressInfo");
     oldInputSystem = options.getBoolean("oldInputSystem");
     getDebugInfo = options.getBoolean("getDebugInfo");
+    printDebugInfo = options.getBoolean("printDebugInfo");
     //println(args.getClass());
     for (int i=0; i<256; i++)ASCII+=char(i)+"";
     String lines[];
