@@ -9,9 +9,15 @@ note: this language is very much in developement, and can, and probably will cha
 
 ### To run a program, 
 
-  - download [V0.8](https://github.com/dzaima/SOGL/blob/master/P5ParserV0_8_2/P5Parser.zip), [V0.9](https://github.com/dzaima/SOGL/blob/master/P5ParserV0_9/P5ParserV0_9.zip), [V0.10](https://github.com/dzaima/SOGL/blob/master/P5ParserV0_10/P5ParserV0_10.zip) or the new (and possibly very glitchy) [V0.11](https://github.com/dzaima/SOGL/blob/master/P5Parser/)
-  - make a file with the program as its contents
-  - launch with the 1st argument as a path (either relative to the `data/` path or a full path) to the file and the continuing args as inputs
-  - the output will be on STDOUT and/or (depending on `data/options.txt`) in the file `output.txt`
+- download the P5Parser
+
+- either 1)
+  - in `/data/p.sogl` paste the code of the program
+  - run the Processing sketch
+
+- or 2)
+  - export the processing sketch
+  - run it with an argument of the path to the file containing the program
+- the output will be in the file `output.txt` and STDOUT.
 
 Find what each char does in [here](https://github.com/dzaima/SOGL/blob/master/charDefsParser/data/charDefs.txt).
