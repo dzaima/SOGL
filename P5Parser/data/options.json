@@ -3,6 +3,7 @@
   saveOutputToFile = true;
   
   getDebugInfo = true;
+  printDebugInfo = true;
   logDecompressInfo = false;
   
   oldInputSystem = false;

@@ -2,9 +2,10 @@ String quirkLetters = " 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRST
 String[] quirks = {"0*0/","1*1/","2*2/","3*3/","4*4/","5*5/","6*6/","7*7/","8*8/","9*9/","0/0*","1/1*","2/2*","3/3*","4/4*","5/5*","6/6*","7/7*","8/8*","9/9*","UU","uu","SU","Su","US","uS","!?","²²","!!","2÷","╥╥","╥╤","ΓΓ"};
 class Preprocessable {
   ArrayList<Poppable> stack = new ArrayList<Poppable>();
-  ArrayList<Poppable> usedInputs = new ArrayList<Poppable>();
+  //ArrayList<Poppable> usedInputs = new ArrayList<Poppable>();
   int ptr = 0;
   int inpCtr = -1;
+  Poppable lIT = tp(B("-1234"));//last input taken
   String[] inputs;
   int[] sdata;
   int[] ldata;
@@ -190,7 +191,7 @@ class Preprocessable {
       inpCtr++;
       if (inpCtr>=inputs.length)
         inpCtr = 0;
-      usedInputs.add(new Poppable(inputs[inpCtr], true));
+      //  usedInputs.add(new Poppable(inputs[inpCtr], true));
       return new Poppable (inputs[inpCtr], true);
     } 
     catch (Exception e) {
@@ -200,16 +201,18 @@ class Preprocessable {
   }
 
   Poppable nI () {
+    String input = "this should not happen (it can tho)";
     try {
       inpCtr++;
       if (inpCtr>=inputs.length)
         inpCtr = 0;
-      usedInputs.add(new Poppable(B(inputs[inpCtr]), true));
-      return new Poppable (B(inputs[inpCtr]), true);
+      input = inputs[inpCtr];
+      //usedInputs.add(new Poppable(B(inputs[inpCtr]), true));
+      return new Poppable (B(input), true);
     } 
     catch (Exception e) {
       eprintln("*-*nI error: "+e+"*-*");
-      return new Poppable (B(0), true);
+      return new Poppable (input, true);
     }
   }
   void setvar (int v, Poppable p) {
@@ -243,21 +246,24 @@ class Preprocessable {
     stack.add(new Poppable(array(a)));
   }
   Poppable pop (int implicitType) {
-    if (stack.size()>0) {
-      return pop();
-    }
-    if (implicitType == BIGDECIMAL) return nI();
-    else if (implicitType == STRING) return sI();
-    else return new Poppable(B("0"));
+    Poppable res;
+    if (stack.size()>0) res = pop();
+    else if (implicitType == BIGDECIMAL) res = nI();
+    else if (implicitType == STRING) res = sI();
+    else res = new Poppable(B("0"));
+    lIT = res;
+    return res;
   }
   
   Poppable pop () {
     try {
       Poppable r = gl();
       stack.remove(stack.size()-1);
+      lIT = r;
       return r;
     } catch (Exception e) {
-      println("error on pop(): "+e.toString());
+      eprint("error on pop(): "+e.toString());
+      e.printStackTrace();
       String ns = sI().s;
       boolean isString = false;
       for (char c : ns.toCharArray())
@@ -285,9 +291,11 @@ class Preprocessable {
   }
   Poppable gl () {//get last
     if (stack.size()==0) {
-      return new Poppable (B(0));
+      lIT = PZERO;
+      return PZERO;
     }
     Poppable g = stack.get(stack.size()-1);
+    lIT = g;
     return g;
   }
   String getStart(boolean self) {

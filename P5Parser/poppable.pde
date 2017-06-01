@@ -157,4 +157,8 @@ class Poppable {
     
     return false;
   }
+  BigDecimal bd() {
+    if (type==BIGDECIMAL) return bd;
+    return new BigDecimal(s);
+  }
 }

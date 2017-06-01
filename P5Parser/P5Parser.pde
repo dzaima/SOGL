@@ -34,6 +34,7 @@ StringList savedOut = new StringList();
 StringList log = new StringList();
 Executable currentPrinter = null;
 int precision = 200;
+Poppable PZERO = new Poppable(ZERO);
 //P5ParserV0_6 SK = this;
 void setup () {
   try {
