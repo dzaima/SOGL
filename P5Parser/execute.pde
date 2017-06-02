@@ -704,9 +704,13 @@ class Executable extends Preprocessable {
               String c = a.s.charAt(a.s.length()-1)+"";
               push (a.s.substring(0, a.s.length()-1));
               push(c);
-            }
-            if (a.type==BIGDECIMAL) {
+            } else if (a.type==BIGDECIMAL) {
               push (B(sin(a.bd.floatValue())));
+            } else {
+              Poppable l = a.a.get(a.a.size()-1);
+              a.a.remove(a.a.size()-1);
+              push(a);
+              push(l);
             }
           }
   
@@ -1374,6 +1378,47 @@ class Executable extends Preprocessable {
           if (cc=='Ι') {
             lastStringUsed = true;
             push(lastString);
+          }
+          
+          if (cc=='ι') {
+            b = pop();
+            a = pop();
+            push (b);
+          }
+          
+          if (cc=='Κ') {
+            b = pop(STRING);
+            a = pop(STRING);
+            if (a.type==BIGDECIMAL&b.type==BIGDECIMAL)push(a.bd.add(b.bd)); 
+            else if ((a.type==BIGDECIMAL|a.type==STRING)&(b.type==BIGDECIMAL|b.type==STRING)) push(b.s+a.s);
+            else if (a.type==STRING && b.type==ARRAY) {
+              b.a.add(a);
+              push(b);
+            } else if (a.type==ARRAY && b.type==STRING) {
+              ArrayList<Poppable> o = ea();
+              o.add(tp(b.s));
+              for (int i = 0; i < a.a.size(); i++)
+                o.add(a.a.get(i));
+              push(o);
+            } else if (a.type==ARRAY && b.type==BIGDECIMAL) {
+              ArrayList<Poppable> o = ea();
+              o.add(b);
+              for (int i = 0; i < a.a.size(); i++)
+                o.add(a.a.get(i));
+              push(o);
+            } else if (a.type==BIGDECIMAL && b.type==ARRAY) {
+              push(b.a.add(a));
+            } else if (a.type==ARRAY && b.type==ARRAY) {
+              b.copy().a.add(a.copy());
+              push(b.a);
+            }
+          }
+          
+          if (cc=='κ') {
+            b = pop(BIGDECIMAL);
+            a = pop(a.type);
+            if (a.type==BIGDECIMAL&b.type==BIGDECIMAL)
+              push(b.bd.subtract(a.bd));
           }
           
           if (cc=='λ') {
