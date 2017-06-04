@@ -18,7 +18,7 @@ class Executable extends Preprocessable {
     ptr = -1;
     ao = true;
     int ctr = 0;
-    while (true) {//ctr < 3000
+    while (true) {//ctr < 3000) {//
       ctr++;
       try {
         if (jumpObj != null) {
@@ -928,12 +928,18 @@ class Executable extends Preprocessable {
           }
           
           if (cc=='m') {
-            
+            b = pop(BIGDECIMAL);
+            a = pop(STRING);
+            String out = "";
+            for (int i = 0; i < b.bd().intValue(); i++) {
+              out+= a.s.charAt(i%a.s.length());
+            }
+            push(out);
           }
           
           if (cc=='n') {
-            b=pop();
-            a=pop();
+            b=pop(BIGDECIMAL);
+            a=pop(STRING);
             String[] splat = new String[ceil(a.s.length()/b.bd.floatValue())];
             int plen = b.bd.intValue();
             if (a.type==STRING) {
@@ -1061,7 +1067,7 @@ class Executable extends Preprocessable {
             a = pop(BIGDECIMAL);
             if (a.type==BIGDECIMAL) {
               data[ptr] = parseJSONObject("{\"N\":\""+a.s+"\",\"T\":3,\"L\":\"0\"}");//3-number, 2-string
-              if (B(data[ptr].getString("N")).intValue()>1) push(B(1));
+              if (B(data[ptr].getString("N")).intValue()>=1) push(B(1));
             }
           }
           if (cc=='}') {
@@ -1290,17 +1296,6 @@ class Executable extends Preprocessable {
               push (join(split,"\n"));
             }
           }
-          if (cc=='δ') {
-            a = pop();
-            if (a.type==STRING) {
-              String o = printableAscii.substring(0, printableAscii.indexOf(a.s));
-              push(o);
-            }
-            if (a.type==BIGDECIMAL) {
-              String o = "0123456789".substring(0, a.bd.intValue());
-              push(o);
-            }
-          }
           
           if (cc=='Δ') {
             a = pop();
@@ -1310,9 +1305,25 @@ class Executable extends Preprocessable {
               push(o);
             }
             if (a.type==BIGDECIMAL) {
-              //should be expanded
-              String o = "123456789".substring(0, a.bd.intValue());
+              ArrayList<Poppable> out = new ArrayList<Poppable>();
+              for (int i = 0; i < a.bd.intValue(); i++) {
+                out.add(tp(B(i+1)));
+              }
+              push(out);
+            }
+          }
+          if (cc=='δ') {
+            a = pop();
+            if (a.type==STRING) {
+              String o = printableAscii.substring(0, printableAscii.indexOf(a.s));
               push(o);
+            }
+            if (a.type==BIGDECIMAL) {
+              ArrayList<Poppable> out = new ArrayList<Poppable>();
+              for (int i = 0; i < a.bd.intValue(); i++) {
+                out.add(tp(B(i)));
+              }
+              push(out);
             }
           }
           

@@ -542,14 +542,14 @@ z	pushes the english alphabet lowercase
 γ	
 Δ	1 input
 		number: pushes range; inclusive
-			`6Δ` -> "123456"
-			`62*Δ` -> "010203040506070809101112"
+			`6Δ` -> [[1,2,3,4,5,6]]
+			`62*Δ` -> [[1,2,3,4,5,6,7,8,9,10,11,12]]
 		string: pushes all printable ascii chars up to that point; inclusive
 			` 6Δ` -> " !\"#$%&'()*+,-./0123456"
 δ	1 input
 		number: pushes range; exclusive
-			`6δ` -> "012345"
-			`11Δ` -> "01020304050607080910"
+			`6δ` -> [[0,1,2,3,4,5]]
+			`LIΔ` -> [[0,1,2,3,4,5,6,7,8,9,10]]
 		string: pushes all printable ascii chars up to that point; exclusive
 			` 6δ` -> " !\"#$%&'()*+,-./012345"
 Ε	
