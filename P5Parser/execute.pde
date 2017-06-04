@@ -930,6 +930,11 @@ class Executable extends Preprocessable {
           if (cc=='m') {
             b = pop(BIGDECIMAL);
             a = pop(STRING);
+            if (b.type==STRING && a.type==BIGDECIMAL) {
+              Poppable t = a;
+              a = b;
+              b = t;
+            }
             String out = "";
             for (int i = 0; i < b.bd().intValue(); i++) {
               out+= a.s.charAt(i%a.s.length());
@@ -940,6 +945,11 @@ class Executable extends Preprocessable {
           if (cc=='n') {
             b=pop(BIGDECIMAL);
             a=pop(STRING);
+            if (b.type==STRING && a.type==BIGDECIMAL) {
+              Poppable t = a;
+              a = b;
+              b = t;
+            }
             String[] splat = new String[ceil(a.s.length()/b.bd.floatValue())];
             int plen = b.bd.intValue();
             if (a.type==STRING) {
