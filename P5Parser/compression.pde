@@ -65,6 +65,19 @@ byte[] toBase (int base, BigInteger b) {
   }
   return O;
 }
+BigDecimal[] toBase (BigDecimal base, BigDecimal b) {
+  ArrayList<BigDecimal> o = new ArrayList<BigDecimal>();
+  while (!b.equals(BigDecimal.ZERO)) {
+    BigDecimal[] t = b.divideAndRemainder(base);
+    o.add(t[1]);
+    b = t[0];
+  }
+  BigDecimal[] O = new BigDecimal[o.size()];
+  for (int i = 0; i<o.size(); i++) {
+    O[i]=o.get(o.size()-i-1);
+  }
+  return O;
+}
 byte[] toArray (String s) {
   byte[] o = new byte[s.length()];
   for (int i=0; i<s.length(); i++)o[i]=(byte)int(s.charAt(i)+"");

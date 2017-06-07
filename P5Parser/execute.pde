@@ -498,26 +498,18 @@ class Executable extends Preprocessable {
                 b = pop();
               if (a.type==BIGDECIMAL&b.type==BIGDECIMAL)push(a.bd.add(b.bd)); 
               else if ((a.type==BIGDECIMAL|a.type==STRING)&(b.type==BIGDECIMAL|b.type==STRING)) push(b.s+a.s);
-              else if (a.type==STRING && b.type==ARRAY) {
+              else if (a.type!=ARRAY && b.type==ARRAY) {
                 b.a.add(a);
                 push(b);
-              } else if (a.type==ARRAY && b.type==STRING) {
-                ArrayList<Poppable> o = ea();
-                o.add(tp(b.s));
-                for (int i = 0; i < a.a.size(); i++)
-                  o.add(a.a.get(i));
-                push(o);
-              } else if (a.type==ARRAY && b.type==BIGDECIMAL) {
+              } else if (a.type==ARRAY && b.type!=ARRAY) {
                 ArrayList<Poppable> o = ea();
                 o.add(b);
                 for (int i = 0; i < a.a.size(); i++)
                   o.add(a.a.get(i));
                 push(o);
-              } else if (a.type==BIGDECIMAL && b.type==ARRAY) {
-                push(b.a.add(a));
               } else if (a.type==ARRAY && b.type==ARRAY) {
-                b.copy().a.add(a.copy());
-                push(b.a);
+                b.a.add(a.copy());
+                push(b.copy().a);
               }
             }
           }
@@ -897,6 +889,11 @@ class Executable extends Preprocessable {
             }
             if (a.type==BIGDECIMAL) {
               push (B(sin(a.bd.floatValue()*PI/180)));
+            } else {
+              Poppable l = a.a.get(a.a.size()-1);
+              a.a.remove(a.a.size()-1);
+              push(a);
+              push(l);
             }
           }
           
@@ -911,6 +908,12 @@ class Executable extends Preprocessable {
             }
             if (a.type==BIGDECIMAL) {
               push (B(cos(a.bd.floatValue()*PI/180)));
+            }
+            if (a.type==ARRAY) {
+              Poppable tmp = a.a.get(0);
+              a.a.remove(0);
+              push(a.a);
+              push(tmp);
             }
           }
           
@@ -1920,6 +1923,9 @@ class Executable extends Preprocessable {
             }
           }
           
+          if (cc=='¶') {
+            push("\n");
+          }
           
           if (cc=='”') {
             push("");

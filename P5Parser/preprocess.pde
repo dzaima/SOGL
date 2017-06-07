@@ -167,7 +167,7 @@ class Preprocessable {
       eprintln("preprocessor: "+p.replace("\n", "…"));
       return preprocess(p, inputs);
     }
-    p = p.replace("¶", "\n");
+    //p = p.replace("¶", "\n");
     if (!getDebugInfo) return this;
     eprintln("program: "+p.replace("\n", "¶"));
     eprint("|");

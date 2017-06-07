@@ -709,7 +709,7 @@ z	pushes the english alphabet lowercase
 ⌠	repeat input times
 ⌡	1 input
 		any: repeat next command 
-¶	
+¶	push a newline character
 →	
 “	string ender: push converted to a number
 ”	string ender: pushes the normal string
