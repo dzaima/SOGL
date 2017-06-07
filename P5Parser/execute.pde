@@ -890,10 +890,8 @@ class Executable extends Preprocessable {
             if (a.type==BIGDECIMAL) {
               push (B(sin(a.bd.floatValue()*PI/180)));
             } else {
-              Poppable l = a.a.get(a.a.size()-1);
               a.a.remove(a.a.size()-1);
               push(a);
-              push(l);
             }
           }
           
@@ -910,10 +908,8 @@ class Executable extends Preprocessable {
               push (B(cos(a.bd.floatValue()*PI/180)));
             }
             if (a.type==ARRAY) {
-              Poppable tmp = a.a.get(0);
               a.a.remove(0);
               push(a.a);
-              push(tmp);
             }
           }
           
@@ -1057,6 +1053,9 @@ class Executable extends Preprocessable {
           if (cc=='{') {
             a = pop(BIGDECIMAL);
             if (a.type==BIGDECIMAL) {
+              if (a.bd.equals(B(0))) {
+                ptr = ldata[ptr];
+              }
               data[ptr] = parseJSONObject("{\"N\":\""+a.s+"\",\"T\":3,\"L\":\"0\"}");//3-number, 2-string
               //eprintln(data[ptr].toString());
             } else
@@ -1064,7 +1063,8 @@ class Executable extends Preprocessable {
               if (a.s.length()>0) {
                 data[ptr] = parseJSONObject("{\"S\":\""+(a.s.substring(1))+"\",\"T\":2,\"L\":\"0\"}");//3-number, 2-string
                 push(a.s.charAt(0)+"");
-              }
+              } else
+                ptr = ldata[ptr];
             } else
             if (a.type==ARRAY) {
               if (a.a.size()>0) {
@@ -1073,7 +1073,8 @@ class Executable extends Preprocessable {
                 data[ptr] = parseJSONObject("{\"T\":4,\"L\":\"0\"}");//3-number, 2-string, 4-array
                 dataA[ptr] = a;
                 //println("%%%",data[ptr],"%%%");
-              }
+              } else  
+                ptr = ldata[ptr];
             }
           }
           if (cc=='∫') {
@@ -1254,18 +1255,42 @@ class Executable extends Preprocessable {
           
           if (cc=='⁾') {
             a = pop();
-            String s = a.s;
-            boolean nextUppercase = true;
-            for (int i = 0; i < s.length(); i++) {
-              if (".?!".indexOf(s.charAt(i)) >= 0) {
-                nextUppercase = true;
+            if (a.type==STRING) {
+              String s = a.s;
+              boolean nextUppercase = true;
+              for (int i = 0; i < s.length(); i++) {
+                if (".?!".indexOf(s.charAt(i)) >= 0) {
+                  nextUppercase = true;
+                }
+                if ((s.charAt(i)+"").matches("\\w") && nextUppercase) {
+                  nextUppercase = false;
+                  s = s.substring(0, i)+(s.charAt(i)+"").toUpperCase()+s.substring(i+1);
+                }
               }
-              if ((s.charAt(i)+"").matches("\\w") && nextUppercase) {
-                nextUppercase = false;
-                s = s.substring(0, i)+(s.charAt(i)+"").toUpperCase()+s.substring(i+1);
-              }
+              push(s);
             }
-            push(s);
+            if (a.type==ARRAY) {
+              ArrayList<Poppable> out = new ArrayList<Poppable>();
+              for (int j = 0; j < a.a.size(); j++) {
+                if (a.a.get(j).type==STRING) {
+                  String s = a.a.get(j).s;
+                  boolean nextUppercase = true;
+                  for (int i = 0; i < s.length(); i++) {
+                    if (".?!".indexOf(s.charAt(i)) >= 0) {
+                      nextUppercase = true;
+                    }
+                    if ((s.charAt(i)+"").matches("\\w") && nextUppercase) {
+                      nextUppercase = false;
+                      s = s.substring(0, i)+(s.charAt(i)+"").toUpperCase()+s.substring(i+1);
+                    }
+                  }
+                  out.add(tp(s));
+                } else {
+                  out.add(a.a.get(j));
+                }
+              }
+              push(out);
+            }
           }
           
           if (cc=='÷') {
@@ -1778,6 +1803,9 @@ class Executable extends Preprocessable {
             a = pop(ARRAY);
             if (a.type != ARRAY) {
               a = toArray(a);
+            }
+            if (d.type != ARRAY) {
+              d = toArray(d);
             }
             int axs = getLongestXFrom(a);
             int ays = a.a.size();

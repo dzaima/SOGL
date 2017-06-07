@@ -411,8 +411,8 @@ m	2 inputs
 			`"hello”9m` -> "hellohell"
 n	2 inputs
 	string & number, number & string, array & number, number & array: mold into POP POP 
-			`"hello world”3m` -> [["hel", "lo ", "wor", "ldh"]]
-			`["a", "b", "c"]2m` -> [[["a", "b"], ["c", "a"]]]
+			`"hello world”3n` -> [["hel", "lo ", "wor", "ldh"]]
+			`["a", "b", "c"]2n` -> [[["a", "b"], ["c", "a"]]]
 o	1 input
 		any: appends to current output line, pops the value
 p	1 input
