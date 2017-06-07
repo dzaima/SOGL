@@ -222,7 +222,7 @@ $	outputs a string ender quote (`”`)
 &	2 inputs
 		strings, numbers: logical and.
 		arrays: makes a new array only with the items that are in both arrays
-'	push the next character as a number (skipping ones that can be done otherwise)
+'	push the next character as a number (skipping ones that can be done otherwise (just use the compressor))
 (	do while the top value of the stack is not equal to the previous answer.
 )	
 *	2 inputs
@@ -501,8 +501,7 @@ z	pushes the english alphabet lowercase
 		number, string, array: if falsy, do nothing
 		note: if required, will put a `}` after itself
 ′		checks if number is prime
-¬	1 input
-		number: loop that many times the continuing code, closed by "}", each time pushing the current loop-point (1-based).
+¬	
 ⁽	1 input (upper "(")
 		String: uppercase the first letter of word
 ⁾	1 input (upper ")")
@@ -582,8 +581,10 @@ z	pushes the english alphabet lowercase
 		number: get the prime factorization of n
 μ	1 input
 		number: get the prime factorization of n (excluding self)
-Ν	
-ν	
+Ν	2 inputs
+		numbers: range, inclusive
+ν	2 inputs
+		numbers: range, excludes last
 Ξ	
 ξ	
 Ο	3 inputs
@@ -624,7 +625,7 @@ z	pushes the english alphabet lowercase
 		number & string, string & number: get the smallest number of the two (convert the string to a number)
 		numbers: get the smallest number of the two
 		strings: get the shortest element of the string (or by ASCII if equal)
-		array: get the largest element of the array (logic as above)
+		array: get the smallest element of the array (logic as above)
 Ψ	1 input
 		number: get a random number from 1 to the number; inclusive, Doesn't pop
 		string: get a random character from " " to the strings 0th char; inclusive, doesn't pop
@@ -695,9 +696,11 @@ z	pushes the english alphabet lowercase
 ▓	
 █	pushes all the possible SOGL characters
 ▲	extra commands 1
-►	
+►	1 input
+		run-length encode
 ▼	
-◄	
+◄	1 input
+		run-length decode
 ■	
 □	
 …	

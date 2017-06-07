@@ -153,7 +153,11 @@ class Poppable {
     return this;
   }
   boolean equals(Poppable c) {
-    if ((c.type==STRING && c.s.equals(s)) || (c.type==BIGDECIMAL && c.bd.equals(bd))) return true;
+    if (
+        (c.type==type) &&
+        ((c.type==STRING && c.s.equals(s)) || (c.type==BIGDECIMAL && c.bd.equals(bd)))
+       )
+    return true;
     
     return false;
   }

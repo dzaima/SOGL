@@ -18,7 +18,7 @@ class Executable extends Preprocessable {
     ptr = -1;
     ao = true;
     int ctr = 0;
-    while (true) {//ctr < 3000) {//
+    while (true) {//ctr < 30) {//
       ctr++;
       try {
         if (jumpObj != null) {
@@ -40,7 +40,7 @@ class Executable extends Preprocessable {
           if (jumpObj.type == ARRAY) {
             if (jumpObj.a.size() > jumpBackTimes) {
               ptr = jumpBackTo;
-              push(jumpObj.a.get(jumpBackTimes)+"");
+              push(jumpObj.a.get(jumpBackTimes).s+"");
               jumpBackTimes++;
             } else
               jumpObj = null;
@@ -1198,8 +1198,8 @@ class Executable extends Preprocessable {
                 push(BAtoString(toBase(2, a.bd.toBigInteger())));
               else {
                 ArrayList<Poppable> out = ea();
-                for (byte cb : toBase(b.bd.intValue(), a.bd.toBigInteger()))
-                  out.add(new Poppable(B(cb)));
+                for (BigDecimal cb : toBase(b.bd, a.bd))
+                  out.add(new Poppable(cb));
                 push(out);
               }
             }
@@ -1210,7 +1210,7 @@ class Executable extends Preprocessable {
             a = pop(ARRAY);
             BigDecimal res = B(0);
             for (Poppable c : a.a) {
-              res = res.multiply(b.bd).add(c.bd);
+              res = res.multiply(b.bd()).add(c.bd());
             }
             push(res);
           }
@@ -1442,6 +1442,17 @@ class Executable extends Preprocessable {
               push(b.bd.subtract(a.bd));
           }
           
+          if (cc=='Λ') {
+            a = pop(BIGDECIMAL);
+            if (a.type==BIGDECIMAL) {
+              ArrayList<Poppable> out = ea();
+              for (BigDecimal i = B(1); i.compareTo(a.bd)!=1; i = i.add(B(1))) //<>// //<>// //<>//
+                if (a.bd.divideAndRemainder(i)[1].equals(B(0)))
+                  out.add(new Poppable(i));
+              push(out);
+            }
+          }
+          
           if (cc=='λ') {
             a = pop(BIGDECIMAL);
             if (a.type==BIGDECIMAL) {
@@ -1453,13 +1464,26 @@ class Executable extends Preprocessable {
             }
           }
           
-          if (cc=='Λ') {
+          if (cc=='Ν') {
+            b = pop(BIGDECIMAL);
             a = pop(BIGDECIMAL);
-            if (a.type==BIGDECIMAL) {
-              ArrayList<Poppable> out = ea();
-              for (BigDecimal i = B(1); i.compareTo(a.bd)!=1; i = i.add(B(1))) //<>// //<>// //<>//
-                if (a.bd.divideAndRemainder(i)[1].equals(B(0)))
-                  out.add(new Poppable(i));
+            if (a.type==BIGDECIMAL && b.type == BIGDECIMAL) {
+              ArrayList<Poppable> out = new ArrayList<Poppable>();
+              for (BigDecimal i = a.bd; i.compareTo(b.bd)<=0; i = i.add(B(1))) {
+                out.add(tp(i));
+              }
+              push(out);
+            }
+          }
+          
+          if (cc=='ν') {
+            b = pop(BIGDECIMAL);
+            a = pop(BIGDECIMAL);
+            if (a.type==BIGDECIMAL && b.type == BIGDECIMAL) {
+              ArrayList<Poppable> out = new ArrayList<Poppable>();
+              for (BigDecimal i = a.bd; i.compareTo(b.bd)<0; i = i.add(B(1))) {
+                out.add(tp(i));
+              }
               push(out);
             }
           }
@@ -1525,13 +1549,34 @@ class Executable extends Preprocessable {
           if (cc=='Χ') {
             a = pop(BIGDECIMAL);
             if (a.type==ARRAY) {
-              BigDecimal greatest = ZERO;
+              BigDecimal greatest = a.a.get(0).bd();
               for (Poppable p : a.a) {
                 if (p.type==STRING) p = tp(B(p.s));
-                if (p.bd.compareTo(greatest)>0)
-                  greatest = p.bd;
+                if (p.bd().compareTo(greatest)>0)
+                  greatest = p.bd();
               }
               push(greatest);
+            }
+            if (a.type==BIGDECIMAL) {
+              b = pop(BIGDECIMAL);
+              push (a.bd.compareTo(b.bd())>0? a : b);
+            }
+          }
+          
+          if (cc=='χ') {
+            a = pop(BIGDECIMAL);
+            if (a.type==ARRAY) {
+              BigDecimal smallest = a.a.get(0).bd();
+              for (Poppable p : a.a) {
+                if (p.type==STRING) p = tp(B(p.s));
+                if (p.bd().compareTo(smallest)<0)
+                  smallest = p.bd();
+              }
+              push(smallest);
+            }
+            if (a.type==BIGDECIMAL) {
+              b = pop(BIGDECIMAL);
+              push (a.bd.compareTo(b.bd())<0? a : b);
             }
           }
           
@@ -1567,23 +1612,14 @@ class Executable extends Preprocessable {
                 s[i] = a.s.charAt(i)+"";
               push(s);
             } else if (a.type == ARRAY) {
-              boolean useStrings = false;
+              String o = "";
               for (Poppable c : a.a) {
-                if (c.type!=BIGDECIMAL) {
-                  useStrings = true;
-                  break;
-                }
+                if (c.type!=ARRAY)
+                  o+=c.s+"\n";
+                else
+                  o+=c.sline(false)+"\n";
               }
-              if (useStrings) {
-                String o = "";
-                for (Poppable c : a.a) {
-                  if (c.type!=ARRAY)
-                    o+=c.s+"\n";
-                  else
-                    o+=c.sline(false)+"\n";
-                }
-                push(o.endsWith("\n")? o.substring(0, o.length()-1) : o);
-              }
+              push(o.endsWith("\n")? o.substring(0, o.length()-1) : o);
             }
           }
           
@@ -1831,6 +1867,37 @@ class Executable extends Preprocessable {
           }
           if (cc=='█') {
             push (ALLCHARS);
+          }
+          
+          if (cc=='►') {
+            a = pop(ARRAY);
+            Poppable l = a.a.get(0);//last
+            BigDecimal count = B(0);
+            ArrayList<Poppable> out = new ArrayList<Poppable>();
+            for (Poppable c : a.a) {
+              if (c.equals(l) || c == a.a.get(0)) {
+                count = count.add(B(1));
+              } else {
+                out.add(l);
+                out.add(tp(count));
+                l = c;
+                count = B(1);
+              }
+            }
+            out.add(l);
+            out.add(tp(count));
+            push(out);
+          }
+          
+          if (cc=='◄') {
+            a = pop(ARRAY);
+            ArrayList<Poppable> out = new ArrayList<Poppable>();
+            for (int i = 0; i < a.a.size()-1; i+= 2) {
+              for (int j = 0; j < a.a.get(i+1).bd().intValue(); j++) {
+                out.add(a.a.get(i));
+              }
+            }
+            push(out);
           }
           
           if (cc=='⌠') {
