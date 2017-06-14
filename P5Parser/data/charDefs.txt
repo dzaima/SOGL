@@ -594,8 +594,9 @@ z	pushes the english alphabet lowercase
 			`739Ο` -> 7
 			`365Ο` -> 6
 			`321Ο` -> 1
-		number & string & string: repeat number-1 times 1stStr+2ndStr and append 1stStr
+		number & string & string, string & string & number: repeat number-1 times 1stStr+2ndStr and append 1stStr
 			`3"|”"  ”Ο` -> "|  |  |"
+            `"hi”"'”1Ο` -> "'hi'"
 		string & number & string: repeat number times 1stStr+2ndStr and append 1stStr
 			`"|”3"  ”Ο` -> "|  |  |  |"
 ο	
