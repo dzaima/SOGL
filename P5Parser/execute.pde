@@ -1528,6 +1528,12 @@ class Executable extends Preprocessable {
                 res=c.bd;
               push(res);
             }
+            if (a.type==STRING&&b.type==STRING&&c.type==BIGDECIMAL) {
+              Poppable t = c;//the number
+              c = a;
+              a = b;
+              b = t;
+            }
             if (a.type==BIGDECIMAL&&b.type==STRING&&c.type==STRING) {
               String o = "";
               for (int i = 0; i < a.bd.intValue()-1; i++) {
