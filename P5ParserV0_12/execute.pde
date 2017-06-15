@@ -518,8 +518,10 @@ class Executable extends Preprocessable {
                   o.add(a.a.get(i));
                 push(o);
               } else if (a.type==ARRAY && b.type==ARRAY) {
-                b.a.add(a.copy());
-                push(b.copy().a);
+                for (Poppable p : a.a) {
+                  b.a.add(p.copy());
+                }
+                push(b);
               }
             }
           }
@@ -1484,7 +1486,7 @@ class Executable extends Preprocessable {
             a = pop(BIGDECIMAL);
             if (a.type==BIGDECIMAL) {
               ArrayList<Poppable> out = ea();
-              for (BigDecimal i = B(1); i.compareTo(a.bd)!=1; i = i.add(B(1))) //<>// //<>// //<>//
+              for (BigDecimal i = B(1); i.compareTo(a.bd)!=1; i = i.add(B(1))) //<>// //<>// //<>// //<>//
                 if (a.bd.divideAndRemainder(i)[1].equals(B(0)))
                   out.add(new Poppable(i));
               push(out);
@@ -1892,8 +1894,8 @@ class Executable extends Preprocessable {
               for (int i = 0; i < ss.length; i++) {
                 ss[i] = ss[i].replace('`', '.');
                 for (int j = 0; j < ss[i].length(); j++) {
-                  if (ss[i].charAt(j)=='_' && (i==0 || ss[i-1].charAt(j)==' ')) {
-                    if (i > 0)
+                  if (ss[i].charAt(j)=='_') {
+                    if (i > 0 && ss[i-1].charAt(j)==' ')
                       ss[i-1] = ss[i-1].substring(0,j)+'_'+ss[i-1].substring(j+1);
                     ss[i] = ss[i].substring(0,j)+' '+ss[i].substring(j+1);
                   }
@@ -1906,8 +1908,8 @@ class Executable extends Preprocessable {
               for (int i = 0; i < out.size(); i++) {
                 out.set(i, tp(out.get(i).s.replace('`', '.')));
                 for (int j = 0; j < out.get(i).s.length(); j++) {
-                  if (out.get(i).s.charAt(j)=='_' && (i==0 || out.get(i-1).s.charAt(j) == ' ')) {
-                    if (i > 0)
+                  if (out.get(i).s.charAt(j)=='_') {
+                    if (i > 0 && out.get(i-1).s.charAt(j)==' ')
                       out.set(i-1, tp(out.get(i-1).s.substring(0,j)+'_'+out.get(i-1).s.substring(j+1)));
                     out.set(i, tp(out.get(i).s.substring(0,j)+' '+out.get(i).s.substring(j+1)));
                   }
@@ -1962,7 +1964,7 @@ class Executable extends Preprocessable {
             }
             if (a.type==STRING) {
               if (b.type==ARRAY) {
-                int maxlen = 0; //<>// //<>// //<>//
+                int maxlen = 0; //<>// //<>// //<>// //<>//
                 for (Poppable c : b.a) 
                   if (c.s.length()>maxlen) 
                     maxlen = c.s.length();

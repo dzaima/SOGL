@@ -25,7 +25,7 @@ class Preprocessable {
   }
   Preprocessable preprocess(String prog, String[] inputs) {
     this.inputs = inputs;
-    p = prog.replace("…", "\n");
+    //p = prog.replace("…", "\n");
     sdata = new int[p.length()];
     ldata = new int[p.length()];
     qdata = new int[p.length()];
@@ -217,33 +217,35 @@ class Preprocessable {
   }
   void setvar (int v, Poppable p) {
     vars[v]=p;
-    }
+  }
+    
+  //pushes
+  void push (Poppable p) {
+    stack.add(new Poppable(p).copy());
+  }
   void push (String s) {
-    stack.add(new Poppable(s));
+    push(new Poppable(s));
   }
   void push (long l) {
-    stack.add(new Poppable(new BigDecimal(l)));
+    push(new Poppable(new BigDecimal(l)));
   }
   void push (float l) {
-    stack.add(new Poppable(new BigDecimal(l)));
+    push(new Poppable(new BigDecimal(l)));
   }
   void push (ArrayList<Poppable> a) {
-    stack.add(new Poppable(a));
+    push(new Poppable(a));
   }
   void push (String[] a) {
-    stack.add(new Poppable(array(a)));
+    push(new Poppable(array(a)));
   }
   void push (boolean b) {
-    stack.add(new Poppable(B(b?"1":"0")));
+    push(new Poppable(B(b?"1":"0")));
   }
   void push (BigDecimal d) {
-    stack.add(new Poppable(d));
-  }
-  void push (Poppable p) {
-    stack.add(new Poppable(p));
+    push(new Poppable(d));
   }
   void push (String[][] a) {
-    stack.add(new Poppable(array(a)));
+    push(new Poppable(array(a)));
   }
   Poppable pop (int implicitType) {
     Poppable res;
@@ -252,7 +254,7 @@ class Preprocessable {
     else if (implicitType == STRING) res = sI();
     else res = new Poppable(B("0"));
     lIT = res;
-    return res;
+    return res.copy();
   }
   
   Poppable pop () {
@@ -260,7 +262,7 @@ class Preprocessable {
       Poppable r = gl();
       stack.remove(stack.size()-1);
       lIT = r;
-      return r;
+      return r.copy();
     } catch (Exception e) {
       eprint("*-*warning on pop(): "+e.toString()+" - function called pop() without implicit input type?*-*");
       e.printStackTrace();
@@ -272,21 +274,21 @@ class Preprocessable {
           break;
         }
       if (isString) {
-        return tp(ns);
+        return tp(ns).copy();
       } else {
-        return tp(B(ns));
+        return tp(B(ns)).copy();
       }
     }
   }
   
   Poppable npop (int implicitType) {
     if (stack.size()>0) {
-      return gl();
+      return gl().copy();
     }
     if (implicitType == BIGDECIMAL)
-      return nI();
+      return nI().copy();
     else if (implicitType == STRING)
-      return sI();
+      return sI().copy();
     else return new Poppable(0);
   }
   Poppable gl () {//get last
