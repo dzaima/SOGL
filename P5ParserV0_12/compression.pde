@@ -1,68 +1,11 @@
-import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.Collections;
 import java.math.BigInteger;
-boolean logDecompressInfo = true;
 String compressChars = "⁰¹²³⁴⁵⁶⁷⁸\t⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½ !#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~←↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□¶‼⌠⌡→";
 String compressableChars = "ZQJKVBPYGFWMUCLDRHSNIATEXOzqjkvbpygfwmucldrhsniatexo~!$%&=?@^()<>[]{};:9876543210#*\"'`.,+\\/_|-\nŗ ";
 int[] presetNums = {0,1,2,3,4,5,6,7,8,9,10,11,12,14,16,18,20,25,36,50,64,75,99,100,101,128,196,200,255,256,257};
 String[] presets = {"0","1","2","3","4","5","6","7","8","9","L","LI","6«","7«","8«","9«","L«","M¼","6²","M»","N¼","M¾","MH","M","MI","N»","N¾","M«","NH","N","NI"};
 String[] dict;
-void setup() {
-  if (parts.length == 0) {
-    StringList a = new StringList();
-    String number = "27";
-    a.append(compressNum(BI(number)));
-    println(decompressNum(compressNum(BI(number))));
-    println(compressNum(BI(number)));
-    println(compressNum(BI(number)).length());
-    saveStrings("compressed", a.array());
-    System.exit(0);
-  }
-  //println(toNum1(compress1("niooaaoasoioaiaaaoiineeaei", 0)));
-  //println(toCmd1(toNum1(compress1("niooaaoasoioaiaaaoiineeaei", 0))).length());
-  //System.exit(0);
-  //83042064962495462445816376887696
-  //619796102596331877059595140240
-  ArrayList<int[]> bits = new ArrayList<int[]>();
-  String raw = "";
-  for (String s : parts) {
-    for (int[] i : compress(s)) {
-      int[] temp = new int[2];
-      temp[0] = i[0];
-      temp[1] = i[1];
-      bits.add(temp);
-    }
-    raw+=s;
-  }//5167382191520587902730082766180203
-   //
-  //int[][] sb = {{8,0}, {32, 2}, {97,2}, {94, 67}, {27, 0}, {26, 2}, {23, 3}, {19, 2}, {16, 2}, {13, 4}, {7, 6}};//{97, 71}, {26, 2}, {23, 3}, {19, 18}, {3, 1}, {3, 0}, {3, 2}, {3, 2}, {3, 0}, {3, 0}};
-  /*for (int s[] : sb) {
-    bits.add(s);
-  }*/
-  //DEBUGGING
-  /*println("\n||----------------------------------------------------------------------||");
-  for (int[] bit : bits)
-    println(bit[0]+" "+bit[1]);//*/
-    //if (true)return;
-  println("\n||----------------------------------------------------------------------||");
-  String comp = toCmd(bits);
-  
-  /*for (int i = 0; i < comp.length()-1; i++) {
-    if (compressChars.indexOf(comp.charAt(i))>compressChars.indexOf(comp.charAt(i+1))) {
-      println("fail");
-    }
-  }*/
-  println("program: " + comp);
-  println("total: \""+decompress(comp)+"\"");
-  //println(decompress(toCmd("00100000101011101")[0]));
-  println("||----------------------------------------------------------------------||");
-  println(comp.length() + " bytes, original was "+raw.length()+" bytes. "+ round(comp.length()*1000f/raw.length())/10 + "% of original length");
-  println("More precisely, " + Math.log(toNum(bits).doubleValue())/log(compressChars.length()) + " bytes");//.multiply(new BigDecimal(2/log(256))));
-  println(toNum(bits));
-  println(toNum(bits).toString().length());
-  exit();
-}
 BigInteger fromBase (int base, byte[] num) {
   BigInteger o = BigInteger.valueOf(0);
   for (byte b : num) {
@@ -88,11 +31,11 @@ int[] read (int base, int count) {
   return o;
 }
 byte read (int base) {
-  //if (logDecompressInfo) print("\nREADING " + base);
+  if (logDecompressInfo) print("\nREADING " + base);
   byte o;
   BigInteger[] temp = decompressable.divideAndRemainder(BI(base));
   o = temp[1].byteValue();
-  //if (logDecompressInfo) println(", GOT " + o);
+  if (logDecompressInfo) println(", GOT " + o);
   decompressable = temp[0];
   return o;
 }

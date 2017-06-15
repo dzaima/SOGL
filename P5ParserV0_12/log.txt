@@ -1,0 +1,12 @@
+###
+program: ┌5►α׀§⌡/!‘
+|┌ 5 ► α ׀ § ⌡ / ! ‘| chars
+|3|3|3|3|3|3|3|3|3|1| strings
+| | | | | | | | | | | quirks
+|0|0|0|0|0|0|0|0|0|0| loops
+|0|1|2|3|4|5|6|7|8|9| 1s
+|0|0|0|0|0|0|0|0|0|0| 10s
+###
+
+*-*warning on pop(): java.lang.ArrayIndexOutOfBoundsException: -1 - function called pop() without implicit input type?*-*
+`┌`@00: ["the input was this string."]

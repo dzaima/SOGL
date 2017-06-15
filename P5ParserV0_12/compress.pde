@@ -44,7 +44,7 @@ ArrayList<int[]> compress (String s, boolean clear, int method) {
   }
 
 
-  if (method == 1) { //<>//
+  if (method == 1) {
     while (s.length()>0) {
       int length = min(s.length(), 18);
       if (logDecompressInfo) println(length);
