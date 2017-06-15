@@ -45,3 +45,19 @@ String reverseChars(String s, boolean reverse) {
   }
   return res;
 }
+Poppable swapChars (Poppable p, char a, char b) {
+  if (p.type==STRING) {
+    String o = "";
+    for (char s : p.s.toCharArray()) {
+      if (s==a) o+= b; else
+      if (s==b) o+= a; else
+      o+=s;
+    }
+    return tp(o);
+  }
+  ArrayList<Poppable> out = ea();
+  for (Poppable c : p.a) {
+    out.add(swapChars(c, a, b));
+  }
+  return tp(out);
+}

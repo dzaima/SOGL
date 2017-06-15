@@ -275,9 +275,9 @@ class Executable extends Preprocessable {
                   for (int i = b.s.length()-1; i > -1; i--) {
                     res += b.s.charAt(i);
                   }
-                  push(res);
+                  b = tp(res);
                 } else if (a.type==BIGDECIMAL) {
-                  push (BigDecimal.ZERO.subtract(a.bd));
+                  b = tp(ZERO.subtract(a.bd));
                 }
                 o.add(b);
               }
@@ -1813,25 +1813,48 @@ class Executable extends Preprocessable {
           }
           
           if (cc=='ž') {
-            Poppable d = pop(ARRAY);
+            Poppable d = pop(BIGDECIMAL);
             Poppable c = pop(BIGDECIMAL);
-            b = pop(BIGDECIMAL);
-            a = pop(ARRAY);
+            b = pop(c.type!=BIGDECIMAL && d.type!=BIGDECIMAL? BIGDECIMAL: ARRAY);
+            a = pop((d.type==BIGDECIMAL? 1 : 0)  +  (c.type==BIGDECIMAL? 1 : 0)  +  (c.type==BIGDECIMAL? 1 : 0) == 2? ARRAY : BIGDECIMAL);
+            Poppable t;
+            //worst way to make a & b numbers and c & d not numbers without losing order :p
+            if (b.type==BIGDECIMAL && c.type!=BIGDECIMAL) {
+              t = b;
+              b = c;
+              c = t;
+            }
+            if (c.type==BIGDECIMAL && d.type!=BIGDECIMAL) {
+              t = d;
+              d = c;
+              c = t;
+            }
+            if (a.type==BIGDECIMAL && b.type!=BIGDECIMAL) {
+              t = b;
+              b = a;
+              a = t;
+            }
+            if (b.type==BIGDECIMAL && c.type!=BIGDECIMAL) {
+              t = b;
+              b = c;
+              c = t;
+            }
+            //oprintln(a.type +","+ b.type +","+ c.type +","+ d.type);
             if (a.type != ARRAY) {
               a = toArray(a);
             }
-            if (d.type != ARRAY) {
-              d = toArray(d);
+            if (b.type != ARRAY) {
+              b = toArray(b);
             }
             int axs = getLongestXFrom(a);
             int ays = a.a.size();
-            int dxs = getLongestXFrom(d);
-            int dys = d.a.size();
-            int x = b.bd.intValue();
-            int y = c.bd.intValue();
+            int dxs = getLongestXFrom(b);
+            int dys = b.a.size();
+            int x = c.bd.intValue();
+            int y = d.bd.intValue();
             String[] res = emptySA(max(axs, dxs+x-1), max(ays, dys+y-1));
             res = write(res, 1, 1, spacesquared(to1DMLSA(a.a)));
-            res = write(res, x, y, spacesquared(to1DMLSA(d.a)));
+            res = write(res, x, y, spacesquared(to1DMLSA(b.a)));
             push(res);
           }
           
@@ -1846,8 +1869,55 @@ class Executable extends Preprocessable {
             if (a.type==BIGDECIMAL)
               push (a.bd.multiply(B(3)).divide(B(4)));
           }
-          
           if (cc=='↔') {
+            a = pop(STRING);
+            a = swapChars(a, '\\', '/');
+            a = swapChars(a, '<', '>');
+            a = swapChars(a, '(', ')');
+            a = swapChars(a, '{', '}');
+            a = swapChars(a, '[', ']');
+            push(a);
+            //a = swapChars(a, '', '');
+          }
+          if (cc=='↕') {
+            a = pop(STRING);
+            a = swapChars(a, '\\', '/');
+            a = swapChars(a, '^', 'V');
+            a = swapChars(a, '\'', '.');
+            a = swapChars(a, '{', '}');
+            a = swapChars(a, '[', ']');
+            if (a.type==STRING) {
+              String[] ss = split(a.s, '\n');
+              ss = spacesquared(ss);
+              for (int i = 0; i < ss.length; i++) {
+                ss[i] = ss[i].replace('`', '.');
+                for (int j = 0; j < ss[i].length(); j++) {
+                  if (ss[i].charAt(j)=='_' && (i==0 || ss[i-1].charAt(j)==' ')) {
+                    if (i > 0)
+                      ss[i-1] = ss[i-1].substring(0,j)+'_'+ss[i-1].substring(j+1);
+                    ss[i] = ss[i].substring(0,j)+' '+ss[i].substring(j+1);
+                  }
+                }
+              }
+            }
+            if (a.type==ARRAY) {
+              ArrayList<Poppable> out = a.a;
+              out = spacesquared(out);
+              for (int i = 0; i < out.size(); i++) {
+                out.set(i, tp(out.get(i).s.replace('`', '.')));
+                for (int j = 0; j < out.get(i).s.length(); j++) {
+                  if (out.get(i).s.charAt(j)=='_' && (i==0 || out.get(i-1).s.charAt(j) == ' ')) {
+                    if (i > 0)
+                      out.set(i-1, tp(out.get(i-1).s.substring(0,j)+'_'+out.get(i-1).s.substring(j+1)));
+                    out.set(i, tp(out.get(i).s.substring(0,j)+' '+out.get(i).s.substring(j+1)));
+                  }
+                }
+              }
+              a.a = out;
+            }
+            push(a);
+          }
+          if (cc=='∆') {
             push(-1);
           }
           

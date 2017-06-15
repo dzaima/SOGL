@@ -663,8 +663,7 @@ z	pushes the english alphabet lowercase
 š	
 ū	
 ž	4 inputs
-		array & number & number & array: replace in the 1st array from the positions given (1-indexed) to those + 2nd arrays size with the 2nd array
-		array & number & number & string, string & number & number & array, string & number & number & string: replace in the 1st input from the positions given (1-indexed) to those + 2nd inputs size with the 2nd array
+		array & number & number & array: replace in the 1st array from the positions given (1-indexed) to those + 2nd arrays size with the 2nd array. Order doesn't matter, but the 1st array will be source and 1st number - x position
 ¼	1 input
 		number: push 0.25*pop
 ¾	1 input
@@ -675,9 +674,11 @@ z	pushes the english alphabet lowercase
 ⅜	
 ⅝	
 ⅞	
-↔	push -1
-↕	
-∆	
+↔	1 input
+		swap pairs of "/\ <> () {} []" (mirroring)
+↕	1 input
+		swap pairs of "/\ ^v '." and replace "`" with "." and move "_" up one character, leaving a space
+∆	push -1
 ≈	
 ┌	push "-"
 ┐	push "|"
