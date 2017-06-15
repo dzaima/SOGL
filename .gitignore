@@ -2,3 +2,7 @@ P5ParserV0_7/data/p.sogl
 P5ParserV0_7/output.txt
 P5ParserV0_7/log.txt
 P5Parser/code/sketch.properties
+P5ParserV0_11/log.txt
+*.txt
+compression/work.pde
+compression/compressed

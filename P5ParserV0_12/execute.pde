@@ -69,7 +69,7 @@ class Executable extends Preprocessable {
                 pushable = tp(decompress(readString));
               break;
               case '”':
-                pushable = tp(readString);
+                pushable = tp(readString.replace("¶", "\n"));
               break;
               case '“':
                 pushable = tp(new BigDecimal(decompressNum("\""+readString+"“")));
@@ -268,8 +268,18 @@ class Executable extends Preprocessable {
               push (BigDecimal.ZERO.subtract(a.bd));
             } else if (a.type==ARRAY) {
               ArrayList<Poppable> o = ea();
-              for (int i = 0; i < a.a.size(); i++) {
-                  o.add(a.a.get(a.a.size()-i-1));
+              for (int j = 0; j < a.a.size(); j++) {
+                b = a.a.get(j);
+                if (b.type==STRING) {
+                  String res = "";
+                  for (int i = b.s.length()-1; i > -1; i--) {
+                    res += b.s.charAt(i);
+                  }
+                  push(res);
+                } else if (a.type==BIGDECIMAL) {
+                  push (BigDecimal.ZERO.subtract(a.bd));
+                }
+                o.add(b);
               }
               push(o);
             }
@@ -1924,6 +1934,25 @@ class Executable extends Preprocessable {
             out.add(l);
             out.add(tp(count));
             push(out);
+          }
+          
+          if (cc=='▼') {
+            a = pop(STRING);
+            if (a.type==STRING) {
+              String[] ss = split(a.s, '\n');
+              String out = "";
+              for (int i = 0; i < ss.length; i++) {
+                out+= (i==0? "" : "\n") + ss[ss.length-i-1];
+              }
+              push(out);
+            }
+            if (a.type==ARRAY) {
+              ArrayList<Poppable> out = new ArrayList<Poppable>();
+              for (int i = 0; i < a.a.size(); i++) {
+                out.add(a.a.get(a.a.size()-i-1));
+              }
+              push(out);
+            }
           }
           
           if (cc=='◄') {

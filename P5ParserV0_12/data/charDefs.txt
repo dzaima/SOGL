@@ -151,7 +151,7 @@ Characters:
 			`8±` -> -8
 		string: reverses the string
 			`"hello”±` -> "olleh"
-		array: reverses the array
+		array: vectorize
 		two of the signs following each other: reverse (or negate) the contents of an array
 ∑	1 input
 		array: add/join the whole array together 
@@ -699,7 +699,10 @@ z	pushes the english alphabet lowercase
 ▲	extra commands 1
 ►	1 input
 		run-length encode
-▼	
+▼	1 input
+		string, array: mirror vertically (either as array or newline separated string)
+			`hello¶world”` -> "world\nhello"
+			`["hello", "world"]` -> [["world", "hello"]]
 ◄	1 input
 		run-length decode
 ■	
