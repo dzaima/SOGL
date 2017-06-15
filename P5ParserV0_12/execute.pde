@@ -961,6 +961,7 @@ class Executable extends Preprocessable {
               a = b;
               b = t;
             }
+            if (b.bd.compareTo(ZERO) <= 0) throw new Exception("`n` was called with nonpositive number");
             String[] splat = new String[ceil(a.s.length()/b.bd.floatValue())];
             int plen = b.bd.intValue();
             if (a.type==STRING) {
