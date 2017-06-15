@@ -6,5 +6,5 @@
   printDebugInfo = true;
   logDecompressInfo = false;
   
-  oldInputSystem = true;
+  oldInputSystem = false;
 }
