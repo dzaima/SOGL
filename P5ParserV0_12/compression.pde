@@ -125,10 +125,11 @@ String BAtoString(byte[] b) {
 }
 BigDecimal[] toBase (BigDecimal base, BigDecimal b) {
   ArrayList<BigDecimal> o = new ArrayList<BigDecimal>();
-  while (!b.equals(BigInteger.ZERO)) {
+  while (!b.equals(BigDecimal.ZERO)) {
     BigDecimal[] t = b.divideAndRemainder(base);
     o.add(t[1]);
     b = t[0];
+    println(b);
   }
   BigDecimal[] O = new BigDecimal[o.size()];
   for (int i = 0; i<o.size(); i++) {
