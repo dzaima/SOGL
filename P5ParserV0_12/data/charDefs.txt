@@ -20,13 +20,13 @@ IO:
    p  x     x
    O  x  x   
    P  x  x  x
-useful chars: "”¶±«»≤≥’→←╥∫┼
+useful chars: "”¶±«»≤≥’→←╥∫┼∑⌡øΘθŗΔ±
 
 	"hello”world” to push 2 strings
 	"hello”A6‘ you can mix&match quote types
 
 
-CGSE post generator: "#[SOGL](https://github.com/dzaima/SOGL), ”od⁄o" [bytes](https://github.com/dzaima/SOGL/blob/master/chartable.md)”o  4*d+P"Explanation:”O  4*O4,{ -=?³d⁄6+;-  *o,o  *O}:3-dWoI}  2*o,o
+CGSE post generator: "#[SOGL V0.12](https://github.com/dzaima/SOGL), ”od⁄o" [bytes](https://github.com/dzaima/SOGL/blob/master/chartable.md)”o  4*d+P"Explanation:”O  4*O4,{ -=?³d⁄6+;-  *o,o  *O}:3-dWoI}  2*o,o
 usage: next line = the code; next = "-" for new line, " " for continuation of prevoius; next = empty; next = each line as a description for each "-".
 
 
@@ -104,21 +104,25 @@ uS 25	push an array with time stuff (year, month, day, hour, minute, second, mil
 2÷ 29	1 input
 		push string of the contents of POP (either file or website, whichever it is)
 ╥╥ 30	1 input
-		string: palendromize on newlines
-			`"hello¶world”╥╥` -> "hello¶world¶hello"
-		array: palendromize on newlines
+		string, array: palindromize vertically
+			`"hello¶world!”╥╥` -> "hello¶world!¶hello"
 			`"hello”world”¹╥╥` -> [["hello","world","hello"]]
+            `["foo","bars"]╥╥` -> [["foo","bars","foo"]]
 ╥╤ 31	1 input
-		string: quad-palendromize
-			`"hi¶there”╥╤` -> "hi     ih¶therereht¶hi     ih”
-		array: quad-palendromize
-			`"hi”there”¹╥╤` -> [["hi     ih","therereht","hi     ih”]]
+		string, array: quad-palindromize
+			`"hi¶there”╥╤` -> "hi     ih¶therereht¶hi     ih"
+			`"hi”there”¹╥╤` -> [["hi     ih","therereht","hi     ih"]]
+			`["//","^<"]╥╤` -> ["///","^<^","///"]
 
 ΓΓ 32	1 input
-		string: quad-palendromize mirroring "/\[](){}<>"
+		string, array: quad-palindromize, mirroring
 			`"/^-¶|”ΓΓ` -> "/^-^\\¶|   |¶\\^-^/"
-		array: quad-palendromize mirroring "/\[](){}<>"
-			`"/^-”|”¹ΓΓ` -> [["/^-^\\","|   |","\\^-^/"]]
+			`"/^-”|”¹ΓΓ` -> [["/^-^\\","|   |","\\v-v/"]]
+			`"/--¶[|”ΓΓ` -> "/---\\¶|[ ]|¶\\---/"
+            
+╥Γ 33	1 input
+		string, array: palindromize vertically, mirroring
+			`"/---¶hi”╥Γ` -> "/---¶hi¶\\---"
 Characters:
 ⁰	
 ¹	x inputs
@@ -516,13 +520,12 @@ z	pushes the english alphabet lowercase
 ÷	2 inputs
 		numbers: divides and floors
 ╤	1 input
-		string: depalendromize
+		string: depalindromize
 ╥	1 input
-		string: palendromize
+		string: palindromize
 			`"hello”` -> "hellolleh"
-			`["foo","bar"]╥` -> [["fooof","barab"]]
-			`["foo","bar"]╥╥` -> [["foo","bar","foo"]]
-			`["foo","bar"]╥╤` -> [["fooof","barab","fooof"]]
+			`["foo","bars"]╥` -> [["foo oof","barsrab"]]
+            
 ƨ	pushes the next character repeated twice
 Ƨ	pushes the next two characters as a string
 Α	
@@ -534,10 +537,8 @@ z	pushes the english alphabet lowercase
 Β	
 β	
 Γ	1 input
-		string, array: palendromize mirroring `/\[](){}<>`
+		string, array: palindromize mirroring
 			`"/--¶\-”Γ` -> "/---\\¶\\- -/"
-			`"/--¶[|”ΓΓ` -> "/---\\¶|[ ]|¶\\---/"
-			`"/---¶hi”╥Γ` -> "/---¶hi¶\\---"
 γ	
 Δ	1 input
 		number: pushes range; inclusive
@@ -605,7 +606,7 @@ z	pushes the english alphabet lowercase
 Ρ	1 input
 		number: rounds to nearest (half-up) integer
 ρ	1 input
-		anything: checks if is a palendrome
+		anything: checks if is a palindrome
 Σ	
 σ	
 Τ	1 input
@@ -677,19 +678,21 @@ z	pushes the english alphabet lowercase
 ↔	1 input
 		swap pairs of "/\ <> () {} []" (mirroring)
 ↕	1 input
-		swap pairs of "/\ ^v '." and replace "`" with "." and move "_" up one character, leaving a space
+		swap pairs of "/\ ^v '." and replace "`" with "." and replace "," with "'" and move "_" up one character, leaving a space
 ∆	push -1
 ≈	
 ┌	push "-"
 ┐	push "|"
 └	
 ┘	
-╬	
+╬	1 input
+		any: palindromize somehow. The how is defined as the next character. See palenDefs.txt for more info
 ┼	2 inputs
 		array & array: appends horizontally
 			`["hello", "world"] ┼ ["foo", "bar"]` -> ["hellofoo", "world bar"]
 		array & string, string & array: append the string vertically horizontally on the array
 			`["this", "is", "an example"] ┼ "hello"` -> ["this      hl", "is        eo", "an examplel"]
+╔	
 ╗	
 ╚	
 ╝	
