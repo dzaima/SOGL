@@ -118,7 +118,6 @@ Characters:
 		string: reverses the string
 			`"hello”±` -> "olleh"
 		array: vectorize
-		two of the signs following each other: reverse (or negate) the contents of an array
 ∑	1 input
 		array: add/join the whole array together 
 			`[1,2,3]∑` -> 6
@@ -158,6 +157,8 @@ Characters:
 		number array & number array: get a string with each item of the 1st array repeated the amount of corresponding 2nd array, joined
 №	1 input
 		number: factorial of POP
+        string: reverse on newlines
+        array: reverse the array
 ℮	
 ½	1 input
 		number: divide by 2 (not rounded unlike "»")
