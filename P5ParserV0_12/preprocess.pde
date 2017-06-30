@@ -309,8 +309,8 @@ class Preprocessable {
     return beggining;
   }
   void oprint (String o) {
+    System.out.print(o);
     if (saveOutputToFile) {
-      System.out.print(o);
       savedOut.append(o);
     }
   }

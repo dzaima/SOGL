@@ -49,7 +49,7 @@ String decompb(BigInteger in) {
       if (last==2 && lastD==4) out+=" ";
       int length = read(4)+1;
       lastD = length;
-      //tmpif(logDecompressInfo) print (length + " english words: \"");
+      print (length + " english words: \"");
       String tout = "";
       for (int i = 0; i < length; i++) {
         if (read(2)==0) 
@@ -59,7 +59,7 @@ String decompb(BigInteger in) {
         }
         if (i<length-1) tout+=" ";
       }
-      //tmpif(logDecompressInfo) println(tout+"\".");
+      println(tout+"\".");
       out+=tout;
     }
     if (eq==5 | eq==4) {

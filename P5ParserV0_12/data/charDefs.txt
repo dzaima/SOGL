@@ -20,7 +20,7 @@ IO:
    p  x     x
    O  x  x   
    P  x  x  x
-useful chars: "”¶±«»≤≥’→←╥∫┼∑⌡øΘθŗΔ±
+useful chars: "”’¶±«»≤≥→←╥∫┼∑⌡øΘθŗΔ±
 
 	"hello”world” to push 2 strings
 	"hello”A6‘ you can mix&match quote types
@@ -28,6 +28,15 @@ useful chars: "”¶±«»≤≥’→←╥∫┼∑⌡øΘθŗΔ±
 
 CGSE post generator: "#[SOGL V0.12](https://github.com/dzaima/SOGL), ”od⁄o" [bytes](https://github.com/dzaima/SOGL/blob/master/chartable.md)”o  4*d+P"Explanation:”O  4*O4,{ -=?³d⁄6+;-  *o,o  *O}:3-dWoI}  2*o,o
 usage: next line = the code; next = "-" for new line, " " for continuation of prevoius; next = empty; next = each line as a description for each "-".
+CGSE no explanation: https://dzaima.github.io/SOGLOnline/?code=JUE3JTBBJXUyMDFEJTIyZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQlMjglMjIldTAxNTclMjIlMjkudmFsdWUlM0QldTIwMUQlM0IlMjAlNUMldTAxQTclNUMlNUMldTAxNTclMjAlMjIldTAxQTclNUMlMjIldTAxNTclQjYldTAxQTclNUNuJXUwMTU3JTIwJTIyMSV1MDM5RisldTIxOTIlQTElMEEldTIwMUQlMjJkb2N1bWVudC5nZXRFbGVtZW50QnlJZCUyOCUyMiV1MDE1NyUyMiUyOS52YWx1ZSV1MjAxRCV1MjE5MiV1MjEyRSUwQWlucHV0cyV1MjEyRWwlM0JBJTIyJTIzJTVCU09HTCUyMFYwLjEyJTVEJTI4aHR0cHMlM0EvL2dpdGh1Yi5jb20vZHphaW1hL1NPR0wlMjklMkMlMjAldTAxNTclMjAlNUJieXRlcyU1RCUyOGh0dHBzJTNBLy9naXRodWIuY29tL2R6YWltYS9TT0dML2Jsb2IvbWFzdGVyL2NoYXJ0YWJsZS5tZCUyOSV1MjAxRE9hJUI2JXUwMzk4JTdCQDQqT28lN0QlMjIlNUJUcnklMjBpdCUyMEhlcmUlMjElNUQlNUIxJTVEJUI2JUI2JTVCMSU1RCUzQSUyMCV1MjAxRE8lMjJpbnB1dCV1MjEyRUIlMjJwcm9ncmFtJXUyMTJFQyUyMiVBNyV1MjAxRGlucHV0cyVBMWElMjJwcm9ncmFtJUExJTIycGVybWFsaW5rJTI4JTI5JXUyMDFEJXUyMTkyJTIyb3V0cHV0JXUyMTJFb2MlMjJwcm9ncmFtJUExYSUyMmlucHV0cyVBMQ__
+golfed: file:///D:/Dzintars/ATC/SOGL/SOGLOnline/index.html?code=JUE3JTBBJTIyJXUyMDMyJUExJXUyMDc0JUM2JTBBJXUwM0JGLi5jJUIxJTBBJXUyMDc1JTIwJTNEKyV1MjA3NyUwQSUyMCU1QyV1MDFBNyU1QyU1QyV1MDE1NyUyMCUyMiV1MDFBNyU1QyUyMiV1MDE1NyVCNiV1MDFBNyU1Q24ldTAxNTclMjAlMjIxJXUwMzlGKyV1MjE5MiV1MjA3NiUwQSV1MjAxOCV1MjE1RiV1MDEyQiV1MjU5MSV1MjU5M2ElQkVnJXUwMTZCbjk2JXUyMTJFJXUyNTE0JUFCJXUwMzk4JXUyMDc5ZCV1MjAzQyV1MDNCN28lQTQlQjIlRTZLJXUyMDE4JXUyMDc1JTBBQiV1MjUxNCUzQyV1MjI2NSV1MjMyMSV1MDM5NCVBQiV1MDNCMyV1MDEwRCV1MjVDQjEldTIwNzQldTAzOThyeUcldTIwNzgldTIyMUUlQUMldTIxOTMldTIwNzlqJXUwM0JFJXUyMjY0JXUyMDQ0JXUyMTkxMSV1MDNCRiV1MjAxOCVCMSV1MjA3NSV1MjE5MmxyJTNCQSV1MjA3NCVCOSUyMiV1MjIxMSV1MjU2NCV1MjU2Q2MldTAzQzAldTIwNzAldTAzQzEldTI1QjIldTI1QTBjJUFCJUExJXUyMDFBJXUwM0M5LypmUiUyODcldTAzQjMldTAzQTMldTAzQTFMJUI2JXUyMTJFZXMldTAzQjVnJUY3JTYwJXUyNTBDUCV1MjUwMjJtJXUyMTk0KzI5JUJCJUIyJXUyMDE4T2ElQjYldTAzOTglN0JANCpPbyU3RCUyMnElN0QldTIyMUFYJXUwM0JGJTI1JXUyMDdEJXUyNTUwKiUzRCV1MDNDNCV1MjVBMSV1MjVDNCV1MjU5MiV1MDNBOFQldTIyNjAldTAzQTl2JUIzJXUyMDE4TyVDNiV1MjA3NSV1MjE5MkMlMjIlQjEldTIwNzclMjIlQTcldTIwMUQldTIwNzYlQzYldTIwNzdhJXUyMDc2JTIyJXUwMTEzJTVCJUE2aSV1MDNBOSV1MDNBNjRXJXUwM0I4JXUwM0I1JXUyMDE4JXUyMTkyJTIyJXUyNUNCJTdCJUU2JXUyMDc1JXUyMTkybyVDNiV1MjA3N2MldTIwNzYlMjIlQjEldTIwNzdhJXUyMDc2
+§
+"′¡⁴Æ
+ο..c±
+⁵ =+⁷
+ \Ƨ\\ŗ "Ƨ\"ŗ¶Ƨ\nŗ "1Ο+→⁶
+‘⅟ī░▓a¾gūn96℮└«Θ⁹d‼ηo¤²æK‘⁵
+B└<≥⌡Δ«γč○1⁴ΘryG⁸∞¬↓⁹jξ≤⁄↑1ο‘±⁵→lr;A⁴¹"∑╤╬cπ⁰ρ▲■c«¡‚ω/*fR(7γΣΡL¶℮esεg÷`┌P│2m↔+29»²‘Oa¶Θ{@4*Oo}"q}√Xο%⁽═*=τ□◄▒ΨT≠Ωv³‘OÆ⁵→C"±⁷"§”⁶Æ⁷a⁶"ē[¦iΩΦ4Wθε‘→"○{æ⁵→oÆ⁷c⁶"±⁷a⁶
 
 
 
@@ -390,6 +399,7 @@ r	1 input
 		string: convert to number
 			`"123”r` -> 123
 		number: convert to character (inverse of above)
+        array: vectorize
 s	1 input
 		string: checks if contains multiple cases
 t	1 input
@@ -452,7 +462,7 @@ z	pushes the english alphabet lowercase
 		arrays: check if all items are equal to their corresponding items in the other array
 ∙	2 inputs
 		number & string, string & number: get an array with number many items all being the string
-		number & array, array & number: multiply the array vertically
+		number & array, array & number: multiply vertically
 			`["hello", "world"]3∙` -> [["hello", "world", "hello", "world", "hello", "world"]]
 ∫	1 input
 		number: loop/repeat that many times the continuing code, closed by "}", each time pushing the current loop-point (0-based).
@@ -498,7 +508,8 @@ z	pushes the english alphabet lowercase
 		number: increase `a` by the number
 			`"3α8αa` -> 11
 Β	
-β	
+β	3 inputs
+		strings: in the 1st replace 2nd with 3rd as regex
 Γ	1 input
 		string, array: palindromize mirroring
 			`"/--¶\-”Γ` -> "/---\\¶\\- -/"
@@ -545,10 +556,8 @@ z	pushes the english alphabet lowercase
 		number: get the prime factorization of n
 μ	1 input
 		number: get the prime factorization of n (excluding self)
-Ν	2 inputs
-		numbers: range, inclusive
-ν	2 inputs
-		numbers: range, excludes last
+Ν	
+ν	
 Ξ	
 ξ	
 Ο	3 inputs
@@ -626,14 +635,15 @@ z	pushes the english alphabet lowercase
 		any: mixed from the above
 š	
 ū	1 input
-		string, array: capitalize every words first letter
+		string, array: uppercase every words first letter
 ž	4 inputs
 		array & number & number & array: replace in the 1st array from the positions given (1-indexed) to those + 2nd arrays size with the 2nd array. Order doesn't matter, but the 1st array will be source and 1st number - x position
 ¼	1 input
 		number: push 0.25*pop
 ¾	1 input
 		number: push 0.75*pop
-⅓	
+⅓	1 input
+		string, array: push contents of that URLs contents
 ⅔	
 ⅛	
 ⅜	
@@ -647,8 +657,8 @@ z	pushes the english alphabet lowercase
 ≈	
 ┌	push "-"
 ┐	push "|"
-└	
-┘	
+└	push "/"
+┘	push "\"
 ╬	1 input
 		any: palindromize somehow. The how is defined as the next character. See palenDefs.txt for more info
 ┼	2 inputs
@@ -656,7 +666,7 @@ z	pushes the english alphabet lowercase
 			`["hello", "world"] ┼ ["foo", "bar"]` -> ["hellofoo", "world bar"]
 		array & string, string & array: append the string vertically horizontally on the array
 			`["this", "is", "an example"] ┼ "hello"` -> ["this      hl", "is        eo", "an examplel"]
-╔	
+╔	push "_"
 ╗	
 ╚	
 ╝	
@@ -664,7 +674,7 @@ z	pushes the english alphabet lowercase
 ▒	
 ▓	
 █	pushes all the possible SOGL characters
-▲	extra commands 1
+▲	
 ►	1 input
 		run-length encode
 ▼	1 input

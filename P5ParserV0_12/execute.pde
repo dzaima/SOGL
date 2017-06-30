@@ -82,27 +82,27 @@ class Executable extends Preprocessable {
               break;
             }
             if (pushable.type==STRING) {
-              String push = pushable.s;
+              String toPush = pushable.s;
               if (pushable.s.contains("ŗ")) {
                 a = pop();
                 if (a.type==STRING)
-                  push = pushable.s.replace("ŗ",a.s);
+                  toPush = pushable.s.replace("ŗ",a.s);
                 else if (a.type==BIGDECIMAL)
-                  push = pushable.s.replace("ŗ",a.bd.toString());
+                  toPush = pushable.s.replace("ŗ",a.bd.toString());
                 else if (a.type==ARRAY) {
                   int index = 0;
-                  push = "";
+                  toPush = "";
                   for (int i = 0; i < pushable.s.length(); i++) {
                     if (pushable.s.charAt(i) == 'ŗ') {
-                      push+= a.a.get(index%a.a.size()).s;
+                      toPush+= a.a.get(index%a.a.size()).s;
                       index++;
                     } else {
-                      push+= pushable.s.charAt(i);
+                      toPush+= pushable.s.charAt(i);
                     }
                   }
                 }
               }
-              push(push);
+              push(toPush);
             } else {
               push(pushable);
             }
@@ -1487,7 +1487,7 @@ class Executable extends Preprocessable {
             a = pop(BIGDECIMAL);
             if (a.type==BIGDECIMAL) {
               ArrayList<Poppable> out = ea();
-              for (BigDecimal i = B(1); i.compareTo(a.bd)!=1; i = i.add(B(1))) //<>// //<>// //<>// //<>//
+              for (BigDecimal i = B(1); i.compareTo(a.bd)!=1; i = i.add(B(1))) //<>// //<>// //<>// //<>// //<>//
                 if (a.bd.divideAndRemainder(i)[1].equals(B(0)))
                   out.add(new Poppable(i));
               push(out);
@@ -1965,7 +1965,7 @@ class Executable extends Preprocessable {
             }
             if (a.type==STRING) {
               if (b.type==ARRAY) {
-                int maxlen = 0; //<>// //<>// //<>// //<>//
+                int maxlen = 0; //<>// //<>// //<>// //<>// //<>//
                 for (Poppable c : b.a) 
                   if (c.s.length()>maxlen) 
                     maxlen = c.s.length();
