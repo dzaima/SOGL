@@ -587,7 +587,8 @@ z	pushes the english alphabet lowercase
 		number: log of base 2
 Υ	2 inputs
 		numbers: log of base POP
-υ	
+υ	1 input
+		number: divide by 10
 Φ	
 φ	
 Χ	2 inputs
@@ -671,7 +672,7 @@ z	pushes the english alphabet lowercase
 ╚	
 ╝	
 ░	clear output
-▒	
+▒	refresh output
 ▓	
 █	pushes all the possible SOGL characters
 ▲	
