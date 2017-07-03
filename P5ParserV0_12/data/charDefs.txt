@@ -556,8 +556,10 @@ z	pushes the english alphabet lowercase
 		number: get the prime factorization of n
 μ	1 input
 		number: get the prime factorization of n (excluding self)
-Ν	
-ν	
+Ν	2 inputs
+		numbers: inclusive range from pop to pop
+ν	2 inputs
+		numbers: range from pop (included) to pop (excluded)
 Ξ	
 ξ	
 Ο	3 inputs
@@ -673,7 +675,8 @@ z	pushes the english alphabet lowercase
 ╝	
 ░	clear output
 ▒	refresh output
-▓	
+▓	1 input
+		add spaces where needed to become square
 █	pushes all the possible SOGL characters
 ▲	
 ►	1 input
