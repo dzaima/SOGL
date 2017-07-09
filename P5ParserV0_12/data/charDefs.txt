@@ -188,9 +188,10 @@ Characters:
 #	outputs a quote character (`"`)
 $	outputs a string ender quote (`”`)
 %	2 inputs
-		numbers: modulo
+		numbers: positive modulo
 			`83%` -> 1
 			`93%` -> 0
+			`9±5%` -> 4
 &	2 inputs
 		strings, numbers: logical and.
 		arrays: makes a new array only with the items that are in both arrays
@@ -537,6 +538,7 @@ z	pushes the english alphabet lowercase
 θ	1 input
 		string: split on spaces
 			`"Hello worldθ”` -> ["Hello", "world"]
+		number: absolute value
 Ι	push the last string in the program
 ι	remove the 2nd-from-top of the stack
 Κ	2 inputs
@@ -649,7 +651,8 @@ z	pushes the english alphabet lowercase
 ⅝	
 ⅞	
 ↔	1 input
-		swap pairs of "/\ <> () {} []" (mirroring)
+		string, array: swap pairs of "/\ <> () {} []" (mirroring)
+		number: divide by 2 and get the ceiling
 ↕	1 input
 		string, array: swap pairs of "/\ ^v '." and replace "`" with "." and replace "," with "'" and move "_" up one character, leaving a space
 		
