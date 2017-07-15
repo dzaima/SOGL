@@ -671,8 +671,14 @@ z	pushes the english alphabet lowercase
 			`["this", "is", "an example"] ┼ "hello"` -> ["this      hl", "is        eo", "an examplel"]
 ╔	push "_"
 ╗	
-╚	
-╝	
+╚	1 input
+		number: get a diagonal (of `/`) of the size of the number
+		string: get a diagonal of the string (starting at the bottom-left corner)
+		array: center the array vertically
+╝	1 input
+		number: get a diagonal (of `\`) of the size of the number
+		string: get a diagonal of the string (starting at the top-left corner)
+		array: center the array horizontally
 ░	clear output
 ▒	refresh output
 ▓	1 input
