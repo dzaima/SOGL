@@ -465,7 +465,7 @@ z	pushes the english alphabet lowercase
 		number: loop/repeat that many times the continuing code, closed by "}", each time pushing the current loop-point (0-based).
 		string: iterate over the string and push the char looping at twice
 		array: for each item in each item in each item in ... in the array loop, ending with "}" or EOF, each time pushing the current item.
-			`[["ab"], ["cd"], ["76f"]]G` -> ["a", "b", "c", "d", "7", "6", "f"]
+			`[["ab"], ["cd"], ["76f"]]∫` -> ["a", "b", "c", "d", "7", "6", "f"]
 ○	1 input
 		number, string, array: if truthy, output 0, exit
 		number, string, array: if falsy, do nothing

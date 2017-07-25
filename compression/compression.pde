@@ -7,11 +7,12 @@ String compressChars = "⁰¹²³⁴⁵⁶⁷⁸\t⁹±∑«»æÆø‽§°¦‚
 String compressableChars = "ZQJKVBPYGFWMUCLDRHSNIATEXOzqjkvbpygfwmucldrhsniatexo~!$%&=?@^()<>[]{};:9876543210#*\"'`.,+\\/_|-\nŗ ";
 int[] presetNums = {0,1,2,3,4,5,6,7,8,9,10,11,12,14,16,18,20,25,36,50,64,75,99,100,101,128,196,200,255,256,257};
 String[] presets = {"0","1","2","3","4","5","6","7","8","9","L","LI","6«","7«","8«","9«","L«","M¼","6²","M»","N¼","M¾","MH","M","MI","N»","N¾","M«","NH","N","NI"};
+char[] alphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 String[] dict;
 void setup() {
   if (parts.length == 0) {
     StringList a = new StringList();
-    String number = "27";
+    String number = "9999999999";
     a.append(compressNum(BI(number)));
     println(decompressNum(compressNum(BI(number))));
     println(compressNum(BI(number)));
@@ -45,7 +46,7 @@ void setup() {
   for (int[] bit : bits)
     println(bit[0]+" "+bit[1]);//*/
     //if (true)return;
-  println("\n||----------------------------------------------------------------------||");
+  System.err.println("\n||----------------------------------------------------------------------||");
   String comp = toCmd(bits);
   
   /*for (int i = 0; i < comp.length()-1; i++) {
@@ -53,14 +54,14 @@ void setup() {
       println("fail");
     }
   }*/
-  println("program: " + comp);
-  println("total: \""+decompress(comp)+"\"");
+  System.err.println("program: " + comp);
+  System.err.println("total: \""+decompress(comp)+"\"");
   //println(decompress(toCmd("00100000101011101")[0]));
-  println("||----------------------------------------------------------------------||");
-  println(comp.length() + " bytes, original was "+raw.length()+" bytes. "+ round(comp.length()*1000f/raw.length())/10 + "% of original length");
-  println("More precisely, " + Math.log(toNum(bits).doubleValue())/log(compressChars.length()) + " bytes");//.multiply(new BigDecimal(2/log(256))));
-  println(toNum(bits));
-  println(toNum(bits).toString().length());
+  System.err.println("||----------------------------------------------------------------------||");
+  System.err.println(comp.length() + " bytes, original was "+raw.length()+" bytes. "+ round(comp.length()*1000f/raw.length())/10 + "% of original length");
+  System.err.println("More precisely, " + Math.log(toNum(bits).doubleValue())/log(compressChars.length()) + " bytes");//.multiply(new BigDecimal(2/log(256))));
+  System.err.println(toNum(bits));
+  System.err.println(toNum(bits).toString().length());
   exit();
 }
 BigInteger fromBase (int base, byte[] num) {
@@ -78,7 +79,7 @@ BigInteger fromBase (int base, String num) {
   return o;
 }
 BigInteger decompressable;
-int[] read (int base, int count) {
+int[] readArr (int base, int count) {
   int[] o = new int[count];
   for (int i = 0; i < count; i++) {
     BigInteger[] temp = decompressable.divideAndRemainder(BI(base));
@@ -87,11 +88,11 @@ int[] read (int base, int count) {
   }
   return o;
 }
-byte read (int base) {
+int read (int base) {
   //if (logDecompressInfo) print("\nREADING " + base);
-  byte o;
+  int o;
   BigInteger[] temp = decompressable.divideAndRemainder(BI(base));
-  o = temp[1].byteValue();
+  o = temp[1].intValue();
   //if (logDecompressInfo) println(", GOT " + o);
   decompressable = temp[0];
   return o;
