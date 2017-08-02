@@ -65506,6 +65506,15 @@ input
 codegolf
 stackexchange
 com
+inputs
+inputs.value
+inputs.value=
+program
+program.value
+program.value=
+output
+output.value
+output.value=
 http://v.ht/
 https://codegolf.stackexchange.com/
 https://api.stackexchange.com/2.2/questions/
