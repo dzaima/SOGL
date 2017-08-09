@@ -20,4 +20,4 @@ note: this language is very much in developement, and can, and probably will cha
   - run it with an argument of the path to the file containing the program
 - the output will be in the file `output.txt` and STDOUT.
 
-Find what each char does in [here](P5Parser/data/charDefs.txt).
+Find what each char does in [here](P5ParserV0_12/data/charDefs.txt).
