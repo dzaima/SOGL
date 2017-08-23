@@ -127,7 +127,7 @@ Characters:
 		array: add/join the whole array together
 			`[1,2,3]∑` -> 6
 			`["9+10= ", 19]∑` -> "9+10= 19"
-		number, string: add/join the whole stack together
+		number, string: join POP with that
 «	1 input
 		number: bitshift left
 		string: put the first letter at the end
@@ -141,7 +141,8 @@ Characters:
 ø	pushes an empty string
 ‽	1 input
 		any: if not POP then (ends with `}`)
-§	
+§	1 input
+		array: reverse the ASCII-art horizontally
 °	
 ¦	1 input
 		number: sign
@@ -215,23 +216,24 @@ $	outputs a string ender quote (`”`)
 			`"hello, ”6+` -> "hello, 6"
 			`"hello”"world”+` -> "helloworld"
 			`6"th place”+` -> "6th place"
-		array & number, number & array, array & string, string & array, arrays: adds the array elements together with complications.
+		array & number, number & array, array & string, string & array: add the non-array item either before of after the array
 			`"hello", ["world", "baz"]` -> ["hello", "world", "baz"]
-			`[["bar”, "baz”], ["hello”, "world”]] + "foo”` -> [["bar", "baz"], ["hello", "world", "foo"]]
-			`"foo” + [["bar”, "baz”], ["hello”, "world”]]` -> [["foo", "bar", "baz"], ["hello", "world"]]
-			`["hi”] + ["there”]` -> ["hi", "there"]
-			`["foo”] + [["bar”, "baz”], ["hello”, "world”]]` -> [["foo"], ["bar", "baz"], ["hello", "world"]]
-			`[["bar”, "baz”], ["hello”, "world”]], ["foo”]` -> [["bar", "baz"], ["hello", "world"], ["foo"]]
+			`"foo” + [["bar”, "baz”], ["hello”, "world”]]` -> ["foo", ["bar", "baz"], ["hello", "world"]]
+		arrays: add the second array in the 1st array
+		`[["bar”, "baz”], ["hello”, "world”]] + "foo”` -> [["bar", "baz"], ["hello", "world", "foo"]]
+		`["hi”] + ["there”]` -> ["hi", ["there"]]
+		`["foo”] + [["bar”, "baz”], ["hello”, "world”]]` -> [["foo"], [["bar", "baz"], ["hello", "world"]]]
+		`[["bar”, "baz”], ["hello”, "world”]], ["foo”]` -> [["bar", "baz"], ["hello", "world"], ["foo"]]
 ,	takes user input as string
 -	2 inputs
 		numbers: 1st num - 2nd num
 			`73-` -> 4
 		string & number, number & string: remove the nth letter from the string(1-indexed)
 		strings: removes the 1st string from the 2nd string
-		array, string: removes all occurences of that string from the array. Also POPs the string
-		array, number: removes all occurences of that number from the array. Also POPs the number
+		array, string: removes all occurences of that string from the array
+		array, number: removes the item at that index
 	1 input (if the last one is an array, ignore the one before and do)
-		array: subtract each item from the next
+		array: get deltas - subtract each item from the next
 			`[3, 6, 13, 5]-` -> [3, 7, 8]
 .	takes user input as number
 /	2 inputs
@@ -421,7 +423,7 @@ z	pushes the english alphabet lowercase
 		string: for each char in the string and push the char looping at, closed by "}" or EOF
 		array: for each item in the array and push the char looping at, closed by "}" or EOF
 |	
-}	loop/if/for each/anything ender. `x+,}{O` would be equal to `[x+,}{O}`
+}	loop/if/for each/anything ender. `x+,}{O` would be equal to `{x+,}{O}`
 ~	2 inputs
 		numbers: if abs(a-b)<1
 ↑	
@@ -478,8 +480,12 @@ z	pushes the english alphabet lowercase
 ¬	
 ⁽	1 input (upper "(")
 		String: uppercase the first letter of word
+		number: increase by 2
+		array: vectorize
 ⁾	1 input (upper ")")
-		String: uppercase all letters after any of `.?!` or at the start (sentence case)
+		string: uppercase all letters after any of `.?!` or at the start (sentence case)
+		number: decrease by 2
+
 ⅟	1 input
 		number: does 1/POP
 ‰	2 inputs
@@ -705,7 +711,7 @@ z	pushes the english alphabet lowercase
 ⌡	1 input
 		any: repeat next command
 ¶	push a newline character
-→	
+→	evaluate as JavaScript (works only in SOGLOnline)
 “	string ender: push converted to a number
 ”	string ender: pushes the normal string
 ‘	string ender: compressed string decompressor (long numbers, base250 to ASCII, english)
