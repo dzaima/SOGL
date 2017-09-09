@@ -2,8 +2,7 @@ truthy/falsy values:
 	outputs will be 1:true and 0:false
 	inputs: 
 		truthy: 1,2,3,...,-1,-2,-3,...,"anything except ""”,["stuff"],[""],[0]
-		falsy:  0,"”,[]
-temp: !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+		falsy:  0, "”, []
 all the current chars:
 ⁰¹²³⁴⁵⁶⁷⁸TN⁹±∑«»æÆø‽§°¦‚‛⁄¡¤№℮½← !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~↑↓≠≤≥∞√═║─│≡∙∫○׀′¬⁽⁾⅟‰÷╤╥ƨƧαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσΤτΥυΦφΧχΨψΩωāčēģīķļņōŗšūž¼¾⅓⅔⅛⅜⅝⅞↔↕∆≈┌┐└┘╬┼╔╗╚╝░▒▓█▲►▼◄■□…‼⌠⌡¶→“”‘’
 |        ^^ \t and \n
@@ -471,11 +470,9 @@ z	pushes the english alphabet lowercase
 ○	1 input
 		number, string, array: if truthy, output 0, exit
 		number, string, array: if falsy, do nothing
-		note: if required, will put a `}` after itself
 ׀	1 input
 		number, string, array: if truthy, output 1, exit
 		number, string, array: if falsy, do nothing
-		note: if required, will put a `}` after itself
 ′		checks if number is prime
 ¬	
 ⁽	1 input (upper "(")
@@ -661,6 +658,7 @@ z	pushes the english alphabet lowercase
 		number: divide by 2 and get the ceiling
 ↕	1 input
 		string, array: swap pairs of "/\ ^v '." and replace "`" with "." and replace "," with "'" and move "_" up one character, leaving a space
+        number: push that many spaces
 		
 ∆	push -1
 ≈	
@@ -676,7 +674,7 @@ z	pushes the english alphabet lowercase
 		array & string, string & array: append the string vertically horizontally on the array
 			`["this", "is", "an example"] ┼ "hello"` -> ["this      hl", "is        eo", "an examplel"]
 ╔	push "_"
-╗	
+╗	push "+"
 ╚	1 input
 		number: get a diagonal (of `/`) of the size of the number
 		string: get a diagonal of the string (starting at the bottom-left corner)
