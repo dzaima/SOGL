@@ -487,7 +487,7 @@ z	pushes the english alphabet lowercase
 ⅟	1 input
 		number: does 1/POP
 ‰	2 inputs
-		numbers: ((POP-1) modulo POP) + 1
+		numbers: ((a-1) modulo b) + 1
 			`83%` -> 1
 			`93%` -> 3
 			`9%` -> ((input-1)%9)+1)
