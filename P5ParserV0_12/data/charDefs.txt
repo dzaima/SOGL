@@ -207,6 +207,7 @@ $	outputs a string ender quote (`”`)
 			`["hello", "bar"]3*` -> ["hellohellohello", "bar  bar  bar  "]
 			`[["ab","cd","ef"],["g","h","i"]]3*` -> [["ababab","cdcdcd","efefef"], ["g g g ","h h h ","i i i "]]
 			`[1, 3, 5]7*` -> [7, 21, 35]
+		array & string, string & array: int the array replace numbers with the string repeated that many times, and append the string after strings
 +	2 inputs
 		numbers: adds the two
 			`35+` -> 8
@@ -444,7 +445,7 @@ z	pushes the english alphabet lowercase
 			`["abcd", "ef12", 625]√` -> [[["ab"], ["cd"]], [["ef"], ["12"]], 25]
 ═	
 ║	1 input
-		string, array, number: remove duplicates from left to right
+		string, array, number: remove duplicates from left to right - deduplicate
 ─	2 inputs
 		number & number: (2nd is base) convert x from base 10 to base y. If base is 2 and is constant then instead of an array with the digits it gives a string
 			`2─` -> "101001101"
@@ -486,7 +487,7 @@ z	pushes the english alphabet lowercase
 ⅟	1 input
 		number: does 1/POP
 ‰	2 inputs
-		numbers: ((POP-1) modulo) + 1
+		numbers: ((POP-1) modulo POP) + 1
 			`83%` -> 1
 			`93%` -> 3
 			`9%` -> ((input-1)%9)+1)
@@ -640,6 +641,7 @@ z	pushes the english alphabet lowercase
 š	
 ū	1 input
 		string, array: uppercase every words first letter
+		number: 2^x
 ž	4 inputs
 		array & number & number & array: replace in the 1st array from the positions given (1-indexed) to those + 2nd arrays size with the 2nd array. Order doesn't matter, but the 1st array will be source and 1st number - x position
 ¼	1 input
