@@ -650,14 +650,14 @@ z	pushes the english alphabet lowercase
 		array & number & number & array: replace in the 1st array from the positions given (1-indexed) to those + 2nd arrays size with the 2nd array. Order doesn't matter, but the 1st array will be source and 1st number - x position
 ¼	1 input
 		number: push 0.25*pop
-		string: encase the string in the two following characters
-			`ello”¼H!` -> "Hello!"
+		string: encase the string in the next character
+			`hello”¾'` -> "'hello'"
 		array: create a diagonal of the lines
 			`a”bc”defg”¹¼` -> [["a", " bc", "  defg"]]
 ¾	1 input
 		number: push 0.75*pop
-		string: encase the string in the next character
-			`hello”¾'` -> "'hello'"
+		string: encase the string in the two following characters
+			`ello”¼H!` -> "Hello!"
 		array: create an antidiagonal of the lines
 			`a”bc”defg”¹¾` -> [["  a", " bc", "defg"]]
 ⅓	1 input
