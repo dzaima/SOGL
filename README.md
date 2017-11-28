@@ -1,4 +1,7 @@
-# SOGL
+# Note
+This repository is.. old. More updated code is available [here](https://github.com/dzaima/SOGLOnline) (and now I've even moved [chardefs](https://github.com/dzaima/SOGLOnline/blob/master/compiler/interpreter/data/charDefs.txt) there)
+
+## SOGL
 A very weakly typed language, meaning that every function will do something for all types of input.  
 For example, 05AB1E has a function `u` for uppercasing and `î` for ceiling, but SOGL has one for both - `U`.  
 You'll never need to uppercase a number and take the ceiling of a string, will you?  
